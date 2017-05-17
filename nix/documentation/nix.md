@@ -3,7 +3,7 @@ mx		Entity.h (IEntity) |EntityHDF5.h| {EntityHDF5.c}
         {updated_at}                    // H5G.a
         {created_at}                    // H5G.a
 
-		|(+)|	id()				    ->s             
+		|(+)|	id()				    ->s
 		|(+)|	updatedAt()			    ->t=time
 		|(+)|	createdAt()			    ->t
 		|(+)|	setUpdatedAt()		    <-v=void
@@ -30,20 +30,22 @@ mx		NamedEntity.h (INamedEntity) |NamedEntityHDF5.h| {NamedEntityHDF5.c}
 
 
 mx		EntityWithMetaData.h (IEntityWithMetaData) |EntityWithMetaDataHDF5.h| {EntityWithMetaDataHDF5.c}
+        {metadata}                      // H5Group
+
 		|(+)|	metadata()			    ->Section           {group().openGroup("metadata")}
 		  + 	metadata(Section)	    <-v                 backend.metadata(Section.id())
-		|(+)|	metadata(id)		    <-v // id=s         {group().createLink(file().findSection(id).group(), "metadata")}     // H5Lcreate_hard
-		|(+)|	metadata(n)			    <-v                 {group().removeGroup("metadata")}               // H5Gunlink
+		|(+)|	metadata(id)		    <-v // id=s         {group().createLink(file().findSection(id).group(), "metadata")}    // H5Lcreate_hard, can only ever be one per Entity
+		|(+)|	metadata(n)			    <-v                 {group().removeGroup("metadata")}                                   // H5Gunlink
 
 
 mx		EntityWithSources.h (IEntityWithSources) |EntityWithSourcesHDF5.h| {EntityWithSourcesHDF5.c}
         -||     sources                 // H5Group optGroup
 
-		|(+)|	sourceCount()		    ->d // d=any int
+		|(+)|	sourceCount()		    ->d                 // d=any int
 		|(+)|	hasSource(n_id)		    ->b                 {sources.hasGroup(n_id)}
 		  + 	hasSource(Source)	    ->b                 backend.hasSource(Source.id())
 		|(+)|	getSource(n_id)		    ->Source            {sources.openGroup(block().findSources(n_id).id())}
-		|(+)|	getSource(idx)		    ->Source //idx=d
+		|(+)|	getSource(idx)		    ->Source            //idx=d
 		  + 	sources(filter)		    -><Source>
 		|(+)|	sources(<Source>)	    <-v                 {for each Source call addSource(Source.id())}
 		|(+)|	addSource(n_id)		    <-v                 {sources.createLink(block().findSources(n_id).group(), n_id)}       // H5Lcreate_hard
@@ -87,7 +89,7 @@ x		|(+)|	getSection(n_id)			->Section           {metadata.findGroupByNameOrAttri
 		|(+)|	sectionCount()				->d
 		  +		sections(filter)			-><Section>
 x		  +		sections()					-><Section>
-		  +		findSections(filter, depth)	-><Section>	// depth=int
+		  +		findSections(filter, depth)	-><Section>         // depth=int
 		  +		findSections(depth)			-><Section>
 x		|(+)|	createSection(name, type)	<-Section           {metadata.openGroup(name)}                      // H5Pcreate & H5Gcreate2, created with name, not id
 x		|(+)|	deleteSection(n_id)			<-b                 {metadata.removeAllLinks(section.name())}       // H5Ldelete, also deletes all child sections by child.id()
@@ -95,7 +97,7 @@ x		|(+)|	deleteSection(n_id)			<-b                 {metadata.removeAllLinks(sect
 
 x		|(+)|	version()					-><d>
 x		|(+)|	format()					->s
-x		|(+)|	location()					->s // URI
+x		|(+)|	location()					->s                 // URI
 x		|(+)|	createdAt()					->t
 x		|(+)|	updatedAt()					->t
 		|(+)|	setUpdatedAt()				<-v
@@ -105,151 +107,152 @@ x		|(+)|	updatedAt()					->t
 		|(+)|	close()						<-v
 		|(+)|	isOpen()					->b
 		|(+)|	fileMode()					->FileMode
-		  +		validate()					->Result        // Result contains warning and error messages
+		  +		validate()					->Result            // Result contains warning and error messages
         -||     fileExists()                ->b
         -||     openRoot()                  <-v
         -||     checkHeader(FileMode)       ->b
         -||     createHeader()              <-v
 
 
-mx		Feature.h (IFeature) |FeatureHDF5.h| {FeatureHDF5.c}
-        {link_type}                 // H5G.a
+mx		Block.h (IBlock) |BlockHDF5.h| {BlockHDF5.c}
+        ?{}     data_arrays, tags, multi_tags, sources, groups      // H5Groups, optional
 
-		|(+)|	linkType(LinkType)	<-v
-		|(+)|	linkType()			->LinkType                                                                                          // "tagged", "untagged", "indexed"
-		|(+)|	data(n_id)			<-v                         {group().createLink(block().getDataArray(n_id).group(), "data")}        // H5Lcreate_hard, removes existing "data" before creation
-		  +		data(DataArray)		<-v                         backend.data(DataArray.id())
-		|(+)|	data()				->DataArray                 {group().openGroup("data")}
-
-        +Entity
-
-
-mx		Source.h (ISource) |SourceHDF5.h| {SourceHDF5.c}
-        -||     sources                     // H5Group
-
-		|(+)|	hasSource(n_id)				->b
-		  +		hasSource(Source)			->b                 backend.hasSource(Source.id())
-		|(+)|	getSource(n_id)				->Source            {sources.findGroupByNameOrAttribute("entity_id", n_id)}
+x		|(+)|	hasSource(n_id)				->b
+		  +		hasSource(Source)			->b                     backend.getSource(Source.name())
+x		|(+)|	getSource(n_id)				->Source                {sources.findGroupByNameOrAttribute("entity_id", n_id)}
 		|(+)|	getSource(idx)				->Source
 		|(+)|	sourceCount()				->d
-		  +		sources(filter)				-><Source>
+x (no f)  +		sources(filter)				-><Source>
 		  +		findSources(filter, depth)	-><Source>
-		|(+)|	createSource(name, type)	<-Source            {sources.openGroup(name)}                       // H5Pcreate & H5Gcreate2, created with name, not id
-		|(+)|	deleteSource(n_id)			<-b                 {sources.removeAllLinks(source.name())}         // H5Ldelete, also deletes all child sources by child.id()
-		  +		deleteSource(Source)		<-b                 backend.deleteSource(Source.id())
-		  +		parentSource()				->Source
+x		|(+)|	createSource(name, type)	<-Source                {sources.openGroup(name)}               // H5Pcreate & H5Gcreate2, created with name, not id
+x		|(+)|	deleteSource(n_id)			<-b                     {sources.removeAllLinks(block().getSource(n_id).name())}            // H5Ldelete, children removed by child.id()
+		  +		deleteSource(Source)		<-b                     backend.deleteSource(Source.name())
 
-		  +		referringDataArray()		-><DataArray>
-		  +		referringTags()				-><Tag>
-		  +		referringMultiTags()		-><MultiTag>
-		  +|()|	parentFile()				->File
-		  +|()|	parentBlock()				->Block
-		  
-		  +Entity +NamedEntity +EntityWithMetaData
+x		|(+)|	hasDataArray(n_id)			->b
+		  +		hasDataArray(DataArray)		->b                     backend.getDataArray(DataArray.name())
+x		|(+)|	getDataArray(n_id)			->DataArray             {data_arrays.findGroupByNameOrAttribute("entity_id", n_id)}
+		|(+)|	getDataArray(idx)			->DataArray
+x (no f)  +		dataArrays(filter)			-><DataArray>
+		|(+)|	dataArrayCount()			->d
+x		|(+)|	createDataArray(name, type, DataType, size)		<-DataArray     {data_arrays.openGroup(name) + newDA.group().createData("data")}  // H5Pcreate & H5Gcreate2 + H5Pcreate & H5Dcreate
+		  +		createDataArray(name, type, <data>, DataType)	<-DataArray
+x		|(+)|	deleteDataArray(n_id)		<-b                     {data_arrays.removeAllLinks(block().getDataArray(n_id).name())} // H5Ldelete
+		  +		deleteDataArray(DataArray)	<-b                     backend.deleteDataArray(DataArray.name())
+
+x		|(+)|	hasTag(n_id)				->b
+		  +		hasTag(Tag)					->b                     backend.getTag(Tag.name())
+x		|(+)|	getTag(n_id)				->Tag                   {tags.findGroupByNameOrAttribute("entity_id", n_id)}
+		|(+)|	getTag(idx)					->Tag
+x (no f)  +		tags(filter)				-><Tag>
+		|(+)|	tagCount()					->d
+x		|(+)|	createTag(name, type, position)	<-Tag // position=<double>  {tags.openGroup(name)}          // H5Pcreate & H5Gcreate2, created with name, not id
+x		|(+)|	deleteTag(n_id)				<-b                     {tags.removeAllLinks(block().getTag(n_id).name())}             // H5Ldelete
+		  +		deleteTag(Tag)				<-b                     backend.deleteTag(Tag.name())
+
+x		|(+)|	hasMultiTag(n_id)			->b
+		  +		hasMultiTag(Tag)			->b                     backend.getMultiTag(MultiTag.name())
+x		|(+)|	getMultiTag(n_id)			->MultiTag              {multi_tags.findGroupByNameOrAttribute("entity_id", n_id)}
+		|(+)|	getMultiTag(idx)			->MultiTag
+x (no f)  +		multiTags(filter)			-><MultiTag>
+		|(+)|	multiTagCount()				->d
+x		|(+)|	createMultiTag(name, type, positions)	<-MultiTag // positions=DataArray   {multi_tags.openGroup(name)}            // H5Pcreate & H5Gcreate2, created with name, not id
+x		|(+)|	deleteMultiTag(n_id			<-b                     {multi_tags.removeAllLinks(block().getMultiTag(n_id).name())}   // H5Ldelete
+		  +		deleteMultiTag(MultiTag)	<-b                     backend.deleteMultiTag(MultiTag.name())
+
+x		|(+)|	hasGroup(n_id)				->b
+		  +		hasGroup(Group)				->b                     backend.getGroup(Group.name())
+x		|(+)|	getGroup(n_id)				->Group                 {groups.findGroupByNameOrAttribute("entity_id", n_id)}
+		|(+)|	getGroup(idx)				->Group
+x (no f)  +		groups(filter)				-><Group>
+		|(+)|	groupCount()				->d
+x		|(+)|	createGroup(name, type)		<-Group                 {groups.openGroup(name)}                // H5Pcreate & H5Gcreate2, created with name, not id
+x		|(+)|	deleteGroup(n_id)			<-b                     {groups.removeAllLinks(block().getGroup(n_id).name())}           // H5Ldelete
+		  +		deleteGroup(Group)			<-b                     backend.deleteGroup(Group.name())
+		+||		block()						->ptr
+		
+		+Entity +NamedEntity +EntityWithMetaData
+x (desc)|(+)|   id()                    ->s
+x (desc)|(+)|   name()                  ->s
+x (desc)|(+)|   type()                  ->s
+x		|(+)|	type(s)					<-v
+x		|(+)|	definition(s)			<-v
+x (desc)|(+)|   definition()            ->s
+x		|(+)|	definition(n)			<-v
+		|(+)|	compare(NamedEntity)	->d
+
+x		|(+)|	metadata()			    ->Section
+		  + 	metadata(Section)	    <-v
+x		|(+)|	metadata(id)		    <-v
+x		|(+)|	metadata(n)			    <-v
 
 
 mx		Group.h (IGroup) |GroupHDF5.h| {GroupHDF5.c}
         -||     data_array, tag, multi_tag  // H5Group
 
-		|(+)|	hasDataArray(n_id)			->b                 {data_array.hasGroup(block().getDataArray(n_id).id())}
+x		|(+)|	hasDataArray(n_id)			->b                 {data_array.hasGroup(block().getDataArray(n_id).id())}
 		  +		hasDataArray(DataArray)		->b                 backend.hasDataArray(DataArray.id())
 		|(+)|	dataArrayCount()			->d                 
-		|(+)|	getDataArray(n_id)			->DataArray         {data_array.getGroup(block().getDataArray(n_id).id())}
+x		|(+)|	getDataArray(n_id)			->DataArray         {data_array.getGroup(block().getDataArray(n_id).id())}
 		|(+)|	getDataArray(idx)			->DataArray
 		  +		addDataArray(DataArray)		<-v // v=void       backend.addDataArray(DataArray.id())
-		|(+)|	addDataArray(id)			<-v                 {data_array.createLink(block().getDataArray(n_id).group(), block().getDataArray(n_id).id())}        // H5Lcreate_hard
+x		|(+)|	addDataArray(n_id)			<-v                 {data_array.createLink(block().getDataArray(n_id).group(), block().getDataArray(n_id).id())}    // H5Lcreate_hard
 		  +		removeDataArray(DataArray)	<-b                 backend.removeDataArray(DataArray.id())
-		|(+)|	removeDataArray(n_id)		<-b                 {data_array.removeGroup(block().getDataArray(n_id).id())}       // H5Gunlink
-		  +		dataArrays(filter)			-><DataArray>
-		  +		dataArrays()				-><DataArray>
+x		|(+)|	removeDataArray(n_id)		<-b                 {data_array.removeGroup(block().getDataArray(n_id).id())}                   // H5Gunlink
+?		  +		dataArrays(filter)			-><DataArray>
+x		  +		dataArrays()				-><DataArray>
 		|(+)|	dataArrays(<DataArray>)		<-v                 {for each addDataArray(DA.id())}
 
-		|(+)|	hasTag(n_id)    			->b                 {tag.hasGroup(block().getTag(n_id).id())}
+x		|(+)|	hasTag(n_id)    			->b                 {tag.hasGroup(block().getTag(n_id).id())}
 		  +		hasTag(Tag)					->b                 backend.hasTag(Tag.id())
 		|(+)|	tagCount()					->d
-		|(+)|	getTag(n_id)				->Tag               {tag.openGroup(block().getTag(n_id).id())
+x		|(+)|	getTag(n_id)				->Tag               {tag.openGroup(block().getTag(n_id).id())
 		|(+)|	getTag(idx)					->Tag
-		|(+)|	addTag(id)					<-v                 {tag.createLink(block().getTag(n_id).group(), block().getTag(n_id).id()}                    // H5Lcreate_hard
+x		|(+)|	addTag(n_id)				<-v                 {tag.createLink(block().getTag(n_id).group(), block().getTag(n_id).id()}    // H5Lcreate_hard
 		  +		addTag(Tag)					<-v                 backend.addTag(Tag.id())
-		|(+)|	removeTag(n_id)				<-b                 {tag.removeGroup(block().getTag(n_id).id())}                       // H5Gunlink
+x		|(+)|	removeTag(n_id)				<-b                 {tag.removeGroup(block().getTag(n_id).id())}                                // H5Gunlink
 		  +		removeTag(Tag)				<-b                 backend.removeTag(Tag.id())
-		  +		tags(filter)				-><Tag>
-		  +		tags()						-><Tag>
+?		  +		tags(filter)				-><Tag>
+x		  +		tags()						-><Tag>
 		|(+)|	tags(<Tag>)					<-v                 {for each addTag(Tag.id())}
 
-		|(+)|	hasMultiTag(n_id)			->b                 {multi_tag.hasGroup(block().getMultiTag(n_id).id())}
+x		|(+)|	hasMultiTag(n_id)			->b                 {multi_tag.hasGroup(block().getMultiTag(n_id).id())}
 		  +		hasMultiTag(MultiTag)		->b                 backend.hasMultiTag(MultiTag.id())
 		|(+)|	multiTagCount()				->d
-		|(+)|	getMultiTag(n_id)			->MultiTag          {multi_tag.openGroup(block().getMultiTag(n_id).id())}
+x		|(+)|	getMultiTag(n_id)			->MultiTag          {multi_tag.openGroup(block().getMultiTag(n_id).id())}
 		|(+)|	getMultiTag(idx)			->MultiTag
-		|(+)|	addMultiTag(n_id)			<-v                 {multi_tag.createLink(block().getMultiTag(n_id).group(), block().getMultiTag(n_id).id())}   // H5Lcreate_hard
+x		|(+)|	addMultiTag(n_id)			<-v                 {multi_tag.createLink(block().getMultiTag(n_id).group(), block().getMultiTag(n_id).id())}   // H5Lcreate_hard
 		  +		addMultiTag(MultiTag)		<-v                 backend.addMultiTag(MultiTag.id())
-		|(+)|	removeMultiTag(n_id)		<-b                 {multi_tag.removeGroup(block().getMultiTag(n_id).id())}                       // H5Gunlink
+x		|(+)|	removeMultiTag(n_id)		<-b                 {multi_tag.removeGroup(block().getMultiTag(n_id).id())}                       // H5Gunlink
 		  +		removeMultiTag(MultiTag)	<-b                 backend.removeMultiTag(MultiTag.id())
-		  +		multiTags(filter)			-><MultiTag>
-		  +		multiTags()					-><MultiTag>
+?		  +		multiTags(filter)			-><MultiTag>
+x		  +		multiTags()					-><MultiTag>
 		|(+)|	multiTags(<MultiTag>)		<-v                 {for each addMultiTag(MultiTag.id())}
 		
 		+Entity +NamedEntity +EntityWithMetaData +EntityWithSources
+x (desc)|(+)|   id()                    ->s
+x (desc)|(+)|   name()                  ->s
+x (desc)|(+)|   type()                  ->s
+x		|(+)|	type(s)					<-v
+x		|(+)|	definition(s)			<-v
+x (desc)|(+)|   definition()            ->s
+x		|(+)|	definition(n)			<-v
+		|(+)|	compare(NamedEntity)	->d
 
-
-mx		Block.h (IBlock) |BlockHDF5.h| {BlockHDF5.c}
-        ?{}     data_arrays, tags, multi_tags, sources, groups      // H5Groups, optional
-
-		|(+)|	hasSource(n_id)				->b
-		  +		hasSource(Source)			->b                     backend.getSource(Source.name())
-		|(+)|	getSource(n_id)				->Source                {sources.findGroupByNameOrAttribute("entity_id", n_id)}
-		|(+)|	getSource(idx)				->Source
-		|(+)|	sourceCount()				->d
-		  +		sources(filter)				-><Source>
-		  +		findSources(filter, depth)	-><Source>
-		|(+)|	createSource(name, type)	<-Source                {sources.openGroup(name)}               // H5Pcreate & H5Gcreate2, created with name, not id
-		|(+)|	deleteSource(n_id)			<-b                     {sources.removeAllLinks(block().getSource(n_id).name())}          // H5Ldelete, children removed by child.id()
-		  +		deleteSource(Source)		<-b                     backend.deleteSource(Source.name())
-
-		|(+)|	hasDataArray(n_id)			->b
-		  +		hasDataArray(DataArray)		->b                     backend.getDataArray(DataArray.name())
-		|(+)|	getDataArray(n_id)			->DataArray             {data_arrays.findGroupByNameOrAttribute("entity_id", n_id)}
-		|(+)|	getDataArray(idx)			->DataArray
-		  +		dataArrays(filter)			-><DataArray>
-		|(+)|	dataArrayCount()			->d
-		|(+)|	createDataArray(name, type, DataType, size)		<-DataArray     {data_arrays.openGroup(name) + newDA.group().createData("data")}  // H5Pcreate & H5Gcreate2 + H5Pcreate & H5Dcreate
-		  +		createDataArray(name, type, <data>, DataType)	<-DataArray
-		|(+)|	deleteDataArray(n_id)		<-b                     {data_arrays.removeAllLinks(block().getDataArray(n_id).name())}          // H5Ldelete
-		  +		deleteDataArray(DataArray)	<-b                     backend.deleteDataArray(DataArray.name())
-
-		|(+)|	hasTag(id)					->b
-		  +		hasTag(Tag)					->b                     backend.getTag(Tag.name())
-		|(+)|	getTag(id)					->Tag                   {tags.findGroupByNameOrAttribute("entity_id", n_id)}
-		|(+)|	getTag(idx)					->Tag
-		  +		tags(filter)				-><Tag>
-		|(+)|	tagCount()					->d
-		|(+)|	createTag(name, type, position)	<-Tag // position=<double>  {tags.openGroup(name)}          // H5Pcreate & H5Gcreate2, created with name, not id
-		|(+)|	deleteTag(n_id)				<-b                     {tags.removeAllLinks(block().getTag(n_id).name())}             // H5Ldelete
-		  +		deleteTag(Tag)				<-b                     backend.deleteTag(Tag.name())
-
-		|(+)|	hasMultiTag(id)				->b
-		  +		hasMultiTag(Tag)			->b                     backend.getMultiTag(MultiTag.name())
-		|(+)|	getMultiTag(n_id)			->MultiTag              {multi_tags.findGroupByNameOrAttribute("entity_id", n_id)}
-		|(+)|	getMultiTag(idx)			->MultiTag
-		  +		multiTags(filter)			-><MultiTag>
-		|(+)|	multiTagCount()				->d
-		|(+)|	createMultiTag(name, type, positions)	<-MultiTag // positions=DataArray   {multi_tags.openGroup(name)}          // H5Pcreate & H5Gcreate2, created with name, not id
-		|(+)|	deleteMultiTag(n_id			<-b                     {multi_tags.removeAllLinks(block().getMultiTag(n_id).name())}       // H5Ldelete
-		  +		deleteMultiTag(MultiTag)	<-b                     backend.deleteMultiTag(MultiTag.name())
-
-		|(+)|	hasGroup(n_id)				->b
-		  +		hasGroup(Group)				->b                     backend.getGroup(Group.name())
-		|(+)|	getGroup(n_id)				->Group                 {groups.findGroupByNameOrAttribute("entity_id", n_id)}
-		|(+)|	getGroup(idx)				->Group
-		  +		groups(filter)				-><Group>
-		|(+)|	groupCount()				->d
-		|(+)|	createGroup(name, type)		<-Group                 {groups.openGroup(name)}                // H5Pcreate & H5Gcreate2, created with name, not id
-		|(+)|	deleteGroup(n_id)			<-b                     {groups.removeAllLinks(block().getGroup(n_id).name())}           // H5Ldelete
-		  +		deleteGroup(Group)			<-b                     backend.deleteGroup(Group.name())
-		+||		block()						->ptr
-		
-		+Entity +NamedEntity +EntityWithMetaData
+		|(+)|	metadata()			    ->Section
+		  + 	metadata(Section)	    <-v
+		|(+)|	metadata(n_id)		    <-v
+		|(+)|	metadata(n) 		    <-v
+		|(+)|	sourceCount()		    ->d
+		|(+)|	hasSource(n_id)		    ->b
+		  + 	hasSource(Source)	    ->b
+		|(+)|	getSource(n_id)		    ->Source
+		|(+)|	getSource(idx)		    ->Source
+		  + 	sources(filter)		    -><Source>
+		|(+)|	sources(<Source>)	    <-v
+		|(+)|	addSource(n_id)		    <-v
+		  + 	addSource(Source)	    <-v
+		|(+)|	removeSource(n_id)	    <-b
+		  + 	removeSource(Source)    <-b
 
 
 mx		DataArray.h (IDataArray) |DataArrayHDF5.h| {DataArrayHDF5.cpp}
@@ -259,34 +262,34 @@ mx		DataArray.h (IDataArray) |DataArrayHDF5.h| {DataArrayHDF5.cpp}
         {polynom_coefficients}                      // DataSet -> LocID -> H5Object
         ?{} dimension                               // H5Group. optGroup
 
-		|(+)|	label()						        ->s
-		|(+)|	label(s)					        <-v
-		|(+)|	label(n)					        <-v
-		|(+)|	unit()						        ->s
-		|(+)|	unit(s)						        <-v
-		|(+)|	unit(n)						        <-n
+x (desc)|(+)|	label()						        ->s
+x		|(+)|	label(s)					        <-v
+x		|(+)|	label(n)					        <-v
+x (desc)|(+)|	unit()						        ->s
+x		|(+)|	unit(s)						        <-v
+x		|(+)|	unit(n)						        <-n
 		|(+)|	expansionOrigin()			        ->d
 		|(+)|	expansionOrigin(d)			        <-v
 		|(+)|	expansionOrigin(n)			        <-v
 		|(+)|	polynomCoefficients(<d>)	        <-v                     {group().createData("polynom_coefficients")}    // H5Pcreate & H5Dcreate
-		|(+)|	polynomCoefficients()		        -><d>
+x (desc)|(+)|	polynomCoefficients()		        -><d>
 		|(+)|	polynomCoefficients(n)		        <-v                     {group().removeData("polynom_coefficients")}    // H5Gunlink
 		  +		dimensions(filter)			        -><Dimension>
-		  +		dimensions()				        -><Dimension>
+x		  +		dimensions()				        -><Dimension>
 		|(+)|	dimensionCount()			        ->d
 		|(+)|	getDimension(idx)			        ->Dimension
-		  +		appendSetDimension()		        <-SetDimension
-		  +		appendRangeDimension(<d>)	        <-RangeDimension
-		  +		appendAliasRangeDimension()	        <-RangeDimension
-		  +		appendSampledDimension(d)	        <-SampledDimension
-		|(+)|	createSetDimension(idx)		        <-SetDimension          {createDimensionGroup(idx)}                         // H5Pcreate & H5Gcreate2
-		|(+)|	createRangeDimension(idx, <d>)	    <-RangeDimension        {createDimensionGroup(idx)}                         // H5Pcreate & H5Gcreate2
-		|(+)|	createAliasRangeDimension()	        <-RangeDimension        {createDimensionGroup(1)}                           // H5Pcreate & H5Gcreate2
-		|(+)|	createSampledDimension(idx, d)	    <-SampledDimension      {createDimensionGroup(idx)}                         // H5Pcreate & H5Gcreate2
-		|(+)|	deleteDimensions()			        <-b                     {for every dimension: dimensions.removeGroup()}     // H5Gunlink
+x		  +		appendSetDimension()		        <-SetDimension
+x		  +		appendRangeDimension(<d>)	        <-RangeDimension
+x		  +		appendAliasRangeDimension()	        <-RangeDimension
+x		  +		appendSampledDimension(d)	        <-SampledDimension
+x		|(+)|	createSetDimension(idx)		        <-SetDimension          {createDimensionGroup(idx)}                         // H5Pcreate & H5Gcreate2
+x		|(+)|	createRangeDimension(idx, <d>)	    <-RangeDimension        {createDimensionGroup(idx)}                         // H5Pcreate & H5Gcreate2
+x		|(+)|	createAliasRangeDimension()	        <-RangeDimension        {createDimensionGroup(1)}                           // H5Pcreate & H5Gcreate2
+x		|(+)|	createSampledDimension(idx, d)	    <-SampledDimension      {createDimensionGroup(idx)}                         // H5Pcreate & H5Gcreate2
+x		|(+)|	deleteDimensions()			        <-b                     {for every dimension: dimensions.removeGroup()}     // H5Gunlink
 		  +		getDataDirect(DataType, data, count, offset)	<-v         // {read(dtype, data, count, offset)}
 		  +		setDataDirect(DataType, data, count, offset)	<-v         // {write(dtype, data, count, offset)}
-		|(+)|	dataExtent()				        ->d                     {group().openData("data").size()}
+x (desc)|(+)|	dataExtent()				        ->d                     {group().openData("data").size()}
 		|(+)|	dataExtent(d)				        <-v                     {group().openData("data").setExtent}                // H5Dset_extent
 		|(+)|	dataType()					        ->DataType              {group().openData("data").dataType()}               // H5Dget_type
 		  +		appendData(DataType, data, count, axis) <-v
@@ -299,6 +302,68 @@ mx		DataArray.h (IDataArray) |DataArrayHDF5.h| {DataArrayHDF5.cpp}
         -||     createDimensionGroup(idx)           <-H5Group               {dimension.openGroup(idx)}                          // H5Pcreate & H5Gcreate2
 		
 		+Entity +NamedEntity +EntityWithMetaData +EntityWithSources
+x (desc)|(+)|   id()                    ->s
+x (desc)|(+)|   name()                  ->s
+x (desc)|(+)|   type()                  ->s
+x		|(+)|	type(s)					<-v
+x		|(+)|	definition(s)			<-v
+x (desc)|(+)|   definition()            ->s
+x		|(+)|	definition(n)			<-v
+		|(+)|	compare(NamedEntity)	->d
+
+x		|(+)|	metadata()			    ->Section
+		  + 	metadata(Section)	    <-v
+x		|(+)|	metadata(n_id)		    <-v
+x		|(+)|	metadata(n)			    <-v
+
+		|(+)|	sourceCount()		    ->d
+		|(+)|	hasSource(n_id)		    ->b
+		  + 	hasSource(Source)	    ->b
+		|(+)|	getSource(n_id)		    ->Source
+		|(+)|	getSource(idx)		    ->Source
+x (no f)  + 	sources(filter)		    -><Source>
+		|(+)|	sources(<Source>)	    <-v
+x		|(+)|	addSource(n_id)		    <-v
+		  + 	addSource(Source)	    <-v
+x		|(+)|	removeSource(n_id)	    <-b
+		  + 	removeSource(Source)    <-b
+
+
+mx		Source.h (ISource) |SourceHDF5.h| {SourceHDF5.c}
+        -||     sources                     // H5Group
+
+x		|(+)|	hasSource(n_id)				->b
+		  +		hasSource(Source)			->b                 backend.hasSource(Source.id())
+x		|(+)|	getSource(n_id)				->Source            {sources.findGroupByNameOrAttribute("entity_id", n_id)}
+		|(+)|	getSource(idx)				->Source
+		|(+)|	sourceCount()				->d
+x (no f)  +		sources(filter)				-><Source>
+		  +		findSources(filter, depth)	-><Source>
+x		|(+)|	createSource(name, type)	<-Source            {sources.openGroup(name)}                       // H5Pcreate & H5Gcreate2, created with name, not id
+x		|(+)|	deleteSource(n_id)			<-b                 {sources.removeAllLinks(source.name())}         // H5Ldelete, also deletes all child sources by child.id()
+		  +		deleteSource(Source)		<-b                 backend.deleteSource(Source.id())
+		  +		parentSource()				->Source
+
+		  +		referringDataArray()		-><DataArray>
+		  +		referringTags()				-><Tag>
+		  +		referringMultiTags()		-><MultiTag>
+		  +|()|	parentFile()				->File
+		  +|()|	parentBlock()				->Block
+		  
+		  +Entity +NamedEntity +EntityWithMetaData
+x (desc)|(+)|   id()                    ->s
+x (desc)|(+)|   type()                  ->s
+x		|(+)|	type(s)					<-v
+x (desc)|(+)|   name()                  ->s
+x		|(+)|	definition(s)			<-v
+x (desc)|(+)|   definition()            ->s
+x		|(+)|	definition(n)			<-v
+		|(+)|	compare(NamedEntity)	->d
+
+x		|(+)|	metadata()			    ->Section
+		  + 	metadata(Section)	    <-v
+x		|(+)|	metadata(n_id)		    <-v
+x		|(+)|	metadata(n)			    <-v
 
 
 mx		Tag.h (ITag) |TagHDF5.h| [IBaseTag] /BaseTagHDF5.h/ {BaseTagHDF5.c && TagHDF5.c}
@@ -307,137 +372,205 @@ mx		Tag.h (ITag) |TagHDF5.h| [IBaseTag] /BaseTagHDF5.h/ {BaseTagHDF5.c && TagHDF
         {extent}                                    // DataSet -> LocID -> H5Object
         -{} features, references                    // H5Group. optGroup
 
-		|(+)|	units()						        -><s>                   {group().getData("units")}
-		|(+)|	units(<s>)					        <-v                     {group().setData("units")}                                  // H5Pcreate & H5Dcreate
-		|(+)|	units(n)					        <-v                     {group().removeData("units")}                               // H5Gunlink
-		|(+)|	position()					        -><d>                   {group().getData("position")}
-		|(+)|	position(<d>)				        <-v                     {group().setData("position")}                               // H5Pcreate & H5Dcreate
-		|(+)|	extent(<d>)					        <-v                     {group().getData("extent")}
-		|(+)|	extent()					        -><d>                   {group().setData("extent")}                                 // H5Pcreate & H5Dcreate
-		|(+)|	extent(n)					        <-v                     {group().removeData("extent")}                              // H5Gunlink
+x (desc)|(+)|	units()						        -><s>                   {group().getData("units")}
+x		|(+)|	units(<s>)					        <-v                     {group().setData("units")}                                  // H5Pcreate & H5Dcreate
+x		|(+)|	units(n)					        <-v                     {group().removeData("units")}                               // H5Gunlink
+x (desc)|(+)|	position()					        -><d>                   {group().getData("position")}
+x		|(+)|	position(<d>)				        <-v                     {group().setData("position")}                               // H5Pcreate & H5Dcreate
+x		|(+)|	extent(<d>)					        <-v                     {group().getData("extent")}
+x (desc)|(+)|	extent()					        -><d>                   {group().setData("extent")}                                 // H5Pcreate & H5Dcreate
+x		|(+)|	extent(n)					        <-v                     {group().removeData("extent")}                              // H5Gunlink
 
-		/[+]/	hasReference(n_id)			        ->b                     {references.hasGroup(block().getDataArray(n_id).id())}
+x		/[+]/	hasReference(n_id)			        ->b                     {references.hasGroup(block().getDataArray(n_id).id())}
 		  +		hasReference(DataArray)		        ->b                     backend.hasReference(DataArray.name())
 		/[+]/	referenceCount()			        ->d
-		/[+]/	getReference(n_id)			        ->DataArray             {references.openGroup(block().getDataArray(n_id).id())}
+x		/[+]/	getReference(n_id)			        ->DataArray             {references.openGroup(block().getDataArray(n_id).id())}
 		/[+]/	getReference(idx)			        ->DataArray
-		/[+]/	addReference(n_id)			        <-v                     {references.createLink(block().getDataArray(n_id).id())}    // H5Lcreate_hard
+x		/[+]/	addReference(n_id)			        <-v                     {references.createLink(block().getDataArray(n_id).id())}    // H5Lcreate_hard
 		  +		addReference(DataArray)		        <-v                     backend.addReference(DataArray.name())
-		/[+]/	removeReference(n_id)		        <-b                     {references.removeGroup(block().getReference(n_id).id())}   // H5Gunlink
+x		/[+]/	removeReference(n_id)		        <-b                     {references.removeGroup(block().getReference(n_id).id())}   // H5Gunlink
 		  +		removeReference(DataArray)	        <-b                     backend.addReference(DataArray.name())
 		  +		references(filter)			        -><DataArray>
-		  +		references()				        -><DataArray>
+x		  +		references()				        -><DataArray>
 		/[+]/	references(<DataArray>)		        <-v                     {for each DA references.createLink(block().getDataArray(DA.id()).id())} // H5Lcreate_hard
 
-		/[+]/	hasFeature(n_id)			        ->b
+x		/[+]/	hasFeature(n_id)			        ->b
 		  +		hasFeature(Feature)			        ->b                     backend.hasFeature(Feature.id())
 		/[+]/	featureCount()				        ->d
-		/[+]/	getFeature(n_id)			        ->Feature
+x		/[+]/	getFeature(n_id)			        ->Feature
 		/[+]/	getFeature(idx)				        ->Feature
-		  +		features(filter)			        -><Feature>
+x (no f)  +		features(filter)			        -><Feature>
 		  +		createFeature(DataArray, LinkType)	<-Feature               backend.createFeature(Feature.id())
-		/[+]/	createFeature(n_id, LinkType)		<-Feature               {features.openGroup(util::createId())}                      // H5Pcreate & H5Gcreate2, n_id ... id/name of an existing DA
-		/[+]/	deleteFeature(n_id)			        <-b                     {features.removeGroup(block().getFeature(n_id).id())}       // H5Gunlink
+x		/[+]/	createFeature(n_id, LinkType)		<-Feature               {features.openGroup(util::createId())}                      // H5Pcreate & H5Gcreate2, n_id ... id/name of an existing DA
+x		/[+]/	deleteFeature(n_id)			        <-b                     {features.removeGroup(block().getFeature(n_id).id())}       // H5Gunlink
 		  +		deleteFeature(Feature)		        <-b                     backend.deleteFeature(Feature.id())
 
-		  +		retrieveData(ref_idx)		        ->DataView
+x		  +		retrieveData(ref_idx)		        ->DataView
 		  +		retrieveData(id)			        ->DataView
-		  +		retrieveFeature(feat_idx)	        ->DataView
+x		  +		retrieveFeature(feat_idx)	        ->DataView
 		  +		retrieveFeature(id)			        ->DataView
 		
 		+Entity +NamedEntity +EntityWithMetaData +EntityWithSources
+x (desc)|(+)|   id()                    ->s
+x (desc)|(+)|   name()                  ->s
+x (desc)|(+)|   type()                  ->s
+x		|(+)|	type(s)					<-v
+x		|(+)|	definition(s)			<-v
+x (desc)|(+)|   definition()            ->s
+x		|(+)|	definition(n)			<-v
+		|(+)|	compare(NamedEntity)	->d
+
+x		|(+)|	metadata()			    ->Section
+		  + 	metadata(Section)	    <-v
+x		|(+)|	metadata(n_id)		    <-v
+x		|(+)|	metadata(n)			    <-v
+
+		|(+)|	sourceCount()		    ->d
+		|(+)|	hasSource(n_id)		    ->b
+		  + 	hasSource(Source)	    ->b
+x		|(+)|	getSource(n_id)		    ->Source
+		|(+)|	getSource(idx)		    ->Source
+x (no f)  + 	sources(filter)		    -><Source>
+		|(+)|	sources(<Source>)	    <-v
+x		|(+)|	addSource(n_id)		    <-v
+		  + 	addSource(Source)	    <-v
+x		|(+)|	removeSource(n_id)	    <-b
+		  + 	removeSource(Source)    <-b
 
 
 mx		MultiTag.h (IMultiTag) |MultiTagHDF5.h| [IBaseTag] /BaseTagHDF5.h/ {BaseTagHDF5.c && MultiTag.c}
         {units}                                         // DataSet -> LocID -> H5Object
-        {position}                                      // DataSet -> LocID -> H5Object
-        {extent}                                        // DataSet -> LocID -> H5Object
+        {positions}                                     // DataSet -> LocID -> H5Object
+        {extents}                                       // DataSet -> LocID -> H5Object
         -{} features, references                        // H5Group. optGroup
 
-		|(+)|	units()						            -><s>                   {group().getData("units")}
-		|(+)|	units(<s>)					            <-v                     {group().setData("units")}                                  // H5Pcreate & H5Dcreate
-		|(+)|	units(n)					            <-v                     {group().removeData("units")}                               // H5Gunlink
-		|(+)|	positions()					            ->DataArray             {group().openGroup("positions")}
-		|(+)|	positions(n_id)     		            <-v                     {group().createLink(block().getDataArray(n_id).group(), "positions")}   // H5Gunlink existing "positions", H5Lcreate_hard
+x (desc)|(+)|	units()						            -><s>                   {group().getData("units")}
+x		|(+)|	units(<s>)					            <-v                     {group().setData("units")}                                  // H5Pcreate & H5Dcreate
+x		|(+)|	units(n)					            <-v                     {group().removeData("units")}                               // H5Gunlink
+x		|(+)|	positions()					            ->DataArray             {group().openGroup("positions")}
+x		|(+)|	positions(n_id)     		            <-v                     {group().createLink(block().getDataArray(n_id).group(), "positions")}   // H5Gunlink existing "positions", H5Lcreate_hard
 		  + 	positions(DataArray)		            <-v                     backend.positions(DataArray.id())
-		|(+)|	hasPositions()				            ->b                     {group().hasGroup("positions")}
-		|(+)|	extents(n_id)   			            <-v                     {group().createLink(block().getDataArray(n_id).group(), "extents")}     // H5Gunlink existing "extents", H5Lcreate_hard
+x		|(+)|	hasPositions()				            ->b                     {group().hasGroup("positions")}
+x		|(+)|	extents(n_id)   			            <-v                     {group().createLink(block().getDataArray(n_id).group(), "extents")}     // H5Gunlink existing "extents", H5Lcreate_hard
 		  + 	extents(DataArray)			            <-v                     backend.extents(DataArray.id())
-		|(+)|	extents()					            ->DataArray             {group().openGroup("extents")}
-		|(+)|	extents(n)         			            <-v                     group().removeGroup("extents")                              // H5Gunlink
+x		|(+)|	extents()					            ->DataArray             {group().openGroup("extents")}
+x		|(+)|	extents(n)         			            <-v                     group().removeGroup("extents")                              // H5Gunlink
 
-		/[+]/	hasReference(n_id)			            ->b                     {references.hasGroup(block().getDataArray(n_id).id())}
+x		/[+]/	hasReference(n_id)			            ->b                     {references.hasGroup(block().getDataArray(n_id).id())}
 		  +		hasReference(DataArray)		            ->b
 		/[+]/	referenceCount()			            ->d
-		/[+]/	getReference(n_id)			            ->DataArray             {references.openGroup(block().getDataArray(n_id).id())}
+x		/[+]/	getReference(n_id)			            ->DataArray             {references.openGroup(block().getDataArray(n_id).id())}
 		/[+]/	getReference(idx)			            ->DataArray
-		/[+]/	addReference(n_id)			            <-v                     {references.createLink(block().getDataArray(n_id).id())}    // H5Lcreate_hard
+x		/[+]/	addReference(n_id)			            <-v                     {references.createLink(block().getDataArray(n_id).id())}    // H5Lcreate_hard
 		  +		addReference(DataArray)		            <-v                     backend.addReference(DataArray.name())
-		/[+]/	removeReference(n_id)		            <-b                     {references.removeGroup(getReference(n_id).id())}           // H5Gunlink
+x		/[+]/	removeReference(n_id)		            <-b                     {references.removeGroup(getReference(n_id).id())}           // H5Gunlink
 		  +		removeReference(DataArray)	            <-b                     backend.removeReference(DataArray.name())
 		  +		references(filter)			            -><DataArray>
-		  +		references()				            -><DataArray>
+x		  +		references()				            -><DataArray>
 		/[+]/	references(<DataArray>)		            <-v                     {for each DA references.createLink(block().getDataArray(DA.id()).id())} // H5Lcreate_hard
 		  +		retrieveData(pos_idx, ref_idx)          ->DataView
 		  +		retrieveData(pos_idx, n_id)             ->DataView
 
-		/[+]/	hasFeature(n_id)			            ->b
+x		/[+]/	hasFeature(n_id)			            ->b
 		  +		hasFeature(Feature)			            ->b                     backend.hasFeature(Feature.id())
 		/[+]/	featureCount()				            ->d
-		/[+]/	getFeature(n_id)			            ->Feature
+x		/[+]/	getFeature(n_id)			            ->Feature
 		/[+]/	getFeature(idx)				            ->Feature
-		  +		features(filter)			            -><Feature>
+x (no f)  +		features(filter)			            -><Feature>
 		  +		createFeature(DataArray, LinkType)	    <-Feature
-		/[+]/	createFeature(n_id, LinkType)		    <-Feature               {features.openGroup(util::createId())}      // H5Pcreate & H5Gcreate2, n_id ... id/name of an existing DA
-		/[+]/	deleteFeature(n_id)			            <-b                     {features.removeGroup(block().getFeature(n_id).id())}       // H5Gunlink
+x		/[+]/	createFeature(n_id, LinkType)		    <-Feature               {features.openGroup(util::createId())}      // H5Pcreate & H5Gcreate2, n_id ... id/name of an existing DA
+x		/[+]/	deleteFeature(n_id)			            <-b                     {features.removeGroup(block().getFeature(n_id).id())}       // H5Gunlink
 		  +		deleteFeature(Feature)		            <-b                     backend.deleteFeature(Feature.id())
 
-		  +		retrieveFeatureData(pos_idx, feat_idx)  ->DataView
+x		  +		retrieveFeatureData(pos_idx, feat_idx)  ->DataView
 		  +		retrieveFeatureData(pos_idx, n_id)      ->DataView
+
+mx has retrieveData - which nix does not have -- WHAAAAAAT?
 		
 		+Entity +NamedEntity +EntityWithMetaData +EntityWithSources
+x (desc)|(+)|   id()                    ->s
+x (desc)|(+)|   name()                  ->s
+x (desc)|(+)|   type()                  ->s
+		|(+)|	type(s)					<-v
+		|(+)|	definition(s)			<-v
+x (desc)|(+)|   definition()            ->s
+		|(+)|	definition(n)			<-v
+		|(+)|	compare(NamedEntity)	->d
+
+x		|(+)|	metadata()			    ->Section
+		  + 	metadata(Section)	    <-v
+x		|(+)|	metadata(n_id)		    <-v
+x		|(+)|	metadata(n)			    <-v
+
+		|(+)|	sourceCount()		    ->d
+		|(+)|	hasSource(n_id)		    ->b
+		  + 	hasSource(Source)	    ->b
+x		|(+)|	getSource(n_id)		    ->Source
+		|(+)|	getSource(idx)		    ->Source
+x (no f)  + 	sources(filter)		    -><Source>
+		|(+)|	sources(<Source>)	    <-v
+x		|(+)|	addSource(n_id)		    <-v
+		  + 	addSource(Source)	    <-v
+x		|(+)|	removeSource(n_id)	    <-b
+		  + 	removeSource(Source)    <-b
+
+
+mx		Feature.h (IFeature) |FeatureHDF5.h| {FeatureHDF5.c}
+        {link_type}                 // H5G.a
+        {data}                      // H5Group
+
+x		|(+)|	linkType(LinkType)	<-v
+x (desc)|(+)|	linkType()			->LinkType                                                                                          // "tagged", "untagged", "indexed"
+x		|(+)|	data(n_id)			<-v                         {group().createLink(block().getDataArray(n_id).group(), "data")}        // H5Lcreate_hard, removes existing "data" before creation
+		  +		data(DataArray)		<-v                         backend.data(DataArray.id())
+x		|(+)|	data()				->DataArray                 {group().openGroup("data")}     // "data" means only one link per Feature
+
+        +Entity
+x (desc)|(+)|   id()                    ->s
+
+nix-mx has getLinkType ... since this already included in the description, could be removed.
 
 
 mx		Section.h (ISection) |SectionHDF5.h| {SectionHDF5.c}
         {repository}                            // H5G.a
-        {link}                                  // H5Group
         {mapping}                               // H5G.a
+        {link}                                  // H5Group
 
         -|| sections, properties                // optional H5Groups
         
-		|(+)|	repository(s)		            <-v
-		|(+)|	repository()		            ->s // URI
-		|(+)|	repository(n)		            <-v
-		|(+)|	link(n_id)			            <-v             {group().createLink(findSection(n_id).group(), "link")}             // H5Lcreate_hard
+x		|(+)|	repository(s)		            <-v
+x (desc)|(+)|	repository()		            ->s             // URI
+x		|(+)|	repository(n)		            <-v
+x		|(+)|	link(n_id)			            <-v             {group().createLink(findSection(n_id).group(), "link")}             // H5Lcreate_hard
 		  + 	link(Section)		            <-v             backend.link(Section.id())
-		|(+)|	link()				            ->Section
-		|(+)|	link(n)				            <-v             {group().removeGroup("link")}                                       // H5Gunlink
-		|(+)|	mapping(s)			            <-v
-		|(+)|	mapping()			            ->s
-		|(+)|	mapping(n)			            <-v
-		|(+)|	parent()			            ->Section
+x		|(+)|	link()				            ->Section
+x		|(+)|	link(n)				            <-v             {group().removeGroup("link")}                                       // H5Gunlink
+x		|(+)|	mapping(s)			            <-v
+x (desc)|(+)|	mapping()			            ->s
+x		|(+)|	mapping(n)			            <-v
+x		|(+)|	parent()			            ->Section
 		|(+)|	sectionCount()		            ->d
-		|(+)|	hasSection(n_id)	            ->b
+x		|(+)|	hasSection(n_id)	            ->b
 		  +		hasSection(Section)	            ->b             backend.hasSection(Section.id())
-		|(+)|	getSection(n_id)	            ->Section       {sections.findGroupByNameOrAttribute("entity_id", n_id)}
+x		|(+)|	getSection(n_id)	            ->Section       {sections.findGroupByNameOrAttribute("entity_id", n_id)}
 		|(+)|	getSection(idx)		            ->Section
-		  +		sections(filter)	            -><Section>
+x (no f)  +		sections(filter)	            -><Section>
 		  +		findSections(filter, depth)	    -><Section>
 		  +		findRelated(filter)	            -><Section>
-		|(+)|	createSection(name, type)	    <-Section       {sections.openGroup(name)}                                          // H5Pcreate & H5Gcreate2, create with name, not id
-		|(+)|	deleteSection(n_id)			    <-b             {sections.removeAllLinks(sections.getSection(n_id).name())}         // H5Ldelete, children removed by child.id()
+x		|(+)|	createSection(name, type)	    <-Section       {sections.openGroup(name)}                                          // H5Pcreate & H5Gcreate2, create with name, not id
+x		|(+)|	deleteSection(n_id)			    <-b             {sections.removeAllLinks(sections.getSection(n_id).name())}         // H5Ldelete, children removed by child.id()
 		  +		deleteSection(Section)		    <-b             backend.deleteSection(Section.id())
 		|(+)|	propertyCount()				    ->d
-		|(+)|	hasProperty(n_id)			    ->b
+x		|(+)|	hasProperty(n_id)			    ->b
 		  +		hasProperty(Property)		    ->b             backend.hasProperty(Property.id())
-		|(+)|	getProperty(n_id)			    ->Property      {properties.findGroupByNameOrAttribute("entity_id", n_id)}
+x		|(+)|	getProperty(n_id)			    ->Property      {properties.findGroupByNameOrAttribute("entity_id", n_id)}
 		|(+)|	getProperty(idx)			    ->Property
-		  + 	properties(filter)			    -><Property>
+x (no f)  + 	properties(filter)			    -><Property>
 		  +		inheritedProperties()		    -><Property>
-		|(+)|	createProperty(name, type)	    <-Property      {properties.createData(name)}                                       // H5Pcreate & H5Dcreate
+x		|(+)|	createProperty(name, type)	    <-Property      {properties.createData(name)}                                       // H5Pcreate & H5Dcreate
 		|(+)|	createProperty(name, value)	    <-Property
-		|(+)|	createProperty(name, <value>)	<-Property
-		|(+)|	deleteProperty(n_id)			<-b             {properties.removeData(properties.getProperty(n_id).name())}        // H5Gunlink
+x		|(+)|	createProperty(name, <value>)	<-Property
+x		|(+)|	deleteProperty(n_id)			<-b             {properties.removeData(properties.getProperty(n_id).name())}        // H5Gunlink
 		  +		deleteProperty(Property)		<-b             backend.deleteProperty(Property.id())
 		  +		referringDataArrays(Block)		-><DataArray>
 		  +		referringDataArrays()			-><DataArray>
@@ -455,6 +588,14 @@ mx		Section.h (ISection) |SectionHDF5.h| {SectionHDF5.c}
 		  +|()|	parentFile()
 		  
 		  +Entity +NamedEntity
+x (desc)|(+)|   id()                    ->s
+x (desc)|(+)|   name()                  ->s
+x (desc)|(+)|   type()                  ->s
+x		|(+)|	type(s)					<-v
+x		|(+)|	definition(s)			<-v
+x (desc)|(+)|   definition()            ->s
+x		|(+)|	definition(n)			<-v
+		|(+)|	compare(NamedEntity)	->d
 
 
 // Note Entity and NamedEntity methods on PropertyHDF5.h & PropertyHDF5.cpp are 
@@ -471,21 +612,21 @@ mx		Property.h (IProperty) |PropertyHDF5.h| {PropertyHDF5.c}
         {mapping}                           // H5G.a
         {unit}                              // H5G.a
 
-		|(+)|	name()			            ->s             // explicitly reimplemented, see Note
-		|(+)|	definition()	            ->s
-		|(+)|	definition(s)	            <-v
-		|(+)|	definition(n)	            <-v
-		|(+)|	mapping(s)		            <-v
-		|(+)|	mapping()		            ->s
-		|(+)|	mapping(n)		            <-v
-		|(+)|	dataType()		            ->DataType
-		|(+)|	unit(s)			            <-v
-		|(+)|	unit()			            ->s
-		|(+)|	unit(n)			            <-v
+x (desc)|(+)|	name()			            ->s             // explicitly reimplemented, see Note
+x (desc)|(+)|	definition()	            ->s
+x		|(+)|	definition(s)	            <-v
+x		|(+)|	definition(n)	            <-v
+x		|(+)|	mapping(s)		            <-v
+x (desc)|(+)|	mapping()		            ->s
+x		|(+)|	mapping(n)		            <-v
+x (desc)|(+)|	dataType()		            ->DataType
+x		|(+)|	unit(s)			            <-v
+x (desc)|(+)|	unit()			            ->s
+x		|(+)|	unit(n)			            <-v
 		|(+)|	deleteValues()	            <-v
 		|(+)|	valueCount()	            ->d
-		|(+)|	values(<Value>)	            <-v
-		|(+)|	values()		            -><Value>
+x(works?|(+)|	values(<Value>)	            <-v
+x		|(+)|	values()		            -><Value>
 		|(+)|	values(n)		            <-v
 		  +		compare(Value)	            ->b
 		+||		explicitly all Entity Methods               // explicitly reimplemented, see Note
@@ -493,6 +634,7 @@ mx		Property.h (IProperty) |PropertyHDF5.h| {PropertyHDF5.c}
 		-||		dataSet()                   ->DataSet
 
         +Entity
+x (desc)|(+)|   id()                    ->s
 
 
 mx		Value.h
@@ -532,31 +674,31 @@ mx      Dimensions.h (IDimensions) |DimensionHDF5.h| {DimensionHDF5.c}
         {offset}                        // H5G.a
         
           +     index()                 ->d
-         |+|    dimensionType()         ->DimensionType
-        |(+)|   label()                 ->s
-        |(+)|   label(s)                <-v
-        |(+)|   label(n)                <-v
-        |(+)|   unit()                  ->s
-        |(+)|   unit(s)                 <-v
-        |(+)|   unit(n)                 <-v
-        |(+)|   samplingInterval()      ->d
-        |(+)|   samplingInterval(d)     <-v
-        |(+)|   offset()                ->d
-        |(+)|   offset(d)               <-v
-        |(+)|   offset(n)               <-v
-          +     indexOf(d)              ->d
-          +     positionAt(d)           ->d
-          +     axis(count, start_idx)  -><d>
+x (desc) |+|    dimensionType()         ->DimensionType
+x (desc)|(+)|   label()                 ->s
+x       |(+)|   label(s)                <-v
+x       |(+)|   label(n)                <-v
+x (desc)|(+)|   unit()                  ->s
+x       |(+)|   unit(s)                 <-v
+x       |(+)|   unit(n)                 <-v
+x (desc)|(+)|   samplingInterval()      ->d
+x       |(+)|   samplingInterval(d)     <-v
+x (desc)|(+)|   offset()                ->d
+x       |(+)|   offset(d)               <-v
+x       |(+)|   offset(n)               <-v
+x         +     indexOf(d)              ->d
+x         +     positionAt(d)           ->d
+x         +     axis(count, start_idx)  -><d>
         
 
         SetDimension
         {labels}                        // H5G.a
 
           +     index()                 ->d
-         |+|    dimensionType()         ->DimensionType
-        |(+)|   labels()                -><s>
-        |(+)|   labels(<s>)             <-v
-        |(+)|   labels(n)               <-v
+x (desc) |+|    dimensionType()         ->DimensionType
+x (desc)|(+)|   labels()                -><s>
+x       |(+)|   labels(<s>)             <-v
+x       |(+)|   labels(n)               <-v
 
 
         RangeDimension
@@ -565,20 +707,20 @@ mx      Dimensions.h (IDimensions) |DimensionHDF5.h| {DimensionHDF5.c}
         {ticks}                         // DataSet -> LocID -> H5Object
         
 
-        |(+)|   alias()                 ->b
+x (desc)|(+)|   alias()                 ->b
           +     index()                 ->d
-         |+|    dimensionType()         ->DimensionType
-        |(+)|   label()                 ->s
-        |(+)|   label(s)                <-v
-        |(+)|   label(n)                <-v
-        |(+)|   unit()                  ->s
-        |(+)|   unit(s)                 <-v
-        |(+)|   unit(n)                 <-v
-        |(+)|   ticks()                 -><d>
-        |(+)|   ticks(<d>)              <-v                 {group().setData("ticks")}          // H5Pcreate & H5Dcreate
-          +     tickAt(idx)             ->d
-          +     indexOf(position)       ->d
-          +     axis(count, start_idx)  -><d>
+x (desc) |+|    dimensionType()         ->DimensionType
+x (desc)|(+)|   label()                 ->s
+x       |(+)|   label(s)                <-v
+x       |(+)|   label(n)                <-v
+x (desc)|(+)|   unit()                  ->s
+x       |(+)|   unit(s)                 <-v
+x       |(+)|   unit(n)                 <-v
+x (desc)|(+)|   ticks()                 -><d>
+x       |(+)|   ticks(<d>)              <-v                 {group().setData("ticks")}          // H5Pcreate & H5Dcreate
+x         +     tickAt(idx)             ->d
+x         +     indexOf(position)       ->d
+x         +     axis(count, start_idx)  -><d>
 
 
         Dimension
