@@ -75,7 +75,7 @@ mx       File.h (IFile) |FileHDF5| {FileHDF5.c}
 x         +     open(name, mode, backend)   -> //name=s mode=FileMode, backend=...,HDF5
         |(+)|   flush()                     ->b // persist changes
 
--       |(+)|   blockCount()                ->d
+x       |(+)|   blockCount()                ->d
 x       |(+)|   hasBlock(n_id)              ->b // n_id=s       {getBlock(n_id)}
 -         +     hasBlock(Block)             ->b                 backend.hasBlock(Block.id())
 x       |(+)|   getBlock(n_id)              ->Block             {data.findGroupByNameOrAttribute("entity_id", n_id)}
@@ -90,7 +90,7 @@ x       |(+)|   hasSection(n_id)            ->b                 {getSection(n_id
 -         +     hasSection(Section)         ->b                 backend.hasSection(Section.id())
 x       |(+)|   getSection(n_id)            ->Section           {metadata.findGroupByNameOrAttribute("entity_id", n_id)}
 -       |(+)|   getSection(idx)             ->Section
--       |(+)|   sectionCount()              ->d
+x       |(+)|   sectionCount()              ->d
 -         +     sections(filter)            -><Section>
 x         +     sections()                  -><Section>
 -         +     findSections(filter, depth) -><Section>         // depth=int
@@ -125,7 +125,7 @@ x       |(+)|   hasSource(n_id)             ->b
 -         +     hasSource(Source)           ->b                     backend.getSource(Source.name())
 x       |(+)|   getSource(n_id)             ->Source                {sources.findGroupByNameOrAttribute("entity_id", n_id)}
 -       |(+)|   getSource(idx)              ->Source
--       |(+)|   sourceCount()               ->d
+x       |(+)|   sourceCount()               ->d
 x-(no f)  +     sources(filter)             -><Source>
 -         +     findSources(filter, depth)  -><Source>
 x       |(+)|   createSource(name, type)    <-Source                {sources.openGroup(name)}               // H5Pcreate & H5Gcreate2, created with name, not id
@@ -137,7 +137,7 @@ x       |(+)|   hasDataArray(n_id)          ->b
 x       |(+)|   getDataArray(n_id)          ->DataArray             {data_arrays.findGroupByNameOrAttribute("entity_id", n_id)}
 -       |(+)|   getDataArray(idx)           ->DataArray
 x-(no f)  +     dataArrays(filter)          -><DataArray>
--       |(+)|   dataArrayCount()            ->d
+x       |(+)|   dataArrayCount()            ->d
 x       |(+)|   createDataArray(name, type, DataType, size)     <-DataArray     {data_arrays.openGroup(name) + newDA.group().createData("data")}  // H5Pcreate & H5Gcreate2 + H5Pcreate & H5Dcreate
 -         +     createDataArray(name, type, <data>, DataType)   <-DataArray
 x       |(+)|   deleteDataArray(n_id)       <-b                     {data_arrays.removeAllLinks(block().getDataArray(n_id).name())} // H5Ldelete
@@ -148,7 +148,7 @@ x       |(+)|   hasTag(n_id)                ->b
 x       |(+)|   getTag(n_id)                ->Tag                   {tags.findGroupByNameOrAttribute("entity_id", n_id)}
 -       |(+)|   getTag(idx)                 ->Tag
 x-(no f)  +     tags(filter)                -><Tag>
--       |(+)|   tagCount()                  ->d
+x       |(+)|   tagCount()                  ->d
 x       |(+)|   createTag(name, type, position) <-Tag // position=<double>  {tags.openGroup(name)}          // H5Pcreate & H5Gcreate2, created with name, not id
 x       |(+)|   deleteTag(n_id)             <-b                     {tags.removeAllLinks(block().getTag(n_id).name())}             // H5Ldelete
 -         +     deleteTag(Tag)              <-b                     backend.deleteTag(Tag.name())
@@ -158,7 +158,7 @@ x       |(+)|   hasMultiTag(n_id)           ->b
 x       |(+)|   getMultiTag(n_id)           ->MultiTag              {multi_tags.findGroupByNameOrAttribute("entity_id", n_id)}
 -       |(+)|   getMultiTag(idx)            ->MultiTag
 x-(no f)  +     multiTags(filter)           -><MultiTag>
--       |(+)|   multiTagCount()             ->d
+x       |(+)|   multiTagCount()             ->d
 x       |(+)|   createMultiTag(name, type, positions)   <-MultiTag // positions=DataArray   {multi_tags.openGroup(name)}            // H5Pcreate & H5Gcreate2, created with name, not id
 x       |(+)|   deleteMultiTag(n_id)        <-b                     {multi_tags.removeAllLinks(block().getMultiTag(n_id).name())}   // H5Ldelete
 -         +     deleteMultiTag(MultiTag)    <-b                     backend.deleteMultiTag(MultiTag.name())
@@ -168,7 +168,7 @@ x       |(+)|   hasGroup(n_id)              ->b
 x       |(+)|   getGroup(n_id)              ->Group                 {groups.findGroupByNameOrAttribute("entity_id", n_id)}
 -       |(+)|   getGroup(idx)               ->Group
 x-(no f)  +     groups(filter)              -><Group>
--       |(+)|   groupCount()                ->d
+x       |(+)|   groupCount()                ->d
 x       |(+)|   createGroup(name, type)     <-Group                 {groups.openGroup(name)}                // H5Pcreate & H5Gcreate2, created with name, not id
 x       |(+)|   deleteGroup(n_id)           <-b                     {groups.removeAllLinks(block().getGroup(n_id).name())}           // H5Ldelete
 -         +     deleteGroup(Group)          <-b                     backend.deleteGroup(Group.name())
@@ -195,7 +195,7 @@ mx       Group.h (IGroup) |GroupHDF5.h| {GroupHDF5.c}
 
 x       |(+)|   hasDataArray(n_id)          ->b                 {data_array.hasGroup(block().getDataArray(n_id).id())}
 -         +     hasDataArray(DataArray)     ->b                 backend.hasDataArray(DataArray.id())
--       |(+)|   dataArrayCount()            ->d
+x       |(+)|   dataArrayCount()            ->d
 x       |(+)|   getDataArray(n_id)          ->DataArray         {data_array.getGroup(block().getDataArray(n_id).id())}
 -       |(+)|   getDataArray(idx)           ->DataArray
 -         +     addDataArray(DataArray)     <-v // v=void       backend.addDataArray(DataArray.id())
@@ -208,7 +208,7 @@ x         +     dataArrays()                -><DataArray>
 
 x       |(+)|   hasTag(n_id)                ->b                 {tag.hasGroup(block().getTag(n_id).id())}
 -         +     hasTag(Tag)                 ->b                 backend.hasTag(Tag.id())
--       |(+)|   tagCount()                  ->d
+x       |(+)|   tagCount()                  ->d
 x       |(+)|   getTag(n_id)                ->Tag               {tag.openGroup(block().getTag(n_id).id())
 -       |(+)|   getTag(idx)                 ->Tag
 x       |(+)|   addTag(n_id)                <-v                 {tag.createLink(block().getTag(n_id).group(), block().getTag(n_id).id()}    // H5Lcreate_hard
@@ -221,7 +221,7 @@ x         +     tags()                      -><Tag>
 
 x       |(+)|   hasMultiTag(n_id)           ->b                 {multi_tag.hasGroup(block().getMultiTag(n_id).id())}
 -         +     hasMultiTag(MultiTag)       ->b                 backend.hasMultiTag(MultiTag.id())
--       |(+)|   multiTagCount()             ->d
+x       |(+)|   multiTagCount()             ->d
 x       |(+)|   getMultiTag(n_id)           ->MultiTag          {multi_tag.openGroup(block().getMultiTag(n_id).id())}
 -       |(+)|   getMultiTag(idx)            ->MultiTag
 x       |(+)|   addMultiTag(n_id)           <-v                 {multi_tag.createLink(block().getMultiTag(n_id).group(), block().getMultiTag(n_id).id())}   // H5Lcreate_hard
@@ -242,20 +242,20 @@ x (desc)|(+)|   definition()            ->s
 x       |(+)|   definition(n)           <-v
 -       |(+)|   compare(NamedEntity)    ->d
 
--       |(+)|   metadata()              ->Section
+x       |(+)|   metadata()              ->Section
 -         +     metadata(Section)       <-v
--       |(+)|   metadata(n_id)          <-v
--       |(+)|   metadata(n)             <-v
--       |(+)|   sourceCount()           ->d
--       |(+)|   hasSource(n_id)         ->b
+x       |(+)|   metadata(n_id)          <-v
+x       |(+)|   metadata(n)             <-v
+x       |(+)|   sourceCount()           ->d
+x       |(+)|   hasSource(n_id)         ->b
 -         +     hasSource(Source)       ->b
--       |(+)|   getSource(n_id)         ->Source
+x       |(+)|   getSource(n_id)         ->Source
 -       |(+)|   getSource(idx)          ->Source
 -         +     sources(filter)         -><Source>
 -       |(+)|   sources(<Source>)       <-v
--       |(+)|   addSource(n_id)         <-v
+x       |(+)|   addSource(n_id)         <-v
 -         +     addSource(Source)       <-v
--       |(+)|   removeSource(n_id)      <-b
+x       |(+)|   removeSource(n_id)      <-b
 -         +     removeSource(Source)    <-b
 
 
@@ -280,7 +280,7 @@ x (desc)|(+)|   polynomCoefficients()               -><d>
 -       |(+)|   polynomCoefficients(n)              <-v                     {group().removeData("polynom_coefficients")}    // H5Gunlink
 -         +     dimensions(filter)                  -><Dimension>
 x         +     dimensions()                        -><Dimension>
--       |(+)|   dimensionCount()                    ->d
+x       |(+)|   dimensionCount()                    ->d
 -       |(+)|   getDimension(idx)                   ->Dimension
 x         +     appendSetDimension()                <-SetDimension
 x         +     appendRangeDimension(<d>)           <-RangeDimension
@@ -320,10 +320,10 @@ x       |(+)|   metadata()              ->Section
 x       |(+)|   metadata(n_id)          <-v
 x       |(+)|   metadata(n)             <-v
 
--       |(+)|   sourceCount()           ->d
--       |(+)|   hasSource(n_id)         ->b
+x       |(+)|   sourceCount()           ->d
+x       |(+)|   hasSource(n_id)         ->b
 -         +     hasSource(Source)       ->b
--       |(+)|   getSource(n_id)         ->Source
+x       |(+)|   getSource(n_id)         ->Source
 -       |(+)|   getSource(idx)          ->Source
 x-(no f)  +     sources(filter)         -><Source>
 -       |(+)|   sources(<Source>)       <-v
@@ -340,7 +340,7 @@ x       |(+)|   hasSource(n_id)             ->b
 -         +     hasSource(Source)           ->b                 backend.hasSource(Source.id())
 x       |(+)|   getSource(n_id)             ->Source            {sources.findGroupByNameOrAttribute("entity_id", n_id)}
 -       |(+)|   getSource(idx)              ->Source
--       |(+)|   sourceCount()               ->d
+x       |(+)|   sourceCount()               ->d
 x-(no f)  +     sources(filter)             -><Source>
 -         +     findSources(filter, depth)  -><Source>
 x       |(+)|   createSource(name, type)    <-Source            {sources.openGroup(name)}                       // H5Pcreate & H5Gcreate2, created with name, not id
@@ -387,7 +387,7 @@ x       |(+)|   extent(n)                           <-v                     {gro
 
 x       /[+]/   hasReference(n_id)                  ->b                     {references.hasGroup(block().getDataArray(n_id).id())}
 -         +     hasReference(DataArray)             ->b                     backend.hasReference(DataArray.name())
--       /[+]/   referenceCount()                    ->d
+x       /[+]/   referenceCount()                    ->d
 x       /[+]/   getReference(n_id)                  ->DataArray             {references.openGroup(block().getDataArray(n_id).id())}
 -       /[+]/   getReference(idx)                   ->DataArray
 x       /[+]/   addReference(n_id)                  <-v                     {references.createLink(block().getDataArray(n_id).id())}    // H5Lcreate_hard
@@ -400,7 +400,7 @@ x         +     references()                        -><DataArray>
 
 x       /[+]/   hasFeature(n_id)                    ->b
 -         +     hasFeature(Feature)                 ->b                     backend.hasFeature(Feature.id())
--       /[+]/   featureCount()                      ->d
+x       /[+]/   featureCount()                      ->d
 x       /[+]/   getFeature(n_id)                    ->Feature
 -       /[+]/   getFeature(idx)                     ->Feature
 x-(no f)  +     features(filter)                    -><Feature>
@@ -429,8 +429,8 @@ x       |(+)|   metadata()              ->Section
 x       |(+)|   metadata(n_id)          <-v
 x       |(+)|   metadata(n)             <-v
 
--       |(+)|   sourceCount()           ->d
--       |(+)|   hasSource(n_id)         ->b
+x       |(+)|   sourceCount()           ->d
+x       |(+)|   hasSource(n_id)         ->b
 -         +     hasSource(Source)       ->b
 x       |(+)|   getSource(n_id)         ->Source
 -       |(+)|   getSource(idx)          ->Source
@@ -462,7 +462,7 @@ x       |(+)|   extents(n)                              <-v                     
 
 x       /[+]/   hasReference(n_id)                      ->b                     {references.hasGroup(block().getDataArray(n_id).id())}
 -         +     hasReference(DataArray)                 ->b
--       /[+]/   referenceCount()                        ->d
+x       /[+]/   referenceCount()                        ->d
 x       /[+]/   getReference(n_id)                      ->DataArray             {references.openGroup(block().getDataArray(n_id).id())}
 -       /[+]/   getReference(idx)                       ->DataArray
 x       /[+]/   addReference(n_id)                      <-v                     {references.createLink(block().getDataArray(n_id).id())}    // H5Lcreate_hard
@@ -477,7 +477,7 @@ x         +     retrieveData(pos_idx, ref_idx)          ->DataView
 
 x       /[+]/   hasFeature(n_id)                        ->b
 -         +     hasFeature(Feature)                     ->b                     backend.hasFeature(Feature.id())
--       /[+]/   featureCount()                          ->d
+x       /[+]/   featureCount()                          ->d
 x       /[+]/   getFeature(n_id)                        ->Feature
 -       /[+]/   getFeature(idx)                         ->Feature
 x-(no f)  +     features(filter)                        -><Feature>
@@ -493,10 +493,10 @@ x         +     retrieveFeatureData(pos_idx, feat_idx)  ->DataView
 x (desc)|(+)|   id()                    ->s
 x (desc)|(+)|   name()                  ->s
 x (desc)|(+)|   type()                  ->s
--       |(+)|   type(s)                 <-v
--       |(+)|   definition(s)           <-v
+x       |(+)|   type(s)                 <-v
+x       |(+)|   definition(s)           <-v
 x (desc)|(+)|   definition()            ->s
--       |(+)|   definition(n)           <-v
+x       |(+)|   definition(n)           <-v
 -       |(+)|   compare(NamedEntity)    ->d
 
 x       |(+)|   metadata()              ->Section
@@ -504,8 +504,8 @@ x       |(+)|   metadata()              ->Section
 x       |(+)|   metadata(n_id)          <-v
 x       |(+)|   metadata(n)             <-v
 
--       |(+)|   sourceCount()           ->d
--       |(+)|   hasSource(n_id)         ->b
+x       |(+)|   sourceCount()           ->d
+x       |(+)|   hasSource(n_id)         ->b
 -         +     hasSource(Source)       ->b
 x       |(+)|   getSource(n_id)         ->Source
 -       |(+)|   getSource(idx)          ->Source
@@ -551,7 +551,7 @@ x       |(+)|   mapping(s)                      <-v
 x (desc)|(+)|   mapping()                       ->s
 x       |(+)|   mapping(n)                      <-v
 x       |(+)|   parent()                        ->Section
--       |(+)|   sectionCount()                  ->d
+x       |(+)|   sectionCount()                  ->d
 x       |(+)|   hasSection(n_id)                ->b
 -         +     hasSection(Section)             ->b             backend.hasSection(Section.id())
 x       |(+)|   getSection(n_id)                ->Section       {sections.findGroupByNameOrAttribute("entity_id", n_id)}
@@ -562,7 +562,7 @@ x-(no f)  +     sections(filter)                -><Section>
 x       |(+)|   createSection(name, type)       <-Section       {sections.openGroup(name)}                                          // H5Pcreate & H5Gcreate2, create with name, not id
 x       |(+)|   deleteSection(n_id)             <-b             {sections.removeAllLinks(sections.getSection(n_id).name())}         // H5Ldelete, children removed by child.id()
 -         +     deleteSection(Section)          <-b             backend.deleteSection(Section.id())
--       |(+)|   propertyCount()                 ->d
+x       |(+)|   propertyCount()                 ->d
 x       |(+)|   hasProperty(n_id)               ->b
 -         +     hasProperty(Property)           ->b             backend.hasProperty(Property.id())
 x       |(+)|   getProperty(n_id)               ->Property      {properties.findGroupByNameOrAttribute("entity_id", n_id)}
@@ -626,7 +626,7 @@ x       |(+)|   unit(s)                     <-v
 x (desc)|(+)|   unit()                      ->s
 x       |(+)|   unit(n)                     <-v
 -       |(+)|   deleteValues()              <-v
--       |(+)|   valueCount()                ->d
+x       |(+)|   valueCount()                ->d
 x(works?|(+)|   values(<Value>)             <-v
 x       |(+)|   values()                    -><Value>
 -       |(+)|   values(n)                   <-v
