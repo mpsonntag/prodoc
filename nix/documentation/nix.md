@@ -204,7 +204,7 @@ x       |(+)|   addDataArray(n_id)          <-v                 {data_array.crea
 x       |(+)|   removeDataArray(n_id)       <-b                 {data_array.removeGroup(block().getDataArray(n_id).id())}                   // H5Gunlink
 -         +     dataArrays(filter)          -><DataArray>
 x         +     dataArrays()                -><DataArray>
--       |(+)|   dataArrays(<DataArray>)     <-v                 {for each addDataArray(DA.id())}
+x       |(+)|   dataArrays(<DataArray>)     <-v                 {for each addDataArray(DA.id())}
 
 x       |(+)|   hasTag(n_id)                ->b                 {tag.hasGroup(block().getTag(n_id).id())}
 -         +     hasTag(Tag)                 ->b                 backend.hasTag(Tag.id())
@@ -217,7 +217,7 @@ x       |(+)|   removeTag(n_id)             <-b                 {tag.removeGroup
 -         +     removeTag(Tag)              <-b                 backend.removeTag(Tag.id())
 -         +     tags(filter)                -><Tag>
 x         +     tags()                      -><Tag>
--       |(+)|   tags(<Tag>)                 <-v                 {for each addTag(Tag.id())}
+x       |(+)|   tags(<Tag>)                 <-v                 {for each addTag(Tag.id())}
 
 x       |(+)|   hasMultiTag(n_id)           ->b                 {multi_tag.hasGroup(block().getMultiTag(n_id).id())}
 -         +     hasMultiTag(MultiTag)       ->b                 backend.hasMultiTag(MultiTag.id())
@@ -230,7 +230,7 @@ x       |(+)|   removeMultiTag(n_id)        <-b                 {multi_tag.remov
 -         +     removeMultiTag(MultiTag)    <-b                 backend.removeMultiTag(MultiTag.id())
 -         +     multiTags(filter)           -><MultiTag>
 x         +     multiTags()                 -><MultiTag>
--       |(+)|   multiTags(<MultiTag>)       <-v                 {for each addMultiTag(MultiTag.id())}
+x       |(+)|   multiTags(<MultiTag>)       <-v                 {for each addMultiTag(MultiTag.id())}
 
         +Entity +NamedEntity +EntityWithMetaData +EntityWithSources
 x (desc)|(+)|   id()                    ->s
@@ -252,7 +252,7 @@ x       |(+)|   hasSource(n_id)         ->b
 x       |(+)|   getSource(n_id)         ->Source
 -       |(+)|   getSource(idx)          ->Source
 -         +     sources(filter)         -><Source>
--       |(+)|   sources(<Source>)       <-v
+x       |(+)|   sources(<Source>)       <-v
 x       |(+)|   addSource(n_id)         <-v
 -         +     addSource(Source)       <-v
 x       |(+)|   removeSource(n_id)      <-b
@@ -326,7 +326,7 @@ x       |(+)|   hasSource(n_id)         ->b
 x       |(+)|   getSource(n_id)         ->Source
 -       |(+)|   getSource(idx)          ->Source
 x-(no f)  +     sources(filter)         -><Source>
--       |(+)|   sources(<Source>)       <-v
+x       |(+)|   sources(<Source>)       <-v
 x       |(+)|   addSource(n_id)         <-v
 -         +     addSource(Source)       <-v
 x       |(+)|   removeSource(n_id)      <-b
@@ -396,7 +396,7 @@ x       /[+]/   removeReference(n_id)               <-b                     {ref
 -         +     removeReference(DataArray)          <-b                     backend.addReference(DataArray.name())
 -         +     references(filter)                  -><DataArray>
 x         +     references()                        -><DataArray>
--       /[+]/   references(<DataArray>)             <-v                     {for each DA references.createLink(block().getDataArray(DA.id()).id())} // H5Lcreate_hard
+x       /[+]/   references(<DataArray>)             <-v                     {for each DA references.createLink(block().getDataArray(DA.id()).id())} // H5Lcreate_hard
 
 x       /[+]/   hasFeature(n_id)                    ->b
 -         +     hasFeature(Feature)                 ->b                     backend.hasFeature(Feature.id())
@@ -435,7 +435,7 @@ x       |(+)|   hasSource(n_id)         ->b
 x       |(+)|   getSource(n_id)         ->Source
 -       |(+)|   getSource(idx)          ->Source
 x-(no f)  +     sources(filter)         -><Source>
--       |(+)|   sources(<Source>)       <-v
+x       |(+)|   sources(<Source>)       <-v
 x       |(+)|   addSource(n_id)         <-v
 -         +     addSource(Source)       <-v
 x       |(+)|   removeSource(n_id)      <-b
@@ -471,7 +471,7 @@ x       /[+]/   removeReference(n_id)                   <-b                     
 -         +     removeReference(DataArray)              <-b                     backend.removeReference(DataArray.name())
 -         +     references(filter)                      -><DataArray>
 x         +     references()                            -><DataArray>
--       /[+]/   references(<DataArray>)                 <-v                     {for each DA references.createLink(block().getDataArray(DA.id()).id())} // H5Lcreate_hard
+x       /[+]/   references(<DataArray>)                 <-v                     {for each DA references.createLink(block().getDataArray(DA.id()).id())} // H5Lcreate_hard
 x         +     retrieveData(pos_idx, ref_idx)          ->DataView
 -         +     retrieveData(pos_idx, n_id)             ->DataView
 
@@ -510,7 +510,7 @@ x       |(+)|   hasSource(n_id)         ->b
 x       |(+)|   getSource(n_id)         ->Source
 -       |(+)|   getSource(idx)          ->Source
 x-(no f)  +     sources(filter)         -><Source>
--       |(+)|   sources(<Source>)       <-v
+x       |(+)|   sources(<Source>)       <-v
 x       |(+)|   addSource(n_id)         <-v
 -         +     addSource(Source)       <-v
 x       |(+)|   removeSource(n_id)      <-b
