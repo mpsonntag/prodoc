@@ -109,9 +109,9 @@ x       |(+)|   updatedAt()                 ->t
         |(+)|   setCreatedAt()              <-v
         |(+)|   forceCreatedAt(t)           <-v
         |(+)|   close()                     <-v
--       |(+)|   isOpen()                    ->b
--       |(+)|   fileMode()                  ->FileMode
--         +     validate()                  ->Result            // Result contains warning and error messages
+x       |(+)|   isOpen()                    ->b
+x       |(+)|   fileMode()                  ->FileMode
+x         +     validate()                  ->Result            // Result contains warning and error messages
         -||     fileExists()                ->b
         -||     openRoot()                  <-v
         -||     checkHeader(FileMode)       ->b
