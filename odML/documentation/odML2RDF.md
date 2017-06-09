@@ -32,6 +32,11 @@ odML:hub
 - odML:hasDocument ... 0-n
 
 
+odML            rdf
+  -             RDF.type odml.Hub
+                
+
+
 ### Root section
 
 odML:RootSection or odML:Document (like in odML XML)
@@ -39,9 +44,7 @@ odML:RootSection or odML:Document (like in odML XML)
 - odML:date ... is this createdAt or modified?
 - odML:version ... is this the version of the document? there seems to be another attribute "version"
 - odML:repository ... are these the terminologies?
-- odML:haSection ... 0-n (should this be specified to hasSubSection and already be a subclass of hasSection?
-                            there are already different connectors between sections/property and section
-                            which could not be distinguished otherwise e.g. mapsToSection)
+- odML:haSection ... 0-n
 
 
 ### Section
@@ -57,10 +60,12 @@ odML:Section
 --------------------------------
 - odML:link ... is a section in NIX
     -> odML:hasLink -> Section
-- odML:reference ... is maybe also a Section?
+- odML:reference ... is this also a link to Section?
     -> odML:hasReference -> Section
-- odML:hasSection ... 0-n
-- odML:hasProperty ... 0-n (same as hasSection: might be that we already require a subclassing here)
+- odML:hasSection ... 0-n (should this be specified to hasSubSection and already be a subclass of hasSection?
+                                                     there are already different connectors between sections/property and section
+                                                     which could not be distinguished otherwise e.g. mapsToSection)
+- odML:hasProperty ... 0-n
 
 
 ### Property
@@ -94,10 +99,12 @@ odML:Value
 
 ## RDF libraries
 
-Python libraries:
-- [RDFlib](https://github.com/RDFLib/rdflib): Actively developed, many RDF project seem to converge on RDFlib.
-
-RDFlib seems to be quite smart as well.
+## RDF libraries
+- [RDFlib](https://github.com/RDFLib/rdflib) 
+    - Actively developed, many RDF project seem to converge on RDFlib
+    - Comes with decent documentation
+    - py2 and py3.
+- [librdf](http://librdf.org/): C library with bindings to various language bindings including Python.
 
 
 ## odML Resources that are out there:
