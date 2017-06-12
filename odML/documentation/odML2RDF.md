@@ -23,79 +23,93 @@ e.g.
  via this specific property, a search for hasSection would return all sections connected by `hasSection` and `hasExperimenter`.
 
 
-
 ### Hub
 I think this is something we would need, to merge different odML documents into an existing graph.
-- because we start from a hierarchical document it is ok to connect them via a central hub node.
+Because we start from a hierarchical document it is ok to connect them via a central hub node.
 
-odML:hub
-- odML:hasDocument ... 0-n
-
-
-odML            rdf
-  -             RDF.type odml.Hub
-                
-
+    odml                                    RDF                             RDF alternative
+    ---------------------------------------------------------------------------------------
+    -                                       odml:Hub                        RDF type odml:Hub
+    -                                       odml:hasDocument
 
 ### Root section
 
-odML:RootSection or odML:Document (like in odML XML)
-- odML:Author
-- odML:date ... is this createdAt or modified?
-- odML:version ... is this the version of the document? there seems to be another attribute "version"
-- odML:repository ... are these the terminologies?
-- odML:haSection ... 0-n
+    odml                                    RDF                             RDF alternative
+    ---------------------------------------------------------------------------------------
+    odml                                    odml:Document                   RDF type odml:Document
+    
+    id                                      use uuid as instance name
+    author                                  odml:author
+    date                                    odml:date
+    version (odml)                          odml:version
+    version (document)                      odml:doc-version
+    repository (deprecated?)                odml:hasExternalSection
+    Sections                                odml:hasSection
+
 
 
 ### Section
-odML:Section
-- rdf:isA odML:Section
-- odML:id ... can `id` be set, when converting odML/NIX -> RDF
-- odML:name
-- odML:type
-- odML:definition
-- odML:repository .. does not really make sense in a graph, only in a hierarchical document
-- odML:mapping ... should be mapping
-- odML:include ... what is it? link to an external section! requires the IRI of this section.
---------------------------------
-- odML:link ... is a section in NIX
-    -> odML:hasLink -> Section
-- odML:reference ... is this also a link to Section?
-    -> odML:hasReference -> Section
-- odML:hasSection ... 0-n (should this be specified to hasSubSection and already be a subclass of hasSection?
-                                                     there are already different connectors between sections/property and section
-                                                     which could not be distinguished otherwise e.g. mapsToSection)
-- odML:hasProperty ... 0-n
+
+    odml                                    RDF                             RDF alternative
+    ---------------------------------------------------------------------------------------
+    Section                                 odml:Section                    RDF type odml:Section
+    
+    id (to be implemented)                  RDF Section instance name
+    name                                    odml:name                       RDFS:label
+    type                                    odml:type
+    definition                              odml:description                RDFS:comment
+    repository (deprecated?)                odml:hasExternalSection         ...
+    mapping (deprecated)                    odml:mapsTo                     RDF subProperty odml:hasSection
+    include (deprecated?)                   odml:hasExternalSection
+    link (deprecated?)                      odml:hasLink                    RDF subProperty odml:hasSection
+            ... link to an external section! requires the IRI of this section.
+    reference (deprecated?)                 odml:hasReference               RDF subProperty odml:hasSection
+    Sections                                odml:hasSection
+            ... should this be specified to hasSubSection and already be a subclass of hasSection?
+                     there are already different connectors between sections/property 
+                     and section which could not be distinguished otherwise e.g. mapsToSection
+    Properties                              odml:hasProperty
 
 
 ### Property
 
-odML:Property
-- odML:id?
-- odML:name
-- odML:definition
-- odML:mapping ... should point to section
-    -> odML:mapsToSection -> Section ?
-- odML:dependency ... should point to property
-    -> odML:dependsOnProperty -> Property ?
-- odML:dependencyValue ... is not required, since access to value is there via property link!
-- odML:hasValue 0-n
-- odML:Synonym? (what is this?)
+    odml                                    RDF                             RDF alternative
+    ---------------------------------------------------------------------------------------
+    Property                                odml:Property                   RDF type odml:Property
+    
+    id (to be implemented)                  RDF Property instance name
+    name                                    odml:name                       RDFS:label
+    definition                              odml:definition                 RDFS:comment
+    mapping (deprecated)                    odml:mapsTo                     RDF subProperty odml:hasSection
+    dependency                              odml:dependency                 RDF subProperty odml:hasProperty
+    dependencyValue                         -
+            ... is not required, since access to value is there via property link!
+    Values                                  odml:hasValue
+    Synonym (deprecated?)
+
 
 
 ### Value
-odML:Value
-- odML:unit (si:unit?)
-- odML:dtype ... problem to link, if its not a basic type, but one defined in a terminology; has to be different from Section/type
-- odML:definition (not in NIX)
-- odML:uncertainty
-- odML:filename
-- odML:encoder
-- odML:checksum
-- odML:reference
-- odML:data ... the actual value
-- odML:defaultFilename (?)
-- odML:id (?)
+
+    odml                                    RDF                             RDF alternative
+    ---------------------------------------------------------------------------------------
+    Value                                   odml:Value                      RDF type odml:Value
+    
+    id (?)                                  generate uuid as instance name or use blank node
+    unit                                    odml:unit                       si:unit (needs to be another node)
+    dtype                                   odml:dtype
+            ... problem to link, if its not a basic type, but one defined in a terminology; 
+                    has to be different from Section/type
+    definition (not in NIX)                 odml:definition                 RDFS:comment 
+    uncertainty                             odml:uncertainty
+    filename (deprecated)
+    encoder (deprecated)
+    checksum (deprecated)
+    reference (deprecated)
+    data                                    odml:data
+     ... the actual value
+    defaultFilename (deprecated?)
+
 
 ## RDF libraries
 
@@ -176,5 +190,4 @@ We have problems on multiple levels:
     - how would they like to search the data.
     - which RDF terminologies are they using, etc.
     - if they use validators for RDF graphs
-
 
