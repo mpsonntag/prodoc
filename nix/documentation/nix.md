@@ -93,8 +93,8 @@ x       |(+)|   getSection(idx)             ->Section
 x       |(+)|   sectionCount()              ->d
 x         +     sections(filter)            -><Section>
 x         +     sections()                  -><Section>
--         +     findSections(filter, depth) -><Section>         // depth=int
--         +     findSections(depth)         -><Section>
+x         +     findSections(filter, depth) -><Section>         // depth=int
+x         +     findSections(depth)         -><Section>
 x       |(+)|   createSection(name, type)   <-Section           {metadata.openGroup(name)}                      // H5Pcreate & H5Gcreate2, created with name, not id
 x       |(+)|   deleteSection(n_id)         <-b                 {metadata.removeAllLinks(section.name())}       // H5Ldelete, also deletes all child sections by child.id()
 -         +     deleteSection(Section)      <-b                 backend.deleteSection(Section.id())
@@ -127,7 +127,7 @@ x       |(+)|   getSource(n_id)             ->Source                {sources.fin
 x       |(+)|   getSource(idx)              ->Source
 x       |(+)|   sourceCount()               ->d
 x         +     sources(filter)             -><Source>
--         +     findSources(filter, depth)  -><Source>
+x         +     findSources(filter, depth)  -><Source>
 x       |(+)|   createSource(name, type)    <-Source                {sources.openGroup(name)}               // H5Pcreate & H5Gcreate2, created with name, not id
 x       |(+)|   deleteSource(n_id)          <-b                     {sources.removeAllLinks(block().getSource(n_id).name())}            // H5Ldelete, children removed by child.id()
 -         +     deleteSource(Source)        <-b                     backend.deleteSource(Source.name())
@@ -342,7 +342,7 @@ x       |(+)|   getSource(n_id)             ->Source            {sources.findGro
 x       |(+)|   getSource(idx)              ->Source
 x       |(+)|   sourceCount()               ->d
 x         +     sources(filter)             -><Source>
--         +     findSources(filter, depth)  -><Source>
+x         +     findSources(filter, depth)  -><Source>
 x       |(+)|   createSource(name, type)    <-Source            {sources.openGroup(name)}                       // H5Pcreate & H5Gcreate2, created with name, not id
 x       |(+)|   deleteSource(n_id)          <-b                 {sources.removeAllLinks(source.name())}         // H5Ldelete, also deletes all child sources by child.id()
 -         +     deleteSource(Source)        <-b                 backend.deleteSource(Source.id())
@@ -557,8 +557,8 @@ x       |(+)|   hasSection(n_id)                ->b
 x       |(+)|   getSection(n_id)                ->Section       {sections.findGroupByNameOrAttribute("entity_id", n_id)}
 x       |(+)|   getSection(idx)                 ->Section
 x         +     sections(filter)                -><Section>
--         +     findSections(filter, depth)     -><Section>
--         +     findRelated(filter)             -><Section>
+x         +     findSections(filter, depth)     -><Section>
+x         +     findRelated(filter)             -><Section>
 x       |(+)|   createSection(name, type)       <-Section       {sections.openGroup(name)}                                          // H5Pcreate & H5Gcreate2, create with name, not id
 x       |(+)|   deleteSection(n_id)             <-b             {sections.removeAllLinks(sections.getSection(n_id).name())}         // H5Ldelete, children removed by child.id()
 -         +     deleteSection(Section)          <-b             backend.deleteSection(Section.id())
