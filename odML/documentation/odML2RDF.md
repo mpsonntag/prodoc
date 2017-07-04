@@ -3,9 +3,7 @@
 
 ## Mapping odML to RDF terms
 
-odML ... namespace should be a URL pointing to where the RDF definition of odML can be found.
-
-looked up all the different resources for odML that are still out there and came up with the following existing
+Looked up all the different resources for odML that are still out there and came up with the following existing
 classes and properties - I am sure many of them can be removed, but then they should also be removed from the
 resources to reduce confusion.
 
@@ -19,8 +17,15 @@ e.g.
  could become
     section hasExperimenter section
     
- here hasExperimenter is a subclass of hasSection ... a search for hasExperimenter would return only sections connected
+ here hasExperimenter is a subclass of `hasSection` ... a search for `hasExperimenter` would return only sections connected
  via this specific property, a search for hasSection would return all sections connected by `hasSection` and `hasExperimenter`.
+
+### The odml namespace:
+odML ... namespace should be a URL pointing to where the RDF definition of odML can be found. 
+Main part of the url will be http://g-node.org, the secondary hierarchical part has not been determined yet.
+
+### Naming guidelines:
+Custom RDF Node and Property names should be in line with rdf best practices.
 
 
 ### Hub
@@ -43,8 +48,14 @@ Because we start from a hierarchical document it is ok to connect them via a cen
     date                                    odml:date
     version (odml)                          odml:version
     version (document)                      odml:doc-version
-    repository (deprecated?)                odml:hasExternalSection
+    repository                              odml:terminology                * see description below
     Sections                                odml:hasSection
+
+ 
+* RDF export of repositories: 
+Export terminology to an additional rfd document with proper ID and add it to the hub node and reference 
+the terminology doc ID in the main document (and all others that use the terminology).
+Otherwise, if pointing to external url (publicly available): keep the url as leaf.
 
 
 
@@ -58,17 +69,54 @@ Because we start from a hierarchical document it is ok to connect them via a cen
     name                                    odml:name                       RDFS:label
     type                                    odml:type
     definition                              odml:description                RDFS:comment
-    repository (deprecated?)                odml:hasExternalSection         ...
-    mapping (deprecated)                    odml:mapsTo                     RDF subProperty odml:hasSection
-    include (deprecated?)                   odml:hasExternalSection
-    link (deprecated?)                      odml:hasLink                    RDF subProperty odml:hasSection
-            ... link to an external section! requires the IRI of this section.
-    reference (deprecated?)                 odml:hasReference               RDF subProperty odml:hasSection
-    Sections                                odml:hasSection
-            ... should this be specified to hasSubSection and already be a subclass of hasSection?
-                     there are already different connectors between sections/property 
-                     and section which could not be distinguished otherwise e.g. mapsToSection
+    repository                              odml:terminology
+    include                                 see below*
+    link                                    see below*
+    reference                               odml:reference                  see below+
+    Sections                                odml:hasSection                 see below#
     Properties                              odml:hasProperty
+
+    mapping (deprecated)                    will be removed in future versions of odml
+
+ 
+* Resolving include and link (i.e. adding all information inherited from the respective resources, should be handled [needs to be confirmed] by the python-odml lib)
+ 
+Links (allow for a more compact tree, models an inheritance pattern, links to sections of the same type within the very same file): 
+-- document: doc_1
+-- section global_foo
+    amp = 1
+    dur  = 2
+-- section bar
+    -- section local_foo (link: global_foo)
+        amp = 1.4
+    -- section local_foo2 (link: global_foo)
+        amp = 1.3
+ 
+local_foo.properties → [amp = 1.4, dur = 2]
+local_foo2.properties → [amp = 1.3, dur = 2]
+ 
+Include (same as Links but for resources in external files):
+-- document: global_doc
+-- section global_foo
+    amp = 1
+    dur  = 2
+ 
+-- document: bar_1
+    --section local_foo (include: global_doc/global_foo)
+        amp = 1.7
+ 
+-- document: bar_2
+    section local_foo (include: global_doc/global_foo)
+        amp = 1.8
+ 
+bar_1.local_foo.properties → [amp = 1.7, dur = 2]
+bar_2.local_foo.properties → [amp = 1.8, dur = 2]
+ 
++ Resolving a reference can be a URL to an external reference or a string pointing to an id in a Database.
+
+-# should this be specified to hasSubSection and already be a subclass of hasSection?
+there are already different connectors between sections/property 
+and section which could not be distinguished otherwise e.g. mapsToSection
 
 
 ### Property
@@ -80,35 +128,31 @@ Because we start from a hierarchical document it is ok to connect them via a cen
     id (to be implemented)                  RDF Property instance name
     name                                    odml:name                       RDFS:label
     definition                              odml:definition                 RDFS:comment
-    mapping (deprecated)                    odml:mapsTo                     RDF subProperty odml:hasSection
-    dependency                              odml:dependency                 RDF subProperty odml:hasProperty
-    dependencyValue                         -
-            ... is not required, since access to value is there via property link!
-    Values                                  odml:hasValue
-    Synonym (deprecated?)
+    unit                                    odml:unit                       si:unit
+    dtype                                   odml:dtype+                     see below
+    uncertainty                             odml:uncertainty
+    Values                                  odml:hasValue*                  see below
 
+    mapping                                 will be removed in future versions of odml
+    synonym                                 will be removed in future versions of odml
+    dependency                              will not be exported
+    dependencyValue                         will not be exported
 
++ This could be a problem to link, if its not a basic type, but one defined in a terminology; 
+    It has to be different from Section/type.
+
+* use RDF:Bag with RDF:li or similar for values since odml supports multiple values.
 
 ### Value
 
-    odml                                    RDF                             RDF alternative
-    ---------------------------------------------------------------------------------------
-    Value                                   odml:Value                      RDF type odml:Value
-    
-    id (?)                                  generate uuid as instance name or use blank node
-    unit                                    odml:unit                       si:unit (needs to be another node)
-    dtype                                   odml:dtype
-            ... problem to link, if its not a basic type, but one defined in a terminology; 
-                    has to be different from Section/type
-    definition (not in NIX)                 odml:definition                 RDFS:comment 
-    uncertainty                             odml:uncertainty
-    filename (deprecated)
-    encoder (deprecated)
-    checksum (deprecated)
-    reference (deprecated)
-    data                                    odml:data
-     ... the actual value
-    defaultFilename (deprecated?)
+    Value as a concept will be removed, in particular the following value fields
+    will not be removed from the odml concept:
+
+    filename
+    encoder
+    checksum
+    reference
+    defaultFilename
 
 
 ## RDF libraries
