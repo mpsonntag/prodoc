@@ -236,3 +236,11 @@ We have problems on multiple levels:
     - which RDF terminologies are they using, etc.
     - if they use validators for RDF graphs
 
+
+## ToDo's
+- use the proper RDF types to all created instances - odml:Document for a document, odml:Section for a section etc.
+- if possible explicitly use "odml" as prefix for odml specific rdf terms in the output file.
+- create rdf/odml schema file with current defined rdf/odml terms - required for documentation, link via odml namespace and validation purposes 
+- should we switch to rdf/turtle format instead of rdf/xml for example files? I find them way more convenient to read!
+
+
