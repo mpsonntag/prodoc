@@ -204,7 +204,8 @@ Section:
 custom data types ... problem for import.
 - NIX does not seem to support the way odML handles values.
 
-Check out which RDFs:xxx would fir for "subset" and check, how this would be stored in "normal" odML ... would this break existing files? 
+Check out which RDFs:xxx would fit for "subset" and check, how this would be stored in "normal" odML 
+... would this break existing files? 
 
 odML namespace
 

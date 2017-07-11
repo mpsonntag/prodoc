@@ -1,0 +1,383 @@
+
+jgrewe
+1:54 PM
+joined #odml. Also, @achilleas joined.
+
+achilleas
+2:46 PM
+Weeeeell
+2:46
+Here I was trying to create the odML channel
+2:46
+and it's already here
+
+jgrewe
+4:46 PM
+sorry
+
+rickskyy
+5:53 PM
+joined #odml by invitation from @achilleas
+
+jgrewe
+6:01 PM
+ah
+6:01
+g’day
+
+rickskyy
+6:18 PM
+somewhat pessimistic ))"We have problems on multiple levels:
+- we are in the process of refactoring odML.
+- we have no proper overview of which odML versions are out there and no good understanding of how they are currently used.
+    - don't have even proper example odML files from any of the users!
+- we have no one who actually is proficient in RDF, knows how the class system works and how to best design it
+    - to specify: to which degree should we use RDF terms that are already there, or should we use just our own defined RDF terms.
+- we have no good idea, how the people from the CRCNS actually work with RDF and which format would be good for them
+    - how would they like to search the data.
+    - which RDF terminologies are they using, etc.
+    - if they use validators for RDF graphs"
+
+jgrewe
+6:28 PM
+Indeed that sounds pessimistic
+6:28
+:smirk:
+
+jgrewe
+7:15 PM
+But methinks it is not that bad, or the other way round, we simply do what we like
+
+dumdribille
+11:26 AM
+joined #odml
+
+dumdribille
+11:27 AM
+@rickskyy jan and me are just re-organizing the odml document
+11:28
+adding examples for the more tricky parts
+11:28
+and removing odml terms that should not be supported any longer
+11:28
+feel free to join in of course! :slightly_smiling_face:
+
+jgrewe
+11:28 AM
+@rickskyy, please visit gin.g-node.org and register there, then we can add you to a repository containing some example files
+11:29
+will be extending that
+
+rickskyy
+11:38 AM
+registered as rickskyy
+11:39
+https://web.gin.g-node.org/rickskyy
+web.gin.g-node.org
+rickskyy (Yaroslav Shalivskyy)
+rickskyy has 0 followers and is following 0 people.
+
+rickskyy
+11:49 AM
+the graph image is nice)
+
+dumdribille
+11:53 AM
+merci
+11:53
+the graph will still change today though :wink:
+11:54
+with the changes @jgrewe an and me discussed just now
+11:54
+but everything will become easier which is nice...
+
+jgrewe
+11:57 AM
+@cgars could you add yaroslav to the gin/odmlFiles repo
+
+cgars
+11:57 AM
+joined #odml by invitation from @jgrewe
+
+rickskyy
+11:57 AM
+yeah it is easier to go from this point comparing to yesterday version)
+
+dumdribille
+3:00 PM
+k, I updated the document some more and added the new and improved first version draft graph!
+
+dumdribille
+5:44 PM
+c:
+
+rickskyy
+8:21 PM
+great, thanks) (edited)
+rickskyy
+11:19 AM
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet  type="text/xsl" href="odmlTerms.xsl"?>
+
+<?xml-stylesheet  type="text/xsl" href="odml.xsl"?>
+
+<odML version="1.1">
+
+  <id>"1"</id>
+
+rickskyy
+11:21 AM
+Does this look ok? There will be uuids as ids, current id strings are just for example
+
+dumdribille
+12:13 PM
+oh, cool!
+12:14
+we have a meeting next
+12:14
+I'll get back to you in the afternoon when I had time to properly appreciate it :wink:
+
+rickskyy
+12:49 PM
+frankly there is nothing to really appreciate yet))
+
+dumdribille
+2:51 PM
+From my point of view the file looks good, except for the type in property which should be dtype instead.
+2:52
+I think thats to distinguish between the type of a section for searching purposes and the dtype which actually describes the datatype of the value.
+
+jgrewe
+2:53 PM
+uh, actually I am not sure, if dtype isn’t mapped to type in the xml writer
+
+dumdribille
+2:53 PM
+but that has been changed in the latest version of the odml->rdf document I think :wink:
+2:53
+ah, ok!
+
+jgrewe
+2:55 PM
+but in the rdf export I agree
+2:55
+should be dtype there
+2:55
+regarding the id strings, I guess there is not reason to have the with quotation marks
+rickskyy
+
+4:01 PM
+yeah, there won't be quotation marks (edited)
+
+rickskyy
+4:11 PM
+
+<rdf:RDF xml:lang="en"
+
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+
+         xmlns:odml="http://g-node/odml#"
+
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+rickskyy
+4:11 PM
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet  type="text/xsl" href="odmlTerms.xsl"?>
+
+<?xml-stylesheet  type="text/xsl" href="odml.xsl"?>
+
+<odML version="1.1">
+
+  <id>aaa</id>
+
+rickskyy
+4:11 PM
+so here is the example of an rdf and odml ( odml is mostly the same as I sent earlier)
+4:13
+rdf is validated by this tool from w3
+https://www.w3.org/RDF/Validator/
+4:14
+I like the validator because it automatically builds graph and generates errors if smth goes wrong with the rdf model (edited)
+
+rickskyy
+4:16 PM
+The graph generated
+
+rickskyy
+4:18 PM
+how does it look? I use this example as the starting point for the converter (edited)
+
+dumdribille
+4:18 PM
+I just glanced over everything and it looks really good!
+4:19
+I got some comments, but I think I will only manage to properly think them through later in the afternoon. :wink:
+4:20
+the validator seems like  a really helpful tool!
+
+rickskyy
+4:21 PM
+the only problem is that it generates error if I use uuids which start with a digit
+Error: {W108} Not an XML Name: '05e14adf-1ca2-4b2d-984d-6c84814a84de'[Line = 6, Column = 72] (edited)
+4:23
+but for simple test examples it is quite good
+4:27
+Also I write some logs about my work in the doc below. Happy to see your comments or feedback there.
+https://docs.google.com/document/d/1EZu6g8TG2ZzoJaXNaTeMDFY5yQTJh1RRm6vf675bMsM/edit?usp=sharing
+
+dumdribille
+4:29 PM
+perfect, thx!
+rickskyy
+4:32 PM
+:blush:
+rickskyy
+7:08 PM
+As you saw I simply duplicated the attributes which relate to the rdfs schema.
+Like:
+       <odml:definition>Information on the crew</odml:definition>
+       <rdfs:comment>Information on the crew</rdfs:comment>It seems to me quite redundant. What do you think about the idea of mapping between such cases while converting to both sides? So the rdf doc would have only comment and odml definition respectively. (edited)
+rickskyy
+7:35 PM
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF
+
+   xmlns:ns1="http://g-node/odml#"
+
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+
+This is the example file generated with rdflib without duplicated properties.
+
+dumdribille
+7:59 PM
+finally had some time to look everything over!
+7:59
+so far it looks good!
+8:01
+one of the comments I wanted to make when I saw the first draft you already addressed: (edited)
+8:02
+with respect to the duplicated properties
+8:02
+Its either odml:name OR RDFS:label and equivalent odml:definition OR RDFS:comment. I just added the alternatives in respect to the case we want to move to the direction to use less custom terms and more already existing RDF terms. (edited)
+8:02
+for now I think we should implement just the terms in the RDF column.
+8:02
+The same is true for si:units - use odml:unit for now and if there is time explore if we could use the existing si:unit vocabulary.
+8:02
+in the concept document, everything in the "RDF alternative" column is supposed to be either an additional comment or an alternative term to the main rdf term. Every RDF:label or RDF:comment
+8:03
+I think with respect to the other comments, I will collect them and comment in a couple of days, since I am sure, that many of them you have already on your mind, but had no time to address yet. :wink:
+
+rickskyy
+2:05 PM
+Hello everyone,Just uploaded the first version of a converter:https://github.com/rickskyy/python-odml/blob/rdf-converter/converter/tools/rdf_converter.pyNow working towards adding links and includes in sections.So far have some questions:1) What are specific data types can be used for objects in a triple, in particular, for values of a property, to specify for the xsd type schema? First one I saw and came with was date so I can explicitly specify it, guess there are more.2) Should the bag be created in all cases (even for one value)?
+GitHub
+rickskyy/python-odml
+python-odml - odML libraries and editor
+
+achilleas
+2:06 PM
+I've been falling behind on this so I'll have to check what you guys were talking about before having a look.
+
+dumdribille
+2:10 PM
+hi!
+
+dumdribille
+3:14 PM
+thx for the code!
+3:14
+ad 2) I would say use a bag in every case even if there is only one value
+
+dumdribille
+3:22 PM
+ad 1) I am not sure how we should add data types directly to values , since this is handled via property.dtype. The type defined there applies to all values in the bag. Maybe if dtype is a basic datatype, then add the corresponding datatype, otherwise add xsd:string.
+3:23
+we were also thinking about how to best do code reviews with the current project setup
+3:24
+it would probably be best, if we create a dev-odml-rdf branch on G-Node/python-odml and @rickskyy can then do pull requests towards this branch
+3:24
+which we then can properly review, comment, issurize and everything
+
+achilleas
+3:25 PM
+odml-rdf-dev would be better, surely
+
+rickskyy
+6:34 PM
+thank you for the response)
+
+
+10.07.2017
+rickskyy
+11:59 AM
+Some questions to discuss.
+1) Should we use empty bag for None values.
+2) How the terminology can be accessed/stored besides the url in the document.
+3) As I read references could be strings to some DB besides url. What do you think of adding a some kind of url validator to diversify such cases? Since different identifiers in rdflib are used (URIRef and Literal) it might be important.
+4) Questions about link&include:
+    a) Does inheritance work only for properties or other attributes as well?
+    b) Should I manage some validation issues e.g. is link from the section to its subsection is considered as mistake?
+    c) Are values of links' attributes just name of Sections in the current document? (edited)
+
+dumdribille
+1:08 PM
+starting hangout :wink:
+
+jgrewe
+1:25 PM
+There are situations in which a strict application of the rules about the hierarchical organization (see above) 
+would lead to complicated and redundant structures. To avoid this odML Sections dene link, include, and reference 
+elements which can be used to introduce relations that exist outside the hierarchical organization.
+A link is used to refer to sections within the document and contains a path in the tree. Paths de ning the position 
+in the tree are given by Section names, separated by slashes (“/”). Paths are absolute, i.e., they begin at the root 
+of the tree. To illustrate the use of links, we consider a case in which a number of datasets have been recorded using a 
+rather complex stimulus. The stimulus is repeated for each dataset, but each time a single stimulus parameter, e.g., 
+the intensity, has been changed. It would be valid to provide the full stimulus description for each dataset 
+individually but, obviously, this would be cumber- some and inef cient. Instead, one de nes the stimulus once 
+within the document and then links to it for each dataset. The referring stimulus sections contain only the changes 
+(i.e., the “intensity” properties). Links can only exist between sections of the same type and include all subsections and 
+properties. Local information, given in the linking section, overrides items inherited from the linked Section.
+The include element can be used to establish relations to sec- tions (same type) that are located in an external  le. 
+Include entries can be either an URL or a path in the  le system (rela- tive or absolute). The URL is followed by a hash symbol (#) 
+and the absolute path of the target Section. For example, a stimulus Section could contain an include element 
+like “stimulus-metadata. xml#myStimulus.” This indicates that the stimulus information is provided in a stimulus-type section 
+of the name “myStimulus” located in the “stimulus-metadata.xml”  le in the same folder in the  le system. Of course care 
+has to be taken if the data is shared when local  les are referenced. As for the link element the locally provided 
+information overrides the one given in the included section.
+1:26
+some information on links and includes
+
+rickskyy
+9:44 PM
+Thanks Jan for the info. In general I understand the concept.
+I guess BaseSection.merge does the linkage. I did not see that when I was writing questions and thought I should implement this merge myself.
+Finally, in terms of the converter - the link is just a Literal string, and include is a string or a URIRef?
+
+jgrewe
+9:47 PM
+could you verify that the merge actually does what is claims? That would be great
+9:49
+both link and include are basically strings. The includes are urls/uris in the ideal world. could also be just filenames and path within that file
+
+rickskyy
+9:56 PM
+ok, I will check this
+
+
+11.07.2017
+dumdribille
+10:28 AM
+I just created the dev-odml-rdf branch on the G-Node/python-odml repository from current master
+10:29
+@rickskyy you can create pull requests against that branch from now on. :slightly_smiling_face:
+
