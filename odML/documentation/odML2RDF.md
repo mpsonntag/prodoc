@@ -244,3 +244,43 @@ We have problems on multiple levels:
 - should we switch to rdf/turtle format instead of rdf/xml for example files? I find them way more convenient to read!
 
 
+## Q&A:
+
+- what are specific datatypes can be used for objects in a triple?  which xsd type schema to use for property values?
+    MS: I am not sure how we should add data types directly to values , since this is handled via property.dtype. 
+            The type defined there applies to all values in the bag. Maybe if dtype is a basic datatype, then 
+            add the corresponding datatype, otherwise add xsd:string.
+
+- should the bag be created in all cases even for one value?
+    MS: I would say use a bag in every case even if there is only one value
+
+
+- should we use empty bag for None values
+    MS: I'd say no, since then the edge 'hasValue' will not be present. I think this would reduce the complexity of SPARQL queries later.
+
+- how the terminology can be accessed / stored besids the url in the document
+    MS: This is touches actually an interesting, more general point: Are `Terminology` and `Document` the same?
+        As far as I understand it so far, they are actually two different concepts. Maybe we should therefore 
+        Also keep them semantically separate. So I would suggest using odml:Document and odml:Terminology as 
+        rdf types respectively.
+        Arbitrary example: an exported document could have one odml:Document and e.g. two different odml:teminologies,
+        connected via an odml:Hub:
+        odml:Hub - hasDocument - odml:Document (id:1)
+        odml:Hub - hasTerminology - odml:Terminology (id:2)
+        odml:Hub - hasTerminology - odml:Terminology (id:3)
+        odml:Document - hasSection - odml:Section (id:4)
+        odml:Document - terminology - odml:Terminology(3)
+        odml:Section(4) - terminology - odml:Terminology(2)
+
+
+- as I read references could be strings to some DB beside url. should we add a url validator to diversify cases, 
+    since different identifiers are used in rdflib (URIRef and Literal)
+        MS: I would export the content as is to a Literal only for now.
+
+- link and include: does inheritance only work for properties or other attributes as well
+
+- link and include: should validation issues be managed e.g. link from the section to subsection considered a mistake
+
+- link and include: are values of links attributes just name of sections in the current document
+
+
