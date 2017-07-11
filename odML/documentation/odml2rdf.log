@@ -381,3 +381,281 @@ I just created the dev-odml-rdf branch on the G-Node/python-odml repository from
 10:29
 @rickskyy you can create pull requests against that branch from now on. :slightly_smiling_face:
 
+
+dumdribille
+5:14 PM
+@rickskyy @jgrewe guys, I just added a Q&A section at the bottom of the "Exporting odML to RDF" google doc
+5:14
+but I am actually not very happy with this communication
+5:16
+I'd rather have these discussions on github either as issues or via a specific project
+5:16
+I guess if Yaroslav, you have questions, add them as issues and we discuss over there
+5:17
+then we can also easily go back and check if we are unsure about our reasons 3 months from now.
+5:18
+we could either use "[rdf] title" to distinguish these issues from other python-odml issues or we create a github project for it and tag the issues with it.
+5:19
+@rickskyy I have some comments and some additional assignments for this week.
+5:19
+should I post them here or add them to your day log google doc? I don't mind either :slightly_smiling_face:
+5:21
+@jgrewe @rickskyy maybe we could also agree one time during the week, where we are more or less available for half a day and chat about arisen questions
+5:21
+because right now it is more or less asynchronious all the time :wink:
+
+dumdribille
+5:27 PM
+sucks a bit, that we all three sit in completely different locations :stuck_out_tongue:
+
+jgrewe
+5:30 PM
+indeed, I agree with the github issues if there is some intense discussio required we can still switch to slack or hangout (edited)
+5:32
+I am basically offline for the next two days
+
+dumdribille
+5:33 PM
+in general, when would be a good day for you to be available for chatting here?
+5:33
+on and off of course :wink:
+5:34
+just so @rickskyy and me know at that time its nice to hang out in the slackroom
+
+jgrewe
+5:34 PM
+can’t say definitely, things keep changing faster than I like
+5:34
+:slightly_smiling_face:
+5:34
+i usually have it on all day
+
+dumdribille
+5:34 PM
+thus is the life of a postdoc :stuck_out_tongue:
+
+jgrewe
+5:34 PM
+hehe
+5:36
+maybe it is easier the other way round, Tuesday mornings is bad since we have seminars, I would also like to keep the Monday morning clear…
+5:36
+othewise I am mainly flexible
+
+dumdribille
+5:37 PM
+that sounds like a good approach!
+5:37
+for me monday afternoon sucks because of meetings, friday afternoon because of frequent vienna travels
+5:37
+and the DB does not provide wireless on their part of the travel-leg
+
+jgrewe
+5:38 PM
+fair enough :slightly_smiling_face: I considered ICE travel as a distraction-free time and now they have wireless … (edited)
+
+dumdribille
+5:39 PM
+on the upper hand, it keeps the other passengers quiet :wink:
+5:39
+*upside actually
+
+
+rickskyy
+5:46 PM
+hi everyone, sorry, was offline during the whole day. (edited)
+5:47
+about assignments, I think it's better to post them to google doc
+5:48
+I mostly open for any day and time for chatting, just let me know what is the best option for you so I can organize my time correctly
+dumdribille
+5:49 PM
+no problemo :wink:
+5:50
+maybe we can aim for tuesday afternoon in general then
+jgrewe
+5:50 PM
+fine with me
+rickskyy
+5:50 PM
+that sounds good
+5:52
+@dumdribille check if you can edit the doc, I changed the sharing
+here is the link: https://docs.google.com/document/d/1EZu6g8TG2ZzoJaXNaTeMDFY5yQTJh1RRm6vf675bMsM/edit?usp=sharing (edited)
+dumdribille
+5:53 PM
+works!
+5:55
+most of the comments I just added aim towards the output rdf
+5:56
+to get our individually defined classes in there
+5:56
+and to create a schema that can be used for proper validation
+5:57
+I just need to figure out where to host the schema after we have it :wink:
+rickskyy
+5:58 PM
+the schema is mostly defined in odml.format as _rdf_map
+5:59
+you mean schema file as namespace?
+dumdribille
+5:59 PM
+indeed
+6:00
+sthg like thus
+6:00
+http://xmlns.com/foaf/spec/index.rdf
+rickskyy
+6:00 PM
+I understand
+dumdribille
+6:00 PM
+this then can be used to validate the resulting rdf file against
+rickskyy
+6:00 PM
+i guess you can add a page on the g-node website (edited)
+dumdribille
+6:01 PM
+yeah the final version should be found there eventually
+6:02
+but I think this one will still change quite heavily during development
+6:02
+I wonder whether it should reside in its own github repo or if we should add it to the python-odml repo for now
+6:02
+decisions descision
+jgrewe
+6:03 PM
+go for it and just decide :slightly_smiling_face:
+dumdribille
+6:03 PM
+or whether it should reside with the odml templates, since it touches a very similar topic
+jgrewe
+6:03 PM
+For the moment I would vote for keeping everything in the same place
+rickskyy
+6:03 PM
+I think it can stay in python-odml
+6:04
+2 votes for now for the staying at python-odml)
+dumdribille
+6:05 PM
+sounds good :slightly_smiling_face:
+6:05
+maybe in the doc section of the converter for now then
+rickskyy
+6:07 PM
+let's discuss the package structure than
+6:09
+smth like:
+converter/
+       doc/
+             examples/
+                  example.odml
+                  example_generator.py
+                  example_rdf.rdf
+             schema_odml.rdf
+       tools/
+             rdf_converter.py
+             rdf_json_converter.py
+             other_converter.py (edited)
+6:09
+?
+dumdribille
+6:10 PM
+looks good
+rickskyy
+6:10 PM
+I thought all this would go to the odml.tools eventually
+dumdribille
+6:11 PM
+plus converter/doc/schema_odml.rdf for the new and over time improving schema :wink:
+jgrewe
+6:12 PM
+does it need the converter?
+6:13
+i mean the converter folder/package?
+rickskyy
+6:13 PM
+I have same doubts
+6:13
+converter/tools can go nicely to odml/tools
+6:14
+with docs pretty the same (edited)
+jgrewe
+6:14 PM
+yep
+dumdribille
+6:15 PM
+true, since we develop against a different branch anyhow, we could already properly integrate the rdf converter
+6:15
+no objection here :slightly_smiling_face:
+rickskyy
+6:17 PM
+so final decision to keep everything in the existing folders odml tools and docs?
+6:17
+good
+6:17
+there is a comment number 4 about xml vs turtle representation
+dumdribille
+6:18 PM
+yeah, I like turtle
+rickskyy
+6:18 PM
+the reason I was using xml to check if ids work right
+dumdribille
+6:18 PM
+I'd actually support whichever format the user wants and rdflib provides
+6:18
+but for our examples i'd prefer turtle
+6:18
+its nice to read
+6:19
+aaah I see
+rickskyy
+6:19 PM
+because I was changing some code in existing xmlparsers to keep them work correctly
+6:19
+turtles looks more human-readable
+6:20
+i vote for turtles for examples and documentation but yeah the user can choose what he/she wants
+6:20
+there is plenty of formats in rdflib and it's easy to switch between them (edited)
+6:24
+I propose to strikethrough the comments that we already discussed. What do you think?
+dumdribille
+6:24 PM
+do it :slightly_smiling_face:
+rickskyy
+6:25 PM
+what a bag I recall
+6:25
+hah
+6:26
+would we create it for none values?
+dumdribille
+6:26 PM
+hm, let me quickly create a couple of issues and post my answers there to get us started with the issues :wink:
+rickskyy
+6:27 PM
+ok
+6:28
+i prepare than a pool request
+dumdribille
+6:29 PM
+cool!
+6:32
+ok, posted three example question / issues and my current answers to them
+6:33
+@jgrewe @rickskyy if you have any suggestions about the format, if you want to handle them differently or want to add a project to it, comment away :slightly_smiling_face:
+rickskyy
+6:39 PM
+thanks it's a nice way to discuss questions) Looked through everything and agree with all points.
+dumdribille
+6:40 PM
+cool! :slightly_smiling_face:
+6:41
+maybe we can come up with a more condensed way of discussing via issues, so we don't swamp the issue tracker, but for now its good enough I guess.
+6:42
+or label them as 'discussion' so whoever is not interested in them can blend them out
+
+
