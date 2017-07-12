@@ -657,5 +657,90 @@ cool! :slightly_smiling_face:
 maybe we can come up with a more condensed way of discussing via issues, so we don't swamp the issue tracker, but for now its good enough I guess.
 6:42
 or label them as 'discussion' so whoever is not interested in them can blend them out
+rickskyy
+6:54 PM
+we can close them instantly after we come up with the solution (edited)
+6:56
+I think I will pull after I finish tests -> so everything would looks finished and working
+6:57
+I hope I will be done with it by tomorrow morning, in worst afternoon (edited)
+dumdribille
+7:04 PM
+I'm off for today, have a nice evening! :slightly_smiling_face:
+rickskyy
+7:04 PM
+you too)
 
+12.07.2017
+
+rickskyy
+1:05 PM
+hi everyone, please check the hub implementation:
+https://github.com/rickskyy/python-odml/commit/64bb4aee5b77eaeb806ccd7ac79b06e54ab43e6c
+Since hub is a just a node in the graph, so for now I just pass the id to the constructor of the converter, and add the processing doc to the hub node with the id specified. Then, several docs can be merged by uniting them via similar hubs.
+GitHub
+[rdf-converter] add links, includes and hub · rickskyy/python-odml@64bb4ae
+python-odml - odML libraries and editor
+dumdribille
+1:17 PM
+I'll look it over in the evening! :slightly_smiling_face:
+dumdribille
+8:21 PM
+ok, looked over the code :slightly_smiling_face:
+8:22
+I got a couple of comments, based on my past experience with rdf
+8:23
+I think we should not use blank nodes, but rather use named nodes (URIRef) wherever we can
+8:25
+I also put together a small example illustrating the custom namespace and how to add instances of custom types.
+dumdribille
+8:25 PM
+
+import uuid
+from rdflib import Graph, Namespace, RDF, URIRef
+g = Graph()
+
+# create custom odml namespace
+ns = Namespace("http://g-node.org/odml-rdf#")
+
+# use a specific prefix for our custom odml namespace
+g.bind('odml', ns)
+
+# create named hub node - since the custom id is supposed to be a uuid,
+# it should be unique wherever, making it unlikely that two different instances
+# have the same id - needs to be replaced
+# maybe there is a nicer way to get a proper uuid tough, I'm not a python guy ;)
+hubNode = URIRef(uuid.uuid4().urn[9:])
+
+# create named document node
+docNode = URIRef(uuid.uuid4().urn[9:])
+
+# add hubNode to graph, add it as RDF type "odml:Hub"
+g.add( (hubNode, RDF.type, ns.Hub) )
+
+# add docNode to graph, add it as RDF type "odml:Document"
+g.add( (docNode, RDF.type, ns.Document) )
+
+# connect docNode as child of hubNode via predicate "odml:hasDocument"
+g.add( (hubNode, ns.hasDocument, docNode) )
+
+dumdribille
+8:29 PM
+whether the actual instances like hubNode or docNode etc should live under the odml namespace as well since they are instances of nodes under the odml namespace I myself am unsure still.
+8:30
+but as mentioned above it should never be a graph merging problem, when using a uuid as URIRef.
+rickskyy
+8:31 PM
+yeah good comments I will correct this
+8:34
+actually as far as I know just uuid.uuid4() generates unique id, so there is no real need to check uniqueness
+dumdribille
+8:35 PM
+perfect :slightly_smiling_face:
+8:35
+if you have more questions let me know!
+8:35
+but for today I finally have to go home :wink:
+8:37
+have a nice evening!
 
