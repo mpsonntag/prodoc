@@ -744,3 +744,260 @@ but for today I finally have to go home :wink:
 8:37
 have a nice evening!
 
+rickskyy
+8:39 PM
+have one comment
+8:39
+I think URIRef should be valid urls - pointing to some resource
+8:40
+docNode = URIRef(uuid.uuid4()) not really different to blank nodes
+rickskyy
+8:53 PM
+"whether the actual instances like hubNode or docNode etc should live under the odml namespace as well since they are instances of nodes under the odml namespace I myself am unsure still."
+I think it is not the problem at all. Since uuids are very unique, every odml user will have unique ids for docs and hubs.
+8:56
+No merging problems at all
+8:58
+I am not sure about uuids that BNode() constructor generate, I would check this, but I guess they have same uniqueness as uuid.uuid4()
+8:59
+I will read more about resources (URIRefs) but for now personally, I am for blank nodes in the case.
+8:59
+Have a nice evening)
+
+
+13.07.2017
+
+dumdribille
+9:51 AM
+and we're back :wink:
+9:51
+The problem with blank nodes is, that any ids they have been given when adding them to the graph are not exported when the graph is saved to a file - they are only there for use within the graph.
+9:51
+You can see in your example file, that the exported statements are all nested blank nodes enclosed by "[...]"
+without exporting the ids they have been given in the graph. When these files are loaded to a graph again,
+all the blank nodes would receive unique, but different ids than they had been given before.
+9:51
+This would render the id not persistently identifiable for our use case. (edited)
+9:51
+That in turn would cause a problem if there are e.g. Sections in two different documents, that are supposed to be the
+same entities. When using blank nodes, this could never be identified in a graph merge, they would live as
+independent nodes. Currently this is unlikely since we will create new uuids for all existing documents, but for
+future documents importing sections that already have a uuid from another odml document, that is actually
+quite likely.
+9:51
+For this reason I think we have to avoid using blank nodes at all.
+9:51
+But using just the uuid as URIRef as in my example posted above is actually also wrong. :wink: When exporting the graph
+to a file, it will add the filename and location as initial part of the URI e.g.
+file:///home/msonntag/Chaos/work/python-odml-dev-yar/465f40c7-d5cf-44de-9f27-7aa186c86d04 which again would not make nodes
+uniquely identifiable for a merge.
+9:51
+So I think the proper way to resolve this is using URIRef(odmlns+uuid) as node identifier. Since a
+URI can be a URN (unique name without pointing to an actual resource as a URL does) it would also be formally correct.
+
+rickskyy 11:47 AM
+Ok I got it, you are right, I thought this blank node ids is being exported. Since I was using xml and I could actually see ids I used to think that way
+rickskyy
+1:14 PM
+Check this
+https://github.com/rickskyy/python-odml/commit/264f1076a7a1dd9b6f1e31b194b68383005085a0
+GitHub
+[rdf-converter] replace BNode usage with proper urns · rickskyy/python-odml@264f107
+python-odml - odML libraries and editor
+rickskyy
+3:35 PM
+
+    from rdflib import Graph, URIRef, Literal, Namespace
+    n = Namespace("http://example.org/")
+    id1 = 'starts-with-letters'
+    id2 = '14930-starts-with-digits'
+    g = Graph()
+    g.bind("custom_namespace", n)
+    g.add((URIRef(n + id1), n.some_predicate, Literal('object1')))
+    g.add((URIRef(n + id2), n.some_predicate, Literal('object2')))
+    print(g.serialize(format='pretty-xml').decode("utf-8"))
+    print(g.serialize(format='turtle').decode("utf-8"))
+    # ------XML-------
+    #
+    # <?xml version="1.0" encoding="UTF-8"?>
+    # <rdf:RDF
+    #    xmlns:custom_namespace="http://example.org/"
+    #    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    # >
+    #   <rdf:Description rdf:about="http://example.org/starts-with-letters">
+    #     <custom_namespace:some_predicate>object1</custom_namespace:some_predicate>
+    #   </rdf:Description>
+    #   <rdf:Description rdf:about="http://example.org/14930-start-with-digits">
+    #     <custom_namespace:some_predicate>object2</custom_namespace:some_predicate>
+    #   </rdf:Description>
+    # </rdf:RDF>
+    #
+    # ------Turtle-------
+    #
+    # @prefix custom_namespace: <http://example.org/> .
+    # @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+    # @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    # @prefix xml: <http://www.w3.org/XML/1998/namespace> .
+    # @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+    #
+    # <http://example.org/14930-start-with-digits> custom_namespace:some_predicate "object2" .
+    #
+    # custom_namespace:starts-with-letters custom_namespace:some_predicate "object1" .
+
+I found it strange how turtle implementation actually represents URIRefs. It could be confusing to see different representation of ids (as url and as plain string of letters and digits)
+rickskyy
+5:07 PM
+I am working on the rdf-schema right now. I found a nice open-source platform for creating schemas and ontologies from Stanford.http://protege.stanford.edu/products.php#web-protegeQuick demo: https://www.youtube.com/watch?v=QvURiHVXnQQI have created account and started a project. It's possible to work on the same project together if you are registered, so I can share it via the login.
+protege.stanford.edu
+
+
+13.07.2017
+
+rickskyy
+1:11 AM
+[file]
+Here is how the first prototype of the odml-schema looks like. Have some topics to discuss though. Can create issues in the morning.
+1) Adding Terminology as class to the schema.
+2) Ranges of owl properties.
+   Literal or xsd:string ( e.g. for id and reference ), maybe usage of xsd:anyUrl
+rickskyy
+1:12 AM
+[file]
+The turtle version.
+
+dumdribille
+2:45 PM
+and we're back again! :slightly_smiling_face:
+2:45
+I try to address the questions in the order they appeared here :wink: we really should use issues or a specific question/answer forum so no questions are doomed to oblivion...
+2:45
+regarding the weird turtle output: I think that only happens, if a class instance only has exactly one predicate.
+I think I was able to reproduce it in an example: Hub has additional predicates, looks normal, Document has only one predicate looks weird: (edited)
+dumdribille
+2:46 PM
+    import uuid
+    from rdflib import Graph, Namespace, RDF, URIRef
+    g = Graph()
+    ns = Namespace("http://g-node.org/odml-rdf#")
+    g.bind('odml', ns)
+    hubNode = URIRef(ns + uuid.uuid4().urn[9:])
+    docNode = URIRef(ns + uuid.uuid4().urn[9:])
+    g.add( (hubNode, RDF.type, ns.Hub) )
+    g.add( (docNode, RDF.type, ns.Document) )
+    g.add( (hubNode, ns.hasDocument, docNode) )
+    print(g.serialize(format='turtle'))
+dumdribille
+2:47 PM
+    @prefix odml: <http://g-node.org/odml-rdf#> .
+    @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix xml: <http://www.w3.org/XML/1998/namespace> .
+    @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+    odml:ffd9a039-2f77-42ca-a557-3c44e050d995 a odml:Hub ;
+        odml:hasDocument <http://g-node.org/odml-rdf#4620f9c6-204a-4bbb-bf5d-485d9451e78f> .
+
+    <http://g-node.org/odml-rdf#4620f9c6-204a-4bbb-bf5d-485d9451e78f> a odml:Document .
+dumdribille
+2:47 PM
+next point up: Protege, cool! I think its really cool you look for tools on your own! :slightly_smiling_face:
+2:47
+I've never had the chance to work with protege, but a former student here in the office worked with it as
+well and was quite happy with it.
+2:47
+I looked over the schema and it looks quite good so far! :slightly_smiling_face:
+2:48
+comments to that:
+2:48
+Perfect, that you already added Terminology as a class! :slightly_smiling_face: I think in addition it will need id and hasSection properties.
+2:48
+I think the Hub class needs to be in the schema as well.
+2:49
+link and include will not be exported to RDF, so we don't need them as properties in the schema.
+When they are encountered while parsing through the document, they should rather be resolved by copying
+data that is not available in the local section from the linked/included section. But maybe we can
+have a short hangout with @jgrewe next week to discuss how to properly resolve link and include.
+2:49
+More comments on the schema I'd rather do in a pull request to reduce description confusion. :wink:
+2:49
+a couple of general comments:
+2:50
+Can you find out from the RDF/OWL documentation, if there are naming conventions for Data properties,
+Object properties and Classes, post what you find in an issue on github and sanitize what we have so far?
+Currently we are using different naming schemes (e.g. odml:terminology and odml:hasDocument) for
+comparable edges. It would be good to have naming rules early on and then all stick to it. :wink:
+2:50
+Can you change the Namespace for our custom terminology everywhere to https://g-node.org/projects/odml-rdf?
+2:51
+Can you create a pull request with all your code changes and the latest version of the proposed schema?
+I think it will be easier to comment, since probably @jgrewe will comment odml specific, @achilleas might give
+Python style related comments and I will mainly comment on RDF related topics and I guess it will be easier
+to do that with the actual code in a pull request. :wink:
+rickskyy
+4:39 PM
+    <http://g-node.org/odml-rdf#173dac73-2ffc-46d5-9635-52b3d08c1e9a> a odml:Hub ;
+        odml:hasDocument odml:e818923e-7765-428e-88cd-4b5eb5b5b06d .
+    odml:e818923e-7765-428e-88cd-4b5eb5b5b06d a odml:Document .
+    ###############################
+    odml:e7888eee-5041-4cea-aea1-b95a32a71c85 a odml:Hub ;
+        odml:hasDocument <http://g-node.org/odml-rdf#4e5fdd78-5d4f-4f88-ac82-bd22ca4eb1ce> .
+
+    <http://g-node.org/odml-rdf#4e5fdd78-5d4f-4f88-ac82-bd22ca4eb1ce> a odml:Document .
+    #################################
+    odml:e4871192-282c-4f2b-882c-67e5f690d550 a odml:Hub ;
+        odml:hasDocument odml:ac5a6f45-2f9e-4439-a84d-b2f1c23f2c37 .
+
+    odml:ac5a6f45-2f9e-4439-a84d-b2f1c23f2c37 a odml:Document .
+    ###################################
+    <http://g-node.org/odml-rdf#2fdc8146-871c-4f5b-9f8d-44d30c96bf5e> a odml:Hub ;
+        odml:hasDocument <http://g-node.org/odml-rdf#0950aa00-d51b-435f-a82a-e18164f7915d> .
+
+    <http://g-node.org/odml-rdf#0950aa00-d51b-435f-a82a-e18164f7915d> a odml:Document .
+@dumdribille look carefully to your turtle example, the weird representation depends on the id first symbol. Here is the different outputs for your example
+rickskyy
+4:41 PM
+I will add our discussion about shema to the google doc. Should I create an issue for the turtle representation?
+4:44
+it do not think it depends on the number of predicates in the class
+dumdribille
+4:53 PM
+ah yes, it really seems that it always happens when the uuid starts with a number
+4:54
+can you check whether this is an issue, if the file is loaded into a graph again?
+4:56
+yeah, I think an issue would be good as well in this case. :slightly_smiling_face:
+rickskyy
+5:00 PM
+yeah I checked that multiple times
+5:01
+the solution that appear instantly in mind is add some digit in the start of the id (edited)
+5:01
+0 + uuid
+5:02
+for example
+5:03
+I guess it won't effect anything (the id length would be 33 symbols instead of 32)
+dumdribille
+5:05 PM
+is it just weird when viewing the file or does it actually create issues when loading the file into a graph again.
+5:06
+if it's just weirdly displayed, but does not effect the graph, I would not care too much
+5:06
+or switch to a different format where the problem does not occur even if it isn't as nice to view. :wink:
+rickskyy
+5:11 PM
+it is just with the turtle
+5:11
+xml works nice
+5:12
+So we can leave it as it is
+dumdribille
+5:13 PM
+does it effect the graph, when you load such a turtle file again?
+rickskyy
+5:13 PM
+of course not
+5:13
+wait
+5:14
+I check
+
