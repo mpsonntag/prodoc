@@ -36,6 +36,7 @@ Because we start from a hierarchical document it is ok to connect them via a cen
     ---------------------------------------------------------------------------------------
     -                                       odml:Hub                        RDF type odml:Hub
     -                                       odml:hasDocument
+    -                                       odml:hasTerminology
 
 ### Root section
 
@@ -57,6 +58,20 @@ Export terminology to an additional rfd document with proper ID and add it to th
 the terminology doc ID in the main document (and all others that use the terminology).
 Otherwise, if pointing to external url (publicly available): keep the url as leaf.
 
+### Terminology
+
+Terminologies from an odml document should live at the same hierarchy level as the original document 
+(directly beneath the odml:Hub) and should be referenced via odml:terminolgy by the odml:Document or 
+odml:Section it was taken from.
+It should have its own id, but I am not sure, if it should have author, date and document version as an 
+odml:Document has. I would leave this for now and introduce it later if we find a case where we actually need it.
+
+    odml                                    RDF                             RDF alternative
+    ---------------------------------------------------------------------------------------
+    odml                                    odml:Terminology
+    
+    id                                      use uuid as instance name
+    Sections                                odml:hasSection
 
 
 ### Section
