@@ -26,7 +26,7 @@ Main part of the url will be http://g-node.org, the secondary hierarchical part 
 
 ### Naming guidelines:
 Custom RDF Node and Property names should be in line with rdf best practices.
-
+Check the corresponding [github issue](https://github.com/G-Node/python-odml/issues/112).
 
 ### Hub
 I think this is something we would need, to merge different odML documents into an existing graph.
@@ -45,11 +45,11 @@ Because we start from a hierarchical document it is ok to connect them via a cen
     odml                                    odml:Document                   RDF type odml:Document
     
     id                                      use uuid as instance name
-    author                                  odml:author
-    date                                    odml:date
-    version (odml)                          odml:version
-    version (document)                      odml:doc-version
-    repository                              odml:terminology                * see description below
+    author                                  odml:hasAuthor
+    date                                    odml:hasDate
+    version (odml)                          odml:hasVersion
+    version (document)                      odml:hasDocVersion
+    repository                              odml:hasTerminology             * see description below
     Sections                                odml:hasSection
 
  
@@ -61,7 +61,7 @@ Otherwise, if pointing to external url (publicly available): keep the url as lea
 ### Terminology
 
 Terminologies from an odml document should live at the same hierarchy level as the original document 
-(directly beneath the odml:Hub) and should be referenced via odml:terminolgy by the odml:Document or 
+(directly beneath the odml:Hub) and should be referenced via odml:Terminolgy by the odml:Document or 
 odml:Section it was taken from.
 It should have its own id, but I am not sure, if it should have author, date and document version as an 
 odml:Document has. I would leave this for now and introduce it later if we find a case where we actually need it.
@@ -81,13 +81,13 @@ odml:Document has. I would leave this for now and introduce it later if we find 
     Section                                 odml:Section                    RDF type odml:Section
     
     id (to be implemented)                  RDF Section instance name
-    name                                    odml:name                       RDFS:label
-    type                                    odml:type
-    definition                              odml:description                RDFS:comment
-    repository                              odml:terminology
+    name                                    odml:hasName                    RDFS:label
+    type                                    odml:hasType
+    definition                              odml:hasDescription             RDFS:comment
+    repository                              odml:hasTerminology
     include                                 see below*
     link                                    see below*
-    reference                               odml:reference                  see below+
+    reference                               odml:hasReference               see below+
     Sections                                odml:hasSection                 see below#
     Properties                              odml:hasProperty
 
@@ -141,11 +141,11 @@ and section which could not be distinguished otherwise e.g. mapsToSection
     Property                                odml:Property                   RDF type odml:Property
     
     id (to be implemented)                  RDF Property instance name
-    name                                    odml:name                       RDFS:label
-    definition                              odml:definition                 RDFS:comment
-    unit                                    odml:unit                       si:unit
-    dtype                                   odml:dtype+                     see below
-    uncertainty                             odml:uncertainty
+    name                                    odml:hasName                    RDFS:label
+    definition                              odml:hasDefinition              RDFS:comment
+    unit                                    odml:hasUnit                    si:unit
+    dtype                                   odml:hasDtype+                  see below
+    uncertainty                             odml:hasUncertainty
     Values                                  odml:hasValue*                  see below
 
     mapping                                 will be removed in future versions of odml
