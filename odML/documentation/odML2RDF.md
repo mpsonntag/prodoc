@@ -201,6 +201,19 @@ properly discuss even within teams, if everyone has different "base of knowledge
 - [odml-terminologies](https://github.com/G-Node/odml-terminologies)
 - [odML Tables](https://github.com/INM-6/python-odmltables)
 
+### RDF resources
+
+#### Introduction
+- http://www.cambridgesemantics.com/semantic-university/rdfs-introduction
+- http://www.cambridgesemantics.com/semantic-university/owl-reference-humans
+
+#### RDF and OWL resources
+- http://www.w3.org/TR/rdf11-concepts
+- http://www.w3.org/TR/rdf-schema/
+- http://www.w3.org/TR/rdf-sparql-query/
+- http://www.w3.org/TR/owl-profiles/
+- [OWL tutorial](http://owl.cs.manchester.ac.uk/publications/talks-and-tutorials/protg-owl-tutorial/)
+
 
 ## Unsorted notes:
 
