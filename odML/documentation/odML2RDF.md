@@ -209,10 +209,15 @@ properly discuss even within teams, if everyone has different "base of knowledge
 
 #### RDF and OWL resources
 - http://www.w3.org/TR/rdf11-concepts
+- https://www.w3.org/TR/2004/REC-rdf-concepts-20040210/
 - http://www.w3.org/TR/rdf-schema/
+- https://www.w3.org/TR/rdf11-primer/
 - http://www.w3.org/TR/rdf-sparql-query/
 - http://www.w3.org/TR/owl-profiles/
 - [OWL tutorial](http://owl.cs.manchester.ac.uk/publications/talks-and-tutorials/protg-owl-tutorial/)
+
+#### Related RFCs
+- [rfc2396 - Uniform Resource Identifiers (URI): Generic Syntax](http://www.ietf.org/rfc/rfc2396.txt)
 
 
 ## Unsorted notes:
