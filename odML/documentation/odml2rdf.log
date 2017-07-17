@@ -851,7 +851,7 @@ I am working on the rdf-schema right now. I found a nice open-source platform fo
 protege.stanford.edu
 
 
-13.07.2017
+14.07.2017
 
 rickskyy
 1:11 AM
@@ -1000,4 +1000,140 @@ of course not
 wait
 5:14
 I check
+rickskyy
+5:30 PM
+it is do not influence
+5:30
+the graph
+rickskyy
+5:32 PM
+    import uuid
+    from rdflib import Graph, Namespace, RDF, URIRef
+    g = Graph()
+    ns = Namespace("http://g-node.org/odml-rdf#")
+    g.bind('odml', ns)
+    hubNode = URIRef(ns + uuid.uuid4().urn[9:])
+    docNode = URIRef(ns + uuid.uuid4().urn[9:])
+    g.add((hubNode, RDF.type, ns.Hub))
+    g.add((docNode, RDF.type, ns.Document))
+    g.add((hubNode, ns.hasDocument, docNode))
+    print(g.serialize(format='turtle').decode("utf-8"))
+
+    data = g.serialize(format='turtle').decode("utf-8")
+    f = open("/home/rick/g-node/python-odml/rdf_dev/example_odmls/test4.xml", "w")
+    f.write(data)
+    f.close()
+
+    g = Graph()
+    g.parse(source="/home/rick/g-node/python-odml/rdf_dev/example_odmls/test4.xml", format="turtle")
+    f = open("/home/rick/g-node/python-odml/rdf_dev/example_odmls/test5.xml", "w")
+    data = g.serialize(format='turtle').decode("utf-8")
+    print(data)
+    print(list(g.subject_objects(predicate=ns.hasDocument)))
+    f.write(data)
+    f.close()
+rickskyy
+5:32 PM
+what I actually did
+rickskyy
+5:41 PM
+    <http://g-node.org/odml-rdf#0e06bd34-2670-4a19-ba59-6a3118a6c8ed> a odml:Hub ;
+        odml:hasDocument odml:c7c57f18-7642-4344-bc49-eb1b9903cb7d .
+    odml:c7c57f18-7642-4344-bc49-eb1b9903cb7d a odml:Document .
+    ## Output: subject and object in the triple with hasDocument predicate
+    [(rdflib.term.URIRef('http://g-node.org/odml-rdf#0e06bd34-2670-4a19-ba59-6a3118a6c8ed'), rdflib.term.URIRef('http://g-node.org/odml-rdf#c7c57f18-7642-4344-bc49-eb1b9903cb7d'))]
+Yeah I am definitely sure this bug does not influence the graph
+dumdribille
+5:47 PM
+ok cool, then I would not worry too much about it. (edited)
+5:48
+but please create an issue with what we learned so far nonetheless so we can come back to it e.g. for tutorial or documentation purposes.
+rickskyy
+5:53 PM
+ok, I will do it right now
+rickskyy
+6:17 PM
+added
+rickskyy
+6:51 PM
+The only drawback the protege has that for renaming parts of IRIs (for example terminology to hasTerminology) of an entity (class, property) I need to recreate the object =( (edited)
+rickskyy
+7:02 PM
+created pr
+rickskyy
+7:43 PM
+i included ontology to the pr. But what to remind you that we can edit the schema in protege together if you register an account so I could share the project.
+7:44
+Also there is a version control mechanism and tools for discussing and proposing changes.
+
+17.07.2017
+
+rickskyy
+1:31 PM
+Hi everyone, want to check if there would be the hangouts meeting today
+dumdribille
+2:34 PM
+Hi!
+2:35
+sorry for the late response, we just had a kinda general gnode meeting today.
+2:35
+but we briefly discussed with @jgrewe, that it might be good to have a hangout tomorrow afternoon to discuss the link and include topic if that is fine with you.
+2:36
+thx for the pull request! regarding this we have a favor to ask: could you split this one
+up into a couple of smaller pull requests, so that we can more easily divide the review
+process amongst ourselves? we usually do smaller, topic specific pull requests on a regular basis.
+That makes them easy to review and easy to discuss and fast to introduce changes.
+2:36
+Could you please split up the current pull request into the following four?
+- updates to odml core
+- ontology, rdf example files
+- rdf_converter, example/rdf_generator
+- tests
+2:36
+Regarding Protege: I registered, you can invite me as "mpsonntag"", but I really would like
+to have the discussions via pull requests or issues on github, since there any discussion
+will be transparent and available to anyone that is interested or investing in the python-odml
+project.
+2:36
+That said, thx a lot for your work so far! It looks really good and we are happy to see you
+work on your own, figuring out stuff so well! :slightly_smiling_face:
+2:36
+Keep that in mind, when we put tons of comments and change requests on the pull request. :wink:
+rickskyy
+2:50 PM
+Meeting tomorrow is good for me. Let me know when you decide about the time. I am available during the whole day tomorrow.
+2:51
+Thanks for appreciation of my work )
+2:51
+I will split the pr into smaller ones soon.
+2:54
+Regarding Protege, I do not say we should discuss all the stuff there, I meant it is just a more convenient way to see the whole project and rather quick to make and review changes that just managing file on github.
+2:56
+Besides, I did not see at first I could share the project via the link, here it is:
+https://webprotege.stanford.edu/#projects/b6d54bcc-da44-44bf-aab8-1b98455cea9a/sharing
+dumdribille
+3:11 PM
+cool, worked like a charm :slightly_smiling_face:
+rickskyy
+3:14 PM
+this version may not be consistent with what I added to pr, since it is impossible to changes IRIs without deleting the object in protege.
+3:16
+hasTerminology has "https://g-node.org/projects/odml-rdf#terminology" in protege version and in the pr it is  "https://g-node.org/projects/odml-rdf#hasTerminology"
+3:17
+I changed that manually
+3:17
+so that is the big drawback of the system, maybe there is a way to do this but I have not found it yet (edited)
+3:20
+Finally, I think it's better to discuss everything on github or here, and everyone could upload the last version of the project to the Protege for yourself if he wants
+jgrewe
+4:50 PM
+hey folks, can we delay a hangout meeting to Wednesday? Got a new appointment for tmorrow...
+4:50
+sorry for the trouble
+dumdribille
+4:53 PM
+no objections from my end :slightly_smiling_face:
+rickskyy
+6:26 PM
+me too ))
 
