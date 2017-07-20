@@ -50,6 +50,7 @@ Because we start from a hierarchical document it is ok to connect them via a cen
     version (odml)                          odml:hasVersion
     version (document)                      odml:hasDocVersion
     repository                              odml:hasTerminology             * see description below
+                                            odml:hasExternalTerminology
     Sections                                odml:hasSection
 
  
@@ -84,7 +85,8 @@ odml:Document has. I would leave this for now and introduce it later if we find 
     name                                    odml:hasName                    RDFS:label
     type                                    odml:hasType
     definition                              odml:hasDescription             RDFS:comment
-    repository                              odml:hasTerminology
+    repository                              odml:hasTerminology             see root:repository
+                                            odml:hasExternalTerminology
     include                                 see below*
     link                                    see below*
     reference                               odml:hasReference               see below+
