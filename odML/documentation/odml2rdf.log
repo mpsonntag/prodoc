@@ -1167,3 +1167,85 @@ dumdribille
 cool, thx!
 
 
+19.07.2017
+
+dumdribille 10:58 AM
+@jgrewe @rickskyy do you want to do a hangout today or just chat about stuff?
+jgrewe
+10:59 AM
+I fell much behind, so a quick hangout will probably be more efficient
+dumdribille
+11:00 AM
+I have time between 13:00 and 17:00
+jgrewe
+11:01 AM
+I'd prefer the later afternoon, say 16:00?
+rickskyy
+11:18 AM
+17.00 (Kyiv) works well for me
+dumdribille
+11:20 AM
+perfect!
+jgrewe
+11:21 AM
+so then it's settled
+11:21
+see you later
+dumdribille
+1:00 PM
+@rickskyy I played around with the webprotege
+1:01
+it really can drive one insane with respect to the IRIs...
+1:02
+I think I managed to get out the kinks with respect to the IRIs and to resolve the rdf:Bag issue by manually editing the downloaded file and reimporting
+1:02
+not sure if this is the proper way to go, but I don't want to spend too much time on the tool itself. :wink:
+dumdribille
+1:03 PM
+
+dumdribille
+1:04 PM
+you can easily import this into webprotege, let me know what you think!
+rickskyy
+1:44 PM
+oh it is nice
+1:44
+it is much better than custom Bag class that I created
+1:45
+It is really a good way to include publicly defined classes
+1:47
+:blush:
+dumdribille
+2:31 PM
+I hope its actually correct, but I think its good enough for now. :wink:
+2:32
+maybe we have to revisit the topic once we are at the first query and see this construct does not work as its supposed to...
+rickskyy
+3:09 PM
+
+dumdribille
+4:02 PM
+hi guys
+jgrewe
+4:02 PM
+hey
+dumdribille
+4:02 PM
+I opened an lrz hangout at meet.lrz.de/odml2rdf
+jgrewe
+4:03 PM
+let’s see if that works :slightly_smiling_face:
+jgrewe
+4:16 PM
+https://github.com/G-Node/odml-terminologies/blob/master/v1.0/cell/cell.xml
+GitHub
+G-Node/odml-terminologies
+odml-terminologies defining terms to annotate electrophysiological data
+rickskyy
+4:28 PM
+https://docs.google.com/document/d/1EZu6g8TG2ZzoJaXNaTeMDFY5yQTJh1RRm6vf675bMsM/edit#
+jgrewe
+4:36 PM
+https://web.gin.g-node.org/G-Node/odmlFiles
+
+
