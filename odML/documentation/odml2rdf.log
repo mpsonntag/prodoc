@@ -1137,3 +1137,33 @@ rickskyy
 6:26 PM
 me too ))
 
+
+18.07.2017
+
+rickskyy
+9:15 AM
+I added 4 new PRs as Michael asked. I did not delete the first big PR, so you can see the passing builds from travis and test coverage. Since core changes was separated to the separate pr, the rdf converter and tests failed the build checks.
+rickskyy
+10:54 AM
+If you have questions let me know. Actually I committed my file changes again with more cleaner structure and messages, so the first big PR and those branch (rdf-converter) would be deleted finally.
+dumdribille
+11:16 AM
+I have one PR general comment: the PR "[rdf] Add odml-rdf converter" is against G-Node:master. :wink:
+11:16
+all the other ones are fine though (edited)
+rickskyy
+11:24 AM
+oh sorry
+11:28
+fixed that
+dumdribille
+12:46 PM
+np :wink:
+rickskyy
+5:18 PM
+@dumdribille I deleted the previous version of ontology in Protege due to IRIs constrains, I shared the new one to you. Here is a link for everyone: https://webprotege.stanford.edu/#projects/640a5c50-33f4-4900-a8c5-6386deba8325/sharing (edited)
+dumdribille
+5:43 PM
+cool, thx!
+
+
