@@ -1327,10 +1327,8 @@ yeah these delayed rewards are really messing up our positive reinforcement mech
 github APP
 3:40 PM
 [G-Node/python-odml] Pull request closed: #110 [rdf] Adding odml-rdf converter and odml ontology prototypes by rickskyy
-
 rickskyy
 6:36 PM
-
 rickskyy
 6:36 PM
 Hello everyone, I need some help with ids.
@@ -1346,4 +1344,111 @@ For now I can just add ids to the constructor again although they are not using,
 earlier. What do you think? Maybe after implementing rdf-odml converter I could rewrite XMLReader but I think it's not
 what important at the moment.
 P.S. You can see the log on travis: https://travis-ci.org/G-Node/python-odml/jobs/255332260 (edited)
+
+21.07.2017
+rickskyy
+1:00 PM
+@dumdribille @jgrewe Have a question about parsing files. As I saw files from gin repo are all in the old format
+(version 1 not 1.1) so value tags contain type unit e.g. ('        <value>25<unit>kHz</unit><type>int</type></value>')
+I am wondering if we had any converter to make them compatible with the new model. I guess we do not, so I am writing
+a short module to do this, am I right?
+jgrewe
+1:03 PM
+That would be most welcome :grinning:
+achilleas
+1:03 PM
+I'm having a look at the id in constructor from yesterday
+1:08
+Right, I see
+1:08
+Yeah, so the arguments passed to the constructor are being determined by the dictionaries in the format file
+1:09
+and the dict specifies that our objects have ids, so it passes to the constructor and ... stuff happens
+1:09
+There's a few dirty solutions here
+1:10
+One, like you mentioned, is to just accept id in the constructor and ignore it
+1:10
+Another would be to have **kwargs in the constructor, which is even uglier
+1:10
+Not sure if making a special case for id when reading in is a great solution either...
+1:11
+What if we put id=None in the constructor and instead of ignoring it, we check whether it's a valid UUID4 and use that
+to set the initial ID?
+1:12
+Parsing/loading is a pretty common operation, so having a constructor that allows it to be specified (for loading) is
+kinda reasonable.
+1:12
+It's better than having a method/constructor signature that includes arguments that are ignored.
+1:15
+then we would also be able to remove the special case we have in the xmlparser xmlparser.py:299 were we set obj._id = v
+1:17
+This kinda sorta contradicts our decision to not have an id property setter, but I think the constructor can have
+different rules. It signals that on creation of an object, one can specify an id, but it is (or should be) unchangeable
+beyond that.
+rickskyy
+2:13 PM
+@achilleas good suggestion about ids, what place would you recommend to integrate like-this function to? Or just paste
+try-except in every constructor for doc, section ...
+def id_setter(id):
+  try:
+       val = str(uuid.UUID(id))
+  except ValueError:
+       val = str(uuid.uuid4())
+  return val (edited)
+achilleas
+2:15 PM
+You could just do it in the constructor, I guess
+2:16
+I dunno what the behaviour should be for invalid IDs though
+2:16
+like if  I call Property(name="foo", id="invalid ID"), should it throw an exception?
+2:17
+Perhaps it should
+rickskyy
+2:17 PM
+the uuid lib raise Value error exception in this situations
+achilleas
+2:17 PM
+yeah
+2:17
+we could propagate it upwards
+rickskyy
+2:17 PM
+the question what we do if this happens
+2:17
+like print smth to the user maybe
+achilleas
+2:18 PM
+catch the exception and raise ValueError("Invalid id string: Must be UUID4") ?
+2:18
+¯\_(ツ)_/¯
+2:18
+I'd like to hear Jan's take on this
+rickskyy
+2:19 PM
+still we need to assign a valid id
+achilleas
+2:19 PM
+He's more in touch with usability in odml :slightly_smiling_face:
+rickskyy
+2:21 PM
+I also think we do not need to raise an exception again (edited)
+2:21
+because it was actually raised by uuid and we can except it (edited)
+2:22
+so we can just print an error message and assign valid id. What do you think? (edited)
+2:25
+like this:
+def id_setter(id):
+   try:
+       val = str(uuid.UUID(id))
+   except ValueError as e:
+       print(e)
+       val = str(uuid.uuid4())
+   return val
+2:25
+for invalid id it prints:
+badly formed hexadecimal UUID string
+9f187f00-88f8-45d6-9986-3ca08643a9cd
 
