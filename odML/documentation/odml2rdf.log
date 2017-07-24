@@ -1249,3 +1249,101 @@ jgrewe
 https://web.gin.g-node.org/G-Node/odmlFiles
 
 
+20.07.2017
+
+dumdribille
+2:55 PM
+@jgrewe are you ok with it if I merge the 4 PRs now?
+2:56
+@rickskyy the 5th one can then be closed, right? All the commits from #110 are in other PRs?
+slackbot APP
+2:56 PM
+Only visible to you
+You mentioned @rickskyy, but they’re not in this channel. Would you like to invite them to join or have Slackbot send them a link to your message? Or, do nothing.
+jgrewe
+2:56 PM
+yeah, sorry, go ahead
+dumdribille
+2:57 PM
+merge heaven :smile:
+achilleas
+2:57 PM
+\o/
+jgrewe
+2:57 PM
+lots of green dotses
+dumdribille
+2:58 PM
+we can split them if you want :wink:
+github APP
+2:58 PM
+[G-Node/python-odml] Pull request closed: #115 [rdf] Adding odml ontology by mpsonntag
+2:58
+[python-odml:dev-odml-rdf] 5 new commits by yshalivskyy and 1 other:
+1fa1754 [rdf] add an example rdf file and its generator - yshalivskyy
+f8a7556 [rdf] add the odml ontology - yshalivskyy
+3408c7c [rdf] ontology improvements - yshalivskyy
+b5986b3 [rdf] update ontology, remove .owl ontology file - yshalivskyy
+3629800 Merge pull request #115 from rickskyy/ontology - Michael Sonntag
+achilleas
+2:58 PM
+well, you don't get the greens until it's merged into master
+github APP
+3:01 PM
+[G-Node/python-odml] Pull request closed: #113 [rdf] Changes to core by mpsonntag
+3:01
+[python-odml:dev-odml-rdf] 5 new commits by yshalivskyy and 1 other:
+720f6b1 [rdf] changes to the odml core module - yshalivskyy
+1c80fd9 [rdf] add rdflib to setup.py and travis.yml - yshalivskyy
+fba563c [rdf] remove id.setter - yshalivskyy
+484186f [rdf] removing id attr from constructors - yshalivskyy
+89e7c80 Merge pull request #113 from rickskyy/core-changes - Michael Sonntag
+jgrewe
+3:01 PM
+so unfair
+github APP
+3:02 PM
+[G-Node/python-odml] Pull request closed: #114 [rdf] Add odml-rdf converter by mpsonntag
+3:02
+[python-odml:dev-odml-rdf] 6 new commits by yshalivskyy and 2 others:
+f3e1564 [rdf] update THGTTG.odml with ids - yshalivskyy
+61bfa02 [rdf] add RDFWriter class for the odml-rdf conversion - yshalivskyy
+6a355ff [rdf] add example files used for manual testing - Yaroslav Shalivskyy
+d44e95e [rdf] add generator for ex_1.odml - yshalivskyy
+81cc66c [rdf] bug fixes and structure improvements - yshalivskyy Show more…
+jgrewe
+3:02 PM
+work now, and rewards later...
+github APP
+3:02 PM
+[G-Node/python-odml] Pull request closed: #116 [rdf] Add tests for the RDFWriter class by mpsonntag
+3:02
+[python-odml:dev-odml-rdf] 2 new commits by yshalivskyy and 1 other:
+4aa029b [rdf] add tests for the RDFWriter class - yshalivskyy
+0d10b10 Merge pull request #116 from rickskyy/tests - Michael Sonntag
+achilleas
+3:03 PM
+yeah these delayed rewards are really messing up our positive reinforcement mechanisms
+github APP
+3:40 PM
+[G-Node/python-odml] Pull request closed: #110 [rdf] Adding odml-rdf converter and odml ontology prototypes by rickskyy
+
+rickskyy
+6:36 PM
+
+rickskyy
+6:36 PM
+Hello everyone, I need some help with ids.
+When the id attr was deleted from constructor XMLReader stopped working and raise exceptions like:
+Exception: __init__() got an unexpected keyword argument 'id'.
+After debugging I realized that it happens when the new object (section, property, doc) is created with attributes of
+None values. The dict with attributes and their values is being passed to object constructor. Since we do not have id
+attribute in the constructor any more, this exception is raised.
+There is a duct tape solution for this like not passing id attr to arguments while parsing the odml document and save
+it locally to a variable, then assign it to the obj._id when setting all properties. However, it would look ugly. After
+some time I have not find any ways to manage this. Too many parts of the module should be rewritten than.
+For now I can just add ids to the constructor again although they are not using, or use the duct tape I was written
+earlier. What do you think? Maybe after implementing rdf-odml converter I could rewrite XMLReader but I think it's not
+what important at the moment.
+P.S. You can see the log on travis: https://travis-ci.org/G-Node/python-odml/jobs/255332260 (edited)
+
