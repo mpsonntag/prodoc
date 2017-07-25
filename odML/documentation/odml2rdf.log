@@ -1452,3 +1452,94 @@ for invalid id it prints:
 badly formed hexadecimal UUID string
 9f187f00-88f8-45d6-9986-3ca08643a9cd
 
+24.07.2017
+
+rickskyy
+10:37 AM
+Hi guys, added a first version of odml_version_converter:
+https://github.com/rickskyy/python-odml/commit/7f25b0f5208e0482f672f2b096274a9c9106726a
+I parsed all the files from gin repo, filtered non odmls, fixed problems related to xml (not matching tags, corrupted
+odml docs, same name occurrence in Sections and more). Although the implementation is not pretty good and universal, if
+we want to add some kind of similar converter to odml master it's need to be improved in terms of class architecture
+and public api functions. There are comments in every function and description for the VersionConverter class.
+Looking for feedback.
+GitHub
+[version-converter] add VersionConverter class and parsed files · rickskyy/python-odml@7f25b0f
+python-odml - odML libraries and editor
+jgrewe
+10:44 AM
+hi, no, never had the git problem. What does it tell you? Is there something in your .gitignore?
+rickskyy
+10:45 AM
+sorry
+10:45
+I forgot about gitignore
+10:45
+fixed that :blush: (edited)
+jgrewe
+10:46 AM
+hehe, happens to the best :slightly_smiling_face:
+rickskyy
+10:46 AM
+just deleted restrictions for .odml
+dumdribille
+11:14 AM
+very cool!
+11:14
+could you please create a pull request for just the converter? its easier to find and review then. :wink:
+rickskyy
+11:14 AM
+ok
+11:18
+what about ids? what solution do we stick for?
+11:19
+for now this pr would not be built on travis
+dumdribille
+11:21 AM
+I'd say make one pull request for the converter and one for the id changes. it does not matter if the pull request does
+not build for now. we can discuss there right with the code and decide which way to go.
+rickskyy
+11:24 AM
+ok
+dumdribille
+11:33 AM
+could you please exclude all gin files from the PR? this many example files should not go to the repository. :slightly_smiling_face:
+dumdribille
+11:48 AM
+yaaaay, the PR builds successfully! :smile:
+rickskyy
+12:26 PM
+ok
+dumdribille
+12:53 PM
+cool, thx! sorry for the back and forth!
+rickskyy
+1:14 PM
+Oh that is fine
+1:15
+Unfortunately, I can respond to comments and suggestions only in the evening today, just to let you know
+dumdribille
+2:56 PM
+no problemo :slightly_smiling_face:
+2:57
+@rickskyy I had the chance to talk to Thomas and he said everything is fine with contract. :slightly_smiling_face:
+2:57
+and regarding the visit in munich
+2:58
+you said you would visit on 01.09.2017, right?
+2:59
+I think at that particular day its just me that would be in Munich, everyone else is on vacation.
+3:00
+if you still want to visit, which would be awesome, we would pay for the trip from berlin to Munich and the hotel fr-sa.
+3:00
+and I am sure also for the food and partly drinks on friday :wink:
+3:01
+It would really be nice to meet you in person, but its totally up to you, if that does not fit with your travel plans. :slightly_smiling_face:
+
+rickskyy
+8:28 PM
+That is ok, I do not think I would have a chance in the near future to visit Munich, so I am really looking forward to
+come. Thank you for proposition, but I do not think you need to pay for me)) Also as I mentioned before, I will come
+with my friend, so I would be very thankful if you find the room with two beds for us.
+
+
