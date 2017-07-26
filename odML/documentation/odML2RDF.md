@@ -32,27 +32,27 @@ Check the corresponding [github issue](https://github.com/G-Node/python-odml/iss
 I think this is something we would need, to merge different odML documents into an existing graph.
 Because we start from a hierarchical document it is ok to connect them via a central hub node.
 
-    odml                                    RDF                             RDF alternative
-    ---------------------------------------------------------------------------------------
-    -                                       odml:Hub                        RDF type odml:Hub
-    -                                       odml:hasDocument
-    -                                       odml:hasTerminology
+    odml                        RDF                             xsd type        RDF alternative
+    -------------------------------------------------------------------------------------------
+    -                           odml:Hub                        -               RDF type odml:Hub
+    -                           odml:hasDocument                -
+    -                           odml:hasTerminology             -
 
 ### Root section
 
-    odml                                    RDF                             RDF alternative
-    ---------------------------------------------------------------------------------------
-    odml                                    odml:Document                   RDF type odml:Document
+    odml                        RDF                             xsd type        RDF alternative
+    -------------------------------------------------------------------------------------------
+    odml                        odml:Document                   -               RDF type odml:Document
     
-    id                                      use uuid as instance name
-    author                                  odml:hasAuthor
-    date                                    odml:hasDate
-    version (odml)                          odml:hasVersion
-    version (document)                      odml:hasDocVersion
-    repository                              odml:hasTerminology             * see description below
-                                            odml:hasExternalTerminology
-    Sections                                odml:hasSection
-    -                                       odml:hasFilename                + see description below
+    id                          use uuid as instance name       -
+    author                      odml:hasAuthor                  xsd:string
+    date                        odml:hasDate                    xsd:date
+    version (odml)              odml:hasVersion                 xsd:float
+    version (document)          odml:hasDocVersion              xsd:string
+    repository                  odml:hasTerminology             -               * see description below
+                                odml:hasExternalTerminology     xsd:string
+    Sections                    odml:hasSection                 -
+    -                           odml:hasFilename                xsd:string      + see description below
 
  
 * RDF export of repositories: 
@@ -71,33 +71,33 @@ odml:Section it was taken from.
 It should have its own id, but I am not sure, if it should have author, date and document version as an 
 odml:Document has. I would leave this for now and introduce it later if we find a case where we actually need it.
 
-    odml                                    RDF                             RDF alternative
-    ---------------------------------------------------------------------------------------
-    odml                                    odml:Terminology
+    odml                        RDF                             xsd type        RDF alternative
+    -------------------------------------------------------------------------------------------
+    odml                        odml:Terminology                -
     
-    id                                      use uuid as instance name
-    Sections                                odml:hasSection
+    id                          use uuid as instance name       -
+    Sections                    odml:hasSection                 -
 
 
 ### Section
 
-    odml                                    RDF                             RDF alternative
+    odml                        RDF                             xsd type        RDF alternative
     ---------------------------------------------------------------------------------------
-    Section                                 odml:Section                    RDF type odml:Section
+    Section                     odml:Section                    -               RDF type odml:Section
     
-    id (to be implemented)                  RDF Section instance name
-    name                                    odml:hasName                    RDFS:label
-    type                                    odml:hasType
-    definition                              odml:hasDescription             RDFS:comment
-    repository                              odml:hasTerminology             see root:repository
-                                            odml:hasExternalTerminology
-    include                                 see below*
-    link                                    see below*
-    reference                               odml:hasReference               see below+
-    Sections                                odml:hasSection                 see below#
-    Properties                              odml:hasProperty
+    id (to be implemented)      RDF Section instance name       -
+    name                        odml:hasName                    xsd:string      RDFS:label
+    type                        odml:hasType                    xsd:string
+    definition                  odml:hasDescription             xsd:string      RDFS:comment
+    repository                  odml:hasTerminology             -               see root:repository
+                                odml:hasExternalTerminology     xsd:string
+    include                     * see below                     -
+    link                        * see below                     -
+    reference                   odml:hasReference               -/xsd:string    + see below
+    Sections                    odml:hasSection                 -               ~ see below
+    Properties                  odml:hasProperty                -
 
-    mapping (deprecated)                    will be removed in future versions of odml
+    mapping (deprecated)        will be removed in future versions of odml
 
  
 * Resolving include and link (i.e. adding all information inherited from the respective resources, should be handled [needs to be confirmed] by the python-odml lib)
@@ -135,29 +135,29 @@ bar_2.local_foo.properties → [amp = 1.8, dur = 2]
  
 + Resolving a reference can be a URL to an external reference or a string pointing to an id in a Database.
 
--# should this be specified to hasSubSection and already be a subclass of hasSection?
+~ should this be specified to hasSubSection and already be a subclass of hasSection?
 there are already different connectors between sections/property 
 and section which could not be distinguished otherwise e.g. mapsToSection
 
 
 ### Property
 
-    odml                                    RDF                             RDF alternative
-    ---------------------------------------------------------------------------------------
-    Property                                odml:Property                   RDF type odml:Property
+    odml                        RDF                             xsd type        RDF alternative
+    -------------------------------------------------------------------------------------------
+    Property                    odml:Property                   -               RDF type odml:Property
     
-    id (to be implemented)                  RDF Property instance name
-    name                                    odml:hasName                    RDFS:label
-    definition                              odml:hasDefinition              RDFS:comment
-    unit                                    odml:hasUnit                    si:unit
-    dtype                                   odml:hasDtype+                  see below
-    uncertainty                             odml:hasUncertainty
-    Values                                  odml:hasValue*                  see below
+    id (to be implemented)      RDF Property instance name      -
+    name                        odml:hasName                    xsd:string      RDFS:label
+    definition                  odml:hasDefinition              xsd:string      RDFS:comment
+    unit                        odml:hasUnit                    xsd:string      si:unit
+    dtype                       odml:hasDtype                   xsd:string      + see below
+    uncertainty                 odml:hasUncertainty             xsd:float
+    Values                      odml:hasValue                   xsd:string      * see below
 
-    mapping                                 will be removed in future versions of odml
-    synonym                                 will be removed in future versions of odml
-    dependency                              will not be exported
-    dependencyValue                         will not be exported
+    mapping                     will be removed in future versions of odml
+    synonym                     will be removed in future versions of odml
+    dependency                  will not be exported
+    dependencyValue             will not be exported
 
 + This could be a problem to link, if its not a basic type, but one defined in a terminology; 
     It has to be different from Section/type.
