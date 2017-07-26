@@ -52,12 +52,16 @@ Because we start from a hierarchical document it is ok to connect them via a cen
     repository                              odml:hasTerminology             * see description below
                                             odml:hasExternalTerminology
     Sections                                odml:hasSection
+    -                                       odml:hasFilename                + see description below
 
  
 * RDF export of repositories: 
 Export terminology to an additional rfd document with proper ID and add it to the hub node and reference 
 the terminology doc ID in the main document (and all others that use the terminology).
 Otherwise, if pointing to external url (publicly available): keep the url as leaf.
+
++ As provenance to follow up on where this particular odml:Document was created from, add the
+  filename of the original odML file.
 
 ### Terminology
 
