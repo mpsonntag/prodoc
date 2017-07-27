@@ -1605,3 +1605,34 @@ jgrewe
 https://en.wikipedia.org/wiki/Merkle_tree
 
 
+26.07.2017
+
+dumdribille
+3:15 PM
+I added the proposed xsd types for all RDF leaves to our google doc, xsd:string nearly everywhere :wink:
+rickskyy
+3:40 PM
+Q&A Section is good)
+rickskyy
+3:59 PM
+Made it a little better
+dumdribille
+4:03 PM
+cool! :slightly_smiling_face:
+4:04
+I actually still prefer issues, but maybe as an intermediate option for documented discussion/place to put opinions. :wink:
+rickskyy
+4:05 PM
+Totally agree (edited)
+dumdribille
+5:05 PM
+I also just updated the example graph in the google doc with the proposed cardinalities of the individual predicates. Maybe @jgrewe, you can check whether these make sense from an odml perspective. (edited)
+jgrewe
+5:06 PM
+having a talk now, will check later
+dumdribille
+5:07 PM
+no hurry, just wanted to keep everyone informed :slightly_smiling_face:
+5:07
+* that stuff has happened
+
