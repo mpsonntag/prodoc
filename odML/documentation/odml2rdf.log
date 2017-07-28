@@ -1636,3 +1636,22 @@ no hurry, just wanted to keep everyone informed :slightly_smiling_face:
 5:07
 * that stuff has happened
 
+
+27.07.2017
+
+dumdribille
+11:05 AM
+I just merged the 'Changes to ids' PR. @rickskyy, could you rebase the second PR with these changes, so the tests will unfail? :slightly_smiling_face:
+rickskyy
+12:23 PM
+ok
+rickskyy
+12:29 PM
+I think I will make another PR soon and close and old one
+12:30
+there would be quite a change, is it ok? (edited)
+rickskyy
+12:37 PM
+Finally, I just rebased :slightly_smiling_face: add commits soon with new code
+12:38
+used to the opinion that rebasing public repos is bad practice but in this case it is ok
