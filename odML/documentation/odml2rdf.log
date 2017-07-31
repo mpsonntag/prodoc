@@ -1655,3 +1655,24 @@ rickskyy
 Finally, I just rebased :slightly_smiling_face: add commits soon with new code
 12:38
 used to the opinion that rebasing public repos is bad practice but in this case it is ok
+
+
+28.07.2017
+dumdribille 12:16 PM
+@rickskyy cool, thx for the changes on the PR! unfortunately I won't be able to review them though today...
+12:17
+@jgrewe the PR is failing due to decreases in coverage. should we ignore it or lower the threshold for fails due to coverage decrease?
+achilleas
+12:17 PM
+What's the diff (how much is the decrease)? (edited)
+dumdribille
+12:18 PM
+-6.6%
+achilleas
+12:18 PM
+I think increasing the threshold above that would be too much.
+12:19
+Then again, we might say screw coverage and disable failing altogether. Let's wait for @jgrewe weigh in
+jgrewe
+1:02 PM
+i would ignore it for this pr
