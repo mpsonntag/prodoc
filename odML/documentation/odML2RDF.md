@@ -149,6 +149,8 @@ and section which could not be distinguished otherwise e.g. mapsToSection
     id (to be implemented)      RDF Property instance name      -
     name                        odml:hasName                    xsd:string      RDFS:label
     definition                  odml:hasDefinition              xsd:string      RDFS:comment
+    reference                   odml:hasReference               - / xsd:string  see below #
+
     unit                        odml:hasUnit                    xsd:string      si:unit
     dtype                       odml:hasDtype                   xsd:string      + see below
     uncertainty                 odml:hasUncertainty             xsd:float
@@ -158,6 +160,8 @@ and section which could not be distinguished otherwise e.g. mapsToSection
     synonym                     will be removed in future versions of odml
     dependency                  will not be exported
     dependencyValue             will not be exported
+
+'# Resolving a reference can be a URL to an external reference or a string pointing to an id in a Database.
 
 + This could be a problem to link, if its not a basic type, but one defined in a terminology; 
     It has to be different from Section/type.
