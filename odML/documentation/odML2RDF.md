@@ -155,6 +155,7 @@ and section which could not be distinguished otherwise e.g. mapsToSection
     dtype                       odml:hasDtype                   xsd:string      + see below
     uncertainty                 odml:hasUncertainty             xsd:float
     Values                      odml:hasValue                   xsd:string      * see below
+    value_origin                odml:hasValueOrigin             xsd:string
 
     mapping                     will be removed in future versions of odml
     synonym                     will be removed in future versions of odml
