@@ -1705,3 +1705,467 @@ much experience with the hotels here, but in general the ibis hotel chains are o
 are on a subway directly to the city center. another option would be the Best Western Atrium Hotel which is close to
 the main train station. a friend of mine stayed in and was really happy with the hotel itself, but its in a bit of a
 shabby part of the city.
+
+
+08.08.2017
+
+dumdribille
+12:19 PM
+@rickskyy I talked to Thomas and sent him your information, so the hotel should be organized in the next days. lets keep our fingers crossed. :wink: he also said, if you keep your stamped train ticket from Berlin to Munich we can reimburse you for that as well.
+rickskyy
+12:21 PM
+Great, thank you. Regarding the train, we decided to take a bus from Berlin to Munich since it is only 7 hour trip and it is cheaper on 40 euros. (edited)
+dumdribille
+12:52 PM
+That should be fine as well.
+12:53
+we have a meeting for one of our projects starting at 13:00, I'll holler when we are back!
+rickskyy
+12:57 PM
+Good, saw new issues, will work on them soon. Now working on the new PR which will include extension to FormatConverter for odml-rdf conversion and some fixes for validation issues. Also have some questions related to validation, so looking forward to the meeting.
+dumdribille
+3:48 PM
+we're back!
+3:48
+@rickskyy do you want to do a hangout thingy?
+rickskyy
+3:49 PM
+can text
+3:49
+up to you
+3:50
+want to clarify work plan for the next week
+3:52
+The PRs with some extensions and solved issues you opened about property attrs will be finished till tomorrow, so we can discuss them then
+dumdribille
+3:52 PM
+cool
+3:53
+did you already get anywhere regarding one or two example SPARQL queries so we know how the graph actually behaves when being queried?
+rickskyy
+3:53 PM
+not yet
+3:54
+can do it today
+dumdribille
+3:54 PM
+in general, did you see the github project I created on the G-Node/python-odml?
+rickskyy
+3:54 PM
+no)
+dumdribille
+3:54 PM
+I think that might be nice to put in tasks in point out which need more discussion
+3:55
+I will put an additional issue in there for the SPARQL task
+3:55
+@jgrewe I am unsure how to best approach the valueOrigin issue
+rickskyy
+3:56 PM
+this is cool, looks like Trello, did not use Projects on github before )
+dumdribille
+3:56 PM
+yeah I am starting to like it as well :slightly_smiling_face:
+rickskyy
+3:57 PM
+could I edit them? (edited)
+jgrewe
+3:57 PM
+valueOrigin
+dumdribille
+3:58 PM
+sure, go crazy
+jgrewe
+3:58 PM
+what do you want to do?
+3:58
+I mean at the moment the field does not exist
+dumdribille
+3:58 PM
+@jgrewe should we implement the valueOrigin in the python-odml core just in the rdf branch or in the main branch and import
+3:58
+cherry pick
+jgrewe
+3:58 PM
+both would be fine with me
+3:59
+if we do it in master, then digaru has it to adjust the ui
+dumdribille
+4:00 PM
+@rickskyy would you be comfortable with adding this field in a python-odml master branch and create a PR there before importing these changes to the rdf-dev branch?
+rickskyy
+4:01 PM
+Yeah fine, just let me understand what does this field mean :smiley:
+dumdribille
+4:01 PM
+It's with respect to this issue: https://github.com/G-Node/python-odml/issues/130
+GitHub
+Keeping a source attribute for metadata values · Issue #130 · G-Node/python-odml
+Currently (in v1.3) the value objects have a reference and a filename attribute. We are still using the filename attribute to state where the metadata value in the property was generated/extracted ...
+4:02
+during the refactoring of the Value entity, fields will be completely removed and some of our collaborators want to store the filename of where the value originally came from
+4:03
+this field would be added to the python-odml Property to provide this feature
+4:05
+So the first step would be to implement and merge this into python-odml master, then import into the rdf-dev branch, add this field to the ontology and then include it into the RDF export as well
+rickskyy
+4:06 PM
+got it
+4:06
+so basically it's a url to the source or the filename?
+dumdribille
+4:06 PM
+yes, exactly
+rickskyy
+4:07 PM
+referencing to just a filename maybe have less sense than url
+dumdribille
+4:07 PM
+if I got it right it could also just be a text containing the filename with any other path whatsoever just for provenance sake
+rickskyy
+4:08 PM
+:sweat_smile:
+dumdribille
+4:08 PM
+yeah...
+4:09
+it might make sense in more complicated queries e.g. to find all properties that where created from a specific filename
+rickskyy
+4:09 PM
+so in ontology it is will be string and that's all
+dumdribille
+4:09 PM
+but that is just me gessing now
+4:09
+*guessing
+4:09
+yes, just a string should be sufficient
+rickskyy
+4:09 PM
+good
+4:10
+also  I did not find the way to edit project on github
+dumdribille
+4:10 PM
+hm, maybe I have to add people in the settings somehow, let me check
+rickskyy
+4:10 PM
+maybe there should some rights delegation
+dumdribille
+4:11 PM
+can you at least add issues as cards?
+rickskyy
+4:11 PM
+no
+dumdribille
+4:11 PM
+lame
+rickskyy
+4:11 PM
+send me a sreenshot how you do this
+4:11
+I guess there might be some buttons or whatever
+4:12
+because now I have nothing
+dumdribille
+4:15 PM
+working on it
+rickskyy
+4:16 PM
+yeah I saw the intro video and there is edit buttons which I do not have
+dumdribille
+4:16 PM
+but if its ok, I'll assign you the above referenced issue :slightly_smiling_face:
+4:17
+ok, I added you as collaborator, can you check if your permissions have changed?
+4:17
+you should have received an invitation to python-odml
+4:17
+via github
+4:17
+I think
+4:17
+maybe
+rickskyy
+4:18 PM
+yeah it works thanks
+dumdribille
+4:18 PM
+awesome
+dumdribille
+4:24 PM
+ok, I am currently coming up with an issue regarding the SPARQL task
+4:26
+@jgrewe do you have any ideas what would be good queries
+4:26
+from your point of view?
+4:27
+what would you query, if your files would be in a databaes
+4:27
+*database
+4:27
+maybe that would be then also good real life oriented quereies
+4:27
+*queries
+4:27
+sorry, typing broken today
+jgrewe
+4:27 PM
+haha, that reminds me of a task i still have to fulfill
+dumdribille
+4:28 PM
+??
+jgrewe
+4:28 PM
+if my data was in the hub I would ask for certain stimulus conditions.
+4:28
+in the case of the drosophila data we should ask cgars
+dumdribille
+4:29 PM
+I think starting to play with your data should be good enough for now to see if the basal structure is ok for quereies
+jgrewe
+4:29 PM
+@dumdribille I promised to export some odml for our nix files
+dumdribille
+4:29 PM
+ah yes :slightly_smiling_face:
+jgrewe
+4:29 PM
+ok. let me see
+dumdribille
+4:30 PM
+I created an issue, maybe you could add one or two real live queries as comments
+4:31
+what the WHERE clause would be and which fields you would expect as results
+4:31
+also added it already to the project :wink:
+jgrewe
+4:31 PM
+ok, which issue is that?
+dumdribille
+4:31 PM
+#142
+4:31
+in the ToDo (prerequisit) column
+jgrewe
+4:31 PM
+thks, just saw the message in the other channel
+dumdribille
+4:34 PM
+@rickskyy I will be gone on vacation for the next two weeks starting friday
+4:34
+should we draft a rough list of issues for these weeks?
+rickskyy
+4:35 PM
+yeah this will be nice
+4:35
+we can talk tomorrow
+4:35
+or today
+dumdribille
+4:35 PM
+from my point of view I would do:
+1) SPARQL query, check if its nice
+4:35
+and refactor schema if necessary
+4:36
+2) write RDF 2 odML converter
+4:37
+3) start subclassing Section / Properties with odML use case specific terms; I will put an example how I imagine this in an issue
+rickskyy
+4:37 PM
+3rd did not understand
+dumdribille
+4:37 PM
+4) if there is time or you feel like it polish the odML converter
+rickskyy
+4:38 PM
+let's write this down in my google doc
+dumdribille
+4:38 PM
+I think it would be best if I draft an example for the 3rd one
+rickskyy
+4:38 PM
+ok
+dumdribille
+4:38 PM
+you said you also wanted to work on the json converter, right?
+4:38
+is this the PR that will be coming up?
+rickskyy
+4:39 PM
+rdflib has plugin for jsonld
+dumdribille
+4:39 PM
+aaah, cool
+rickskyy
+4:39 PM
+I just added it
+dumdribille
+4:39 PM
+very cool
+4:39
+looking forward to seeing this.;)
+rickskyy
+4:39 PM
+the question is if it works well
+4:39
+hahah
+4:40
+I guess I will need to add some stuff manually or edit graph
+4:41
+for now it works, but I am still researching and reading if the result is good
+dumdribille
+4:42 PM
+@jgrewe cool, just saw the comment on the SPARQL issue
+4:45
+@rickskyy would you be cool with using jupyter notebooks for writing the example SPARQL queries? the nice thing about them is, that you can just work like in an ipython window but afterwards we already have something that can easily be converted into an interactive tutorial.
+rickskyy
+4:46 PM
+I think I will cope with it
+dumdribille
+4:46 PM
+:smile:
+rickskyy
+4:46 PM
+:blush:
+dumdribille
+4:46 PM
+ok
+4:47
+I think I need a bit of thinking to draft the issues for point 3 and 4
+4:47
+should I write them up and we can discuss this and the coming PR on Thursday?
+4:47
+because after that I am off :slightly_smiling_face:
+rickskyy
+4:48 PM
+yeah sounds cool
+dumdribille
+4:48 PM
+do you have any questions or other stuff for now?
+4:49
+@jgrewe do you have any other stuff on your mind?
+jgrewe
+4:50 PM
+no, I think that's fine for the moment
+dumdribille
+4:52 PM
+awesome! then I declare the meeting adjourned for now (if everyone agrees)
+jgrewe
+4:53 PM
+hehe, do so :slightly_smiling_face:
+rickskyy
+4:54 PM
+agree)
+dumdribille
+4:55 PM
+cool, if any questions pop up, we are here :wink:
+
+rickskyy
+5:07 PM
+just added the value_origin PR, check please
+5:08
+@dumdribille Now has a small temptation to close my own PRs heh))
+dumdribille
+5:10 PM
+nice
+dumdribille
+5:16 PM
+ok, the PR has my approval :wink:
+jgrewe
+5:17 PM
+did you see my comment?
+dumdribille
+5:17 PM
+just now yes
+jgrewe
+5:17 PM
+:wink:
+dumdribille
+5:17 PM
+forgot about the format
+5:17
+naughty
+jgrewe
+5:18 PM
+just a tiny fix, I hope
+5:18
+@rickskyy  the writing should be tested as well
+rickskyy
+5:19 PM
+i change the format
+jgrewe
+5:19 PM
+cool
+dumdribille
+5:19 PM
+I checked test_property.py and its nearly all pass, amazing...
+rickskyy
+5:19 PM
+test_property does not really checks all attrs
+check the commit
+5:25
+Do such kind of tests are valuable?
+dumdribille
+5:26 PM
+from my point of view they are helpful when refactoring and you overlook sthg
+5:26
+other than that...
+rickskyy
+5:26 PM
++0.01% lol
+dumdribille
+5:27 PM
+:smile:
+jgrewe
+5:27 PM
+By now I feel much better when tests are there and I notice when I break something.
+rickskyy
+5:27 PM
+yeah thanks)
+5:28
+I think I can enhance tests as one of the tasks for the next week
+dumdribille
+5:28 PM
+if you don't mind, that would be awesome
+rickskyy
+5:30 PM
+@jgrewe could you approve and close, so I process further?
+jgrewe
+5:36 PM
+I am struggling with the test, tbh. What I miss is the testing of actual writing and reading from file
+rickskyy
+5:36 PM
+oh
+5:37
+Yeah I can implement this through StringIO, as I did with converters (edited)
+jgrewe
+5:38 PM
+let it sink for a bit, Read-Write is tested in test_samplefile.py, but I do not completely understand how it works, never really looked to it, to be honest (edited)
+5:39
+I'm misspelling a lot, maybe I should go home :slightly_smiling_face:
+rickskyy
+5:40 PM
+this part does all the magic:
+def test_restore(self):
+       try:
+           from StringIO import StringIO
+       except ImportError:
+           from io import StringIO
+       modules = [(xmlparser.XMLWriter, xmlparser.XMLReader)]
+       # (jsonparser.JSONWriter, jsonparser.JSONReader)]        for Writer, Reader in modules:            doc = Writer(self.doc)
+           if sys.version_info < (3, 0):
+               doc = StringIO(unicode(doc))
+           else:
+               doc = StringIO(str(doc))
+           doc = Reader().fromFile(doc)
+           self.assertEqual(doc, self.doc) (edited)
+jgrewe
+5:42 PM
+now it depends on the features that are in self.doc
+rickskyy
+5:58 PM
+The solution I see here is just extend SampleFileCreator with all properties we have, so the SampleFileOperationTest.test restore() can check this, or change SampleFileOperationTest.test_restore() so we can pass docs created with SampleFileCreator directly as params and create test funcs for every attribute in specific to the entity modules (edited)
+6:00
+the last suggestion will take more time, but ensures that we have at least one test for every entity attr so later we can add some meaningful tests for them if needed (edited)
