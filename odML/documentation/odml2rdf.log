@@ -2169,3 +2169,45 @@ rickskyy
 The solution I see here is just extend SampleFileCreator with all properties we have, so the SampleFileOperationTest.test restore() can check this, or change SampleFileOperationTest.test_restore() so we can pass docs created with SampleFileCreator directly as params and create test funcs for every attribute in specific to the entity modules (edited)
 6:00
 the last suggestion will take more time, but ensures that we have at least one test for every entity attr so later we can add some meaningful tests for them if needed (edited)
+
+
+09.08.2017
+
+dumdribille
+3:28 PM
+While reviewing I just realized sthg I overlooked in the previous rdf_converter PR
+3:29
+currently the hub gets an id which is not what we had in mind from the beginning.
+3:30
+if we imagine a merge between two graphs, we ideally want them merged via the same hub
+3:30
+we can't do that, if the hub of two graphs have different ids
+rickskyy
+3:31 PM
+you want to say we need to set hub id by default
+dumdribille
+3:31 PM
+no, the hub has no id
+3:31
+it does not need one :slightly_smiling_face:
+3:32
+thats why there is none in the conversion description
+3:32
+but I completely blanked on that while reviewing the converter PR
+3:33
+so hub id should be removed again, sry
+rickskyy
+3:33 PM
+that's fine
+rickskyy
+4:05 PM
+@dumdribille I am just trying to understand what would be the subject of the triple which describe Hub. Smth like this:
+odml:Hub
+   odml:hasDocument <https://g-node.org/projects/odml-rdf#id_doc>,
+       <https://g-node.org/projects/odml-rdf#id_doc2> ;
+   odml:hasTerminology <https://g-node.org/projects/odml-rdf#id_terminology> .? (edited)
+rickskyy
+5:38 PM
+I think it is fine
+
+
