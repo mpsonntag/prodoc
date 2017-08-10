@@ -2211,3 +2211,289 @@ rickskyy
 I think it is fine
 
 
+10.08.2017
+dumdribille
+10:32 AM
+that is actually a good question...
+10:33
+I would have said the example you posted above is ok, but could you try creating two RDF graphs with the implementation above and then merging them, checking, if they were properly merged via exactly one Hub node?
+rickskyy
+11:14 AM
+Ok will try now. Sorry about issue with ids I guess I missed it while merging , will fix now
+dumdribille
+11:14 AM
+no problemo, I'm fuzzy on the details here as well. :wink:
+11:15
+trial and error will show us the way
+11:18
+We might need a constant id for the Hub in the end which is the same everywhere to make it available for a merge, but it can't be a random UUID every time we export a document.
+rickskyy
+12:16 PM
+The URI like https://g-node.org/projects/odml-rdf#Hub works as an id, in above logic there are not much sense to have constant id everywhere I think (edited)
+rickskyy
+12:33 PM
+ex_1.ttl
+I tested merging graphs as it is without id and I think it works well, here is files testes
+rickskyy
+12:35 PM
+ex_2.ttl
+rickskyy
+12:35 PM
+merge.ttl
+rickskyy
+12:38 PM
+The script
+dumdribille
+12:51 PM
+awesome, thats perfect!
+rickskyy
+12:52 PM
+Wait minute before closing PR is it ok
+dumdribille
+12:52 PM
+then we can remove the hub.id everywhere with good conscience :wink:
+rickskyy
+12:52 PM
+Have some fixes
+12:53
+Yeah that is what I wanted to do finally
+rickskyy
+1:57 PM
+saw your request changed that but ran into some odd error with another stuff, trying to fix
+dumdribille
+1:57 PM
+no hurries!
+rickskyy
+1:57 PM
+While using argparse and calling funcs from terminal got this:
+   RDFWriter(odml.load(input_path)).write_file(output_path, res_format)
+TypeError: write_file() takes exactly 2 arguments (3 given)
+1:57
+I am just stuck a little
+1:58
+how it possible
+dumdribille
+1:58 PM
+thats odd
+rickskyy
+1:58 PM
+but when calling that funcs from a test script not terminal everything is fine
+1:59
+also I found the argparse was not working since I deleted the main(), so I fixed that
+1:59
+but I really confused with the error
+achilleas
+1:59 PM
+it says 3 given because the first argument is self
+1:59
+Since it’s being called as an object method
+rickskyy
+2:02 PM
+you are my savior, just forgot about it, my fault)
+achilleas
+2:02 PM
+I assume the test script is using the checked out repository, which is your branch
+2:02
+and from the term you’re importing the old version?
+2:02
+:slightly_smiling_face:
+2:02
+Glad to be of service
+rickskyy
+2:04 PM
+I thought I was using checkout repository
+2:05
+I mean it is a good question because I do not know what version I call in terminal and what happens inside (edited)
+achilleas
+2:07 PM
+you can use
+
+import odml
+odml.__file__
+
+2:07
+So see where it’s being imported from
+rickskyy
+2:10 PM
+i got this i think it ok
+'/usr/local/lib/python2.7/dist-packages/odML-1.3.dev0-py2.7.egg/odml/__init__.pyc'
+achilleas
+2:12 PM
+well that’s your system-wide installed odml package, which means if you switch branches or change things in your code directory, you wont be using the latest changes from the term
+rickskyy
+2:12 PM
+so it takes the version where .write_file was not an object method?
+ok
+2:13
+how could  Ichange that
+achilleas
+2:13 PM
+no I think it takes a version where .write_file didn’t take a format argument
+rickskyy
+2:13 PM
+wondering why my manual tests were passing before) (edited)
+achilleas
+2:14 PM
+You can uninstall the system-wide odml pip uninstall odml and then from the code directory do python setup.py develop
+2:16
+Which puts a symlink in the site-packages and so whenever you import, the system-wide version becomes whatever you have in your code repo
+rickskyy
+2:17 PM
+thank you work out nice
+achilleas
+2:17 PM
+:thumbsup:
+thumbsup:
+rickskyy
+2:19 PM
+:blush:
+dumdribille
+2:40 PM
+just saw the changes on the PR. will choices=list(cls._conversion_formats) just add the list of keys of the _conversion_formats dict?
+rickskyy
+2:40 PM
+yes
+2:40
+i checked that
+dumdribille
+2:41 PM
+ok, nice. :slightly_smiling_face:
+2:41
+and approved.
+rickskyy
+2:42 PM
+oh i do not know if it works at python 2)
+2:42
+guess if travis built it it is fine
+2:42
+or not?
+dumdribille
+2:44 PM
+is there a test that checks parsing from the commandline?
+rickskyy
+2:44 PM
+no)
+2:45
+will write now and check
+dumdribille
+2:45 PM
+cool, thx!
+rickskyy
+2:45 PM
+I was actually struggling with how to test creation of folders and so on
+2:47
+because FormatConverter has not covered with tests at all yet
+dumdribille
+2:48 PM
+ah, ok.
+2:48
+any particular difficulties? I'm just wondering if we have some similar tests in another project already I could point you to.
+rickskyy
+2:50 PM
+before I used stringIO for testing files but how do I check creating of folders subfolders etc automatically, I should surf for some solution in the web (edited)
+dumdribille
+2:54 PM
+hm, I don't think we have similar tests in python so far.
+2:54
+the only thing remotely similar would be this here, but I don't know if that is of any help to what you have in mind
+2:54
+https://github.com/G-Node/gin-repo/blob/master/contrib/mkdata.py
+GitHub
+G-Node/gin-repo
+gin-repo - G-Node Infrastructure - Repository server
+rickskyy
+3:01 PM
+it might help
+3:01
+thanks
+3:06
+@dumdribille read all newly created todos, everything is well described, really no questions)
+dumdribille
+3:08 PM
+ok, cool! I tried to be as descriptive as possible.
+rickskyy
+3:09 PM
+You did a great job towards detalization)
+dumdribille
+3:09 PM
+:wink:
+3:10
+I will be on vacation until 28.08
+3:10
+I will be available on and off tomorrow as the wlan on the train permits
+3:11
+and will probably look in on slack and email until wednesday next week, but then I'm offline
+3:11
+if any questions come up I try to answer everything until wednesday
+rickskyy
+3:12 PM
+ok, I think I will make some progress in those directions so will see if I would have any
+3:12
+how about others?
+dumdribille
+3:12 PM
+as far as I know, Jan and Achilleas will be still here until friday next week
+rickskyy
+3:13 PM
+ok good
+achilleas
+3:13 PM
+nods
+achilleas
+3:13 PM
+yeah, I’m here until 18
+rickskyy
+3:13 PM
+Wondering how you make nice references
+rickskyy
+3:13 PM
+rickskyy
+3:13 PM
+like this
+3:14
+first page of google have not provided me with the answer on several requests
+3:14
+:sweat_smile:
+achilleas
+3:14 PM
+The thing you see on the second screenshot happens automatically when you put the #number in the comment
+rickskyy
+3:15 PM
+ok I did it on first
+3:15
+and nothing happened
+3:15
+I want some magic)
+achilleas
+3:15 PM
+can you link the issue where you made the comment?
+rickskyy
+3:15 PM
+https://github.com/G-Node/python-odml/pull/145
+GitHub
+Add Property.value_origin and Property.reference attrs by rickskyy · Pull Request #145 · G-Node/python-odml
+This PR includes: Merge of python-odml/master and python-odml/dev-odml-rdf branches. Add Property.value_origin and Property.reference attributes to the rdf converter. Relevant changes to ontology.
+achilleas
+3:16 PM
+right, so if you go to #141 you’ll see it says you referenced issue #141 from #145
+rickskyy
+3:16 PM
+oh i got it
+3:17
+thanks
+3:18
+it was easy)))))
+achilleas
+3:18 PM
+if you want to reference stuff in another repository, you can do stuff like user/repository#number (e.g., G-Node/odml-ui#10)
+rickskyy
+3:18 PM
+cool
+achilleas
+3:19 PM
+and if you reference an issue in a pull request with one of a few special keywords (stuff like fixes #10 or closes #20) the issue will be automatically closed when the PR is merged
+rickskyy
+3:21 PM
+that's nice feature
+
+
