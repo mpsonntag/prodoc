@@ -2760,4 +2760,183 @@ achilleas
 yeah
 
 
+12.08.2017
+
+jgrewe
+12:35 PM
+I rebased the rdf branch against master and pushed it to g-node as rdf_converter. @rickskyy please confirm that it is correct. In particular the following file:
+- test_rdf_writer: [rdf] remove id form hub removes parts of the test line24 ff, in [rdf] adding value_origin attr to rdf converter these lines are again present… and it fails on travis :slightly_smiling_face: (edited)
+rickskyy
+12:37 PM
+Ok, will check now
+jgrewe
+12:39 PM
+Thanks!
+for the following let us try to keep it free of merge commits that introduce changes from master.
+The workflow could be something like:
+1: always work o topic branches
+2: rebase the rdf branch if there are changes in master, that need to be taken over. This should keep ther merge to master clean
+rickskyy
+12:40 PM
+Good, I understand, thank you)
+jgrewe
+12:44 PM
+do you understand the traiv fail?
+rickskyy
+12:44 PM
+Ok where I can see the changes @jgrewe ?
+jgrewe
+12:44 PM
+https://travis-ci.org/G-Node/python-odml/jobs/263791607
+12:44
+this is the travis error log (edited)
+12:45
+https://github.com/G-Node/python-odml/tree/rdf_converter
+GitHub
+G-Node/python-odml
+python-odml - odML libraries
+12:45
+this is the new branch, should include all your commits :slightly_smiling_face:
+rickskyy
+12:46 PM
+Oh it is named as my old branch so I thought it is smth strange
+jgrewe
+12:46 PM
+haha
+12:46
+bad luck
+12:47
+a convenient name
+rickskyy
+12:48 PM
+yeah it looks like we forgot smth in id section
+12:48
+id part*
+jgrewe
+12:50 PM
+ups, did I forget a commit?
+rickskyy
+12:59 PM
+i do not know check if you forgot
+12:59
+but there is missing id=None in Property constructor
+1:00
+that is it, I run tests locally and everything is ok)
+jgrewe
+1:00 PM
+you’r right, fixes everything
+1:00
+nice
+1:01
+funny error message
+rickskyy
+1:01 PM
+so should I check all commits missing?
+1:01
+if missing
+jgrewe
+1:01 PM
+yeah, would be good, in particular the test_rdf_writer which had a conflict
+1:01
+the other “should” be fine
+rickskyy
+1:02 PM
+so would you add new commit, or maybe I will add one with all fixes later
+jgrewe
+1:02 PM
+I will introduce the id fix now
+rickskyy
+1:02 PM
+with all fixes if needed*
+1:03
+I see you added some commits from open prs too
+jgrewe
+1:04 PM
+yes, all of them I hope
+rickskyy
+1:04 PM
+except new one
+1:04
+about sparql
+jgrewe
+1:04 PM
+ah, yes, they are not in yet
+1:05
+so 144 and 145 it was
+rickskyy
+1:06 PM
+ok, will just bring second screen from another room, and start reviewing:smile:
+jgrewe
+1:08 PM
+haha, will look impressive on your desk :slightly_smiling_face: Just pushed the id fix
+1:12
+I will be offline for a while but will be back later. see you
+rickskyy
+1:12 PM
+fine
+rickskyy
+1:25 PM
+test_rdf_writer is ok
+1:29
+overall it looks like you did a great job and everything merged perfectly. Although somehow PEP8 blank lines in the end of almost all edited files are removed, but that is totally fine)
+jgrewe
+2:27 PM
+hehe, cool, I can live with this :slightly_smiling_face:
+Thanks a lot. I will then close your prs, and we can decide to work against rdf_converter from now on or I will force push the “old” odml_rdf_dev branch. What do you think?
+rickskyy
+2:29 PM
+I vote for force push I like the previous name better)
+2:29
+So I will reopen the sparql stuff in the updated brunch
+achilleas
+2:30 PM
+I see y’all are having fun
+jgrewe
+2:30 PM
+ok, fine with me :slightly_smiling_face:
+2:30
+indeed
+achilleas
+2:30 PM
+branches sorted?
+rickskyy
+2:31 PM
+Yeap
+achilleas
+2:31 PM
+neato
+rickskyy
+2:31 PM
+Happy Saturday:smile:
+achilleas
+2:31 PM
+woo \o/
+jgrewe
+2:32 PM
+it always makes me nervous to force push to g-node, why?
+rickskyy
+2:33 PM
+You can do it)
+achilleas
+2:33 PM
+I don’t know but it should so you’re ok
+2:33
+I mean, it should make you nervous
+2:33
+that way you’re more likely to pay attention to what you’re doing :smile:
+jgrewe
+2:34 PM
+yeah, you’r right, works for me, I guess
+2:35
+https://github.com/G-Node/python-odml/network
+GitHub
+G-Node/python-odml
+python-odml - odML libraries
+2:36
+nice and clean :slightly_smiling_face:
+rickskyy
+2:36 PM
+:blush:
+
+
 
