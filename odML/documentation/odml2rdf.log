@@ -2939,4 +2939,18 @@ rickskyy
 :blush:
 
 
+17.08.2017
+rickskyy
+10:13 AM
+Good morning everyone. How are you doing? Want to ask you for advice. I prepared a PR with RDF-odml converter and branched it from last merged commit from G-Node/dev-odml-rdf. While developing I reused the newly merged to master branch ODMLReader, used some functions from it (to not writing same thing again) and extended it with RDF parser. Also I will rewrite RDFWriter class to make it compatible with the generic converter, so the overall picture will be nice. The question is how should I deal with changed odmlparser.py. Should I just add it dev-odml-rdf and then in the future we resolve changes while merging? Or we need to rebase dev-odml-rdf onto changes in master now. I saw there also some stuff that need to be resolved.
+jgrewe
+2:55 PM
+Hi rickskyy sorry for being slow with replies. It's been a busy week so far...
+Regarding your question: I just rebased and force pushed
+2:57
+hope that helps
+rickskyy
+3:05 PM
+great thanks)
+
 
