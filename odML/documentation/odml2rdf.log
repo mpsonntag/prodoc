@@ -2497,3 +2497,267 @@ rickskyy
 that's nice feature
 
 
+11.08.2017
+
+rickskyy
+11:39 AM
+
+@prefix odml: <https://g-node.org/projects/odml-rdf#> .
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+File used for queries
+rickskyy
+11:39 AM
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet type="text/xsl" href="odmlTerms.xsl"?>
+
+<?xml-stylesheet type="text/xsl" href="odml.xsl"?>
+
+<odML version="1.1">
+
+  <section>
+
+rickskyy
+11:39 AM
+
+from rdflib import Graph, Namespace, RDF
+
+from rdflib.plugins.sparql import prepareQuery
+
+​
+
+g = Graph()
+
+g.parse(
+
+rickskyy
+11:41 AM
+
+q1
+
+Doc: https://g-node.org/projects/odml-rdf#cd24b60f-1d5e-4040-9881-5e5a597baef7, Sec: https://g-node.org/projects/odml-rdf#4620a3bf-3316-4a00-9fa0-206aaf520d4a,
+
+Prop: https://g-node.org/projects/odml-rdf#902f9acf-f13c-4b29-ae3b-a9463e480752, Bag: https://g-node.org/projects/odml-rdf#3aab5e4d-3be5-4ffa-92c2-a08ba2ab0393
+
+q2
+
+Doc: https://g-node.org/projects/odml-rdf#cd24b60f-1d5e-4040-9881-5e5a597baef7, Sec: https://g-node.org/projects/odml-rdf#4620a3bf-3316-4a00-9fa0-206aaf520d4a,
+
+Here is the result
+rickskyy
+11:43 AM
+commented on query.py
+@jgrewe Please check the queries you mentioned in https://github.com/G-Node/python-odml/issues/142
+rickskyy
+11:50 AM
+The result is just URIRefs of entities, I guess when you mentioned select d.* from dataset d ... you wanted all info about the doc, but in this case I just wanted to try sparql and how to work with it. Please tell what you think.
+rickskyy
+3:05 PM
+Maybe you have more docs like this, so I can add them and see the results on merged graph
+rickskyy
+3:10 PM
+@dumdribille could I close approved by you PRs so I would not struggle with merging? Because I have another one with this sparql example one.
+achilleas
+3:11 PM
+Unfortunately, I doubt you'll get a response from Michi any time soon @rickskyy
+3:11
+WAIT WHAT
+dumdribille
+3:11 PM
+@achilleas got 10 more min of wifi!
+achilleas
+3:11 PM
+He's TYPING
+rickskyy
+3:11 PM
+yeah)
+dumdribille
+3:11 PM
+then vienna .D
+achilleas
+3:11 PM
+well, thanks for making me look all WRONG
+dumdribille
+3:11 PM
+was a fluke, wifi is coming and goi
+rickskyy
+3:11 PM
+:smile:
+dumdribille
+3:11 PM
+hah, that was nice
+achilleas
+3:12 PM
+lol
+3:12
+indeed
+3:12
+ok then I'll go away so as to not add any more noise and let you guys do your thang
+dumdribille
+3:12 PM
+@rickskyy regarding the PR: really want @jgrewe to also sign off on these so we know he is in the loop...
+rickskyy
+3:13 PM
+ok fine, I will add PR from new branch then
+3:13
+what about reviewing in the future?
+dumdribille
+3:13 PM
+I know it`s a bit tedious but that ensures that people all over are on the same page :wink:
+rickskyy
+3:14 PM
+during next week
+dumdribille
+3:14 PM
+I'm also sitting on tons of PRs :stuck_out_tongue:
+rickskyy
+3:14 PM
+lol
+3:14
+nice vacation)
+dumdribille
+3:14 PM
+we'll 5 by now actually, lets not go overboard
+3:15
+I will be able to read PRs until Wednesday, just a bit less frequent
+rickskyy
+3:15 PM
+ok, I got the point, enjoy your trip)
+dumdribille
+3:15 PM
+after wednesday i'm out of it and jan and you can close PRs when they are reviewed, I will catch up on the closed PRs when I'm back :wink: (edited)
+rickskyy
+3:16 PM
+good)
+dumdribille
+3:16 PM
+ok, need to sign off now and pack up mah stuff
+3:17
+I'll shortly check back this evening
+jgrewe
+3:55 PM
+@rickskyy, @achilleas  I just tried to catch up with the odml pull requests… I am kind of afraid we aready have a mess at hand…
+3:56
+for example the #145 contains stuff that should go to master, right?
+3:56
+The handling of the core stuff
+achilleas
+3:56 PM
+e.g., value origin
+3:56
+yeah
+3:57
+But we could cherry pick later, if they're independent enough
+jgrewe
+3:57 PM
+So either I merge this one and we cherry pick to master but this will be terrible when ref needs to be merged into master
+achilleas
+3:57 PM
+blergh
+jgrewe
+3:57 PM
+ups, rdf, not ref
+achilleas
+3:59 PM
+yeah I see your point
+rickskyy
+3:59 PM
+I think I misunderstood
+3:59
+and make all this bad
+achilleas
+3:59 PM
+anything else you've noticed that makes things messy? I haven't been paying attention to odml today and I'm way behind on the rdf progress
+jgrewe
+3:59 PM
+rather, methinls we should have the core parts going to master, rebase rdf against master
+rickskyy
+3:59 PM
+oh wait
+4:00
+master is already contains core values
+4:00
+changes
+4:00
+everything is ok
+4:00
+I mean there are some commits from master but that is what was indented
+jgrewe
+4:00 PM
+ok, hm, let’s still think for a bit
+rickskyy
+4:00 PM
+I made as @dumdribille said
+4:01
+i find the message
+jgrewe
+4:01 PM
+@rickskyy do not worry
+rickskyy
+4:02 PM
+So the first step would be to implement and merge this into python-odml master, then import into the rdf-dev branch, add this field to the ontology and then include it into the RDF export as well
+4:02
+@dumdribille closed PR
+4:02
+to master
+jgrewe
+4:02 PM
+Cleanest way probably is to first rebase rdf against master
+rickskyy
+4:02 PM
+https://github.com/G-Node/python-odml/pull/143
+GitHub
+Add value_origin to the Property entity by rickskyy · Pull Request #143 · G-Node/python-odml
+Implementation of the Property.value_origin due to #130
+jgrewe
+4:04 PM
+tricky things are the merges from master into rdf
+rickskyy
+4:04 PM
+will they matter in the future?
+jgrewe
+4:04 PM
+when we want to merge rdf into master, maybe they cause trouble
+4:09
+just tried to rebase it and failed :disappointed:
+rickskyy
+4:09 PM
+I think it's ok, because there were small changes, so even if it would be some conflicts , it can be easilt resolved, but I up to your suggestions
+jgrewe
+4:09 PM
+let’s see how bad it is
+4:13
+ok, not too bad
+jgrewe
+4:22 PM
+How best to proceed? @achilleas would like to have your opinion on this:
+In short: Situation now is a bit messy, lots of merge commits in the repo, some conflicts as well.
+1. I would force push the rebased rdf branch
+2. @rickskyy would need to pull it and rebase his topic branches onto the updated rdf
+3. from branch rickskyy:dev-value (pull request 145) only the last 4 commits should be cherry picked into a new topic branch
+4. same may apply to pull request 144… ups, this ist basically equivalent of the g-node:dev-odml-rdf…
+4:22
+bad idea, need to clean point 4 first…
+achilleas
+4:47 PM
+yeah, I don't think it's that bad to rebase and force push dev branches. In the worst case, if you don't like forcing it, we could rebase and push as a new branch rdf...-rebased or whatever, to keep things clean-ish
+jgrewe
+5:26 PM
+alternative approach: I cherry pick the stuff from the development branches …
+5:26
+but kind fo risky to miss some essential commits :slightly_smiling_face:
+achilleas
+5:31 PM
+yeah
+
+
+
