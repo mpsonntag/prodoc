@@ -3053,3 +3053,99 @@ U6 is the name of the subway line and klinikum grosshadern is the name of the st
 rickskyy
 7:39 PM
 Oh, I got it. I just googled lmu location and omitted the fact that institute can be located in the other place
+
+
+04.09.2017
+rickskyy
+11:34 AM
+I am finally back) It was a tough journey. We were late for our train from poland to ukraine by only 5 min because of people were running a marathon and the road was closed. Overall the bus was late for almost 2 hours but the running guys killed our hope at the last moment. Nevertheless, we managed to get back to Kyiv through Lviv :slightly_smiling_face: (edited)
+dumdribille
+11:51 AM
+aaaah that sucks...
+11:52
+sorry to hear it! I hope you didn't have to buy new tickets for the train. :confused:
+rickskyy
+12:09 PM
+it was cheap and also I returned some money from the one we missed, not a big deal - overall lose was like a good beer in Munich)
+dumdribille
+12:11 PM
+ah ok, glad to hear it. :sli
+
+
+06.09.2017
+rickskyy
+2:16 PM
+@dumdribille @achilleas want to ask you a git related question.
+I have just rebased some feature branches (tests, sub-sec) onto the merged commits (from rdf-odml) to have a cleaner history. Since tests and sub-sec were not merged yet by making my changes public I overwrote my previously commited files and comments appeared above commits. Though it maybe do not makes much difference, if I do not change the content of new commits, I want to make clear that I chose the right way to do the process in the future.
+2:17
+See Michael have just merged tests while I was writing this :sweat_smile:
+achilleas
+2:18 PM
+Generally speaking, as long as the branches aren't merged and especially if they're on your personal fork, you can rewrite history as much as you want :slightly_smiling_face:
+2:19
+You're correct in thinking that, since there was an open pull request with those branches, you didn't want to change the commit messages
+2:20
+If I understand what you're describing correctly, that's basically how we do it as well. If a branch associated with an open pull request needs rebasing, we try not to change the order and messages of the new commits, so that it appears as if it was written after the latest merge.
+2:21
+Some people like to reorder commits to bundle them together so that they make more sense, others like to squash them to make history shorter. I don't think any of us have specific preferences for these cases.
+rickskyy
+2:31 PM
+Understood, thanks
+rickskyy
+5:57 PM
+@dumdribille added loading of subclass mappings via yaml in last commits. Check please if it looks appropriate, so I would add all subclasses from http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml
+dumdribille
+5:59 PM
+was just checking it, it looks fine.
+6:00
+should I merge the PR now or do you want to add the other classes to this PR?
+rickskyy
+6:01 PM
+actually I just wanted to extend this yaml file, if it is in the high priority
+dumdribille
+6:01 PM
+sounds good, then I'll wait until you've had the chance to add it. :wink:
+
+
+07.09.2017
+
+rickskyy
+11:03 AM
+@dumdribille want to set up my work plan for next days and prioritize the tasks. Here is how I see the whole picture.
+0) Running complex queries for multiple files (probably all gin repo) to compare efficiency on different rdf libraries. #167
+1) Setup Jupyter Notebook #117 (Document examples of usage of implemented classes)
+2) Tests + subclasses implementation for RDFReader
+3) Somehow merge FormatConverter with existing tools and rename it...
+4) Add subclasses to ontology after all is approved to be efficient. (edited)
+11:05
+All in all, everything goes to #167 query efficiency comparison, am I right?
+dumdribille
+11:09 AM
+sounds very good!
+11:10
+and basically #167 should give us a good idea how well our design works so it indeed boils down to that issue. :slightly_smiling_face:
+rickskyy
+11:11 AM
+Do you think I should focus on queries first?
+dumdribille
+11:13 AM
+I think that would be the most important result for now, so I'd go for it first.
+11:14
+I think Jan will be back from vacation next week.
+11:15
+But we are going to a conference on Tuesday, so we'll be available via slack, but not via hangout.
+11:15
+I don't know Jans timetable yet, but would you have time for a hangout on Monday?
+rickskyy
+11:16 AM
+I think I will, but only after 2.30 pm my time - 1.30 yours
+dumdribille
+11:17 AM
+ok, cool. so if Jan is available, that would be nice to have some facetime again, now that everyone is back.
+rickskyy
+11:17 AM
+:blush:
+dumdribille
+11:19 AM
+we'll try to figure it out until tomorrow.
+
