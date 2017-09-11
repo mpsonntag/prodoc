@@ -328,3 +328,57 @@ We have problems on multiple levels:
 - link and include: are values of links attributes just name of sections in the current document
 
 
+Issues:
+
+- Subclassing for Sections and Properties Examples
+        Subclass Sections and Properties according to the type of available terminologies
+        Start with the Section and Property types in our current example files
+        e.g. odml:Person subclass odml:Section; odml:Electrode subclass odml:Section
+        Update the current odML ontology with these terms as new subclasses
+        to sections and properties. That way A Section of type "Electrode" can be
+        found either by "isSection" and "hasType=Electrode" or directly by
+        "isElectrode" which should make the queries more efficient when they become
+        more complex.
+
+- Generic Subclass exporter prototype
+refactor the current exporter to
+    - [ ] Implement a generic list filled with the newly added Section and
+            Property subclasses mapped to the corresponding type. This
+            list should be easily updatable with additional Section and
+            Property Subclasses.
+    - [ ] during the export, add a Section or Property check for type. If a Section or Property
+            is of a type in the list of subclasses, export them as the corresponding subclass
+            Otherwise export as plain Section or Property.
+            e.g.
+
+- Test queries for subclassing
+    Transform the queries created during the first round of testing into the
+        new version and add new specific queries against a couple of merged
+        documents.
+
+- Update import from RDF to odML of Subclass RDF documents
+    Refactor the importer so that it correctly interprets all subclasses of
+    Section as Section and subclasses of Property as Property during the
+    import process.
+
+- Port all documented odML Terminology terms to odML Ontology
+    Once the subclassing prototype works and the queries run
+    satisfyingly, include all described Sections and Properties from
+    the G-Node odML Terminology into the odML Ontology and make
+    them available to the rdf_exporter.
+
+- Updates for the odML converter
+  - [ ] when using the odML v1 -> v1.1 converter, make sure that the
+        document we convert is actually a v1 file. Do not try to
+        convert from a higher version to v1.1.
+  - [ ] define formats in only one place formats should be defined in just one place!
+            here
+                _conversion_formats = [
+                    "v1_1",
+                    "odml"
+                ]
+            and here
+                parser.add_argument("result_format", choices=['v1_1', 'odml'], help="Format of output files")
+
+- odml2rdf: add id label to graph
+
