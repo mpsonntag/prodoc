@@ -3226,3 +3226,63 @@ Great, it fits to me, I will prepare the recap)
 dumdribille
 4:19 PM
 awesome, thx!
+
+
+11.09.2017
+dumdribille
+12:30 PM
+huhu
+12:31
+Thomas hat gemeint, sobald wir ihm sagen, dass die arbeit von Yaroslav erledigt ist, weist er an, dass das geld überwiesen wird. dann dauerts noch etwa 2 wochen bis das geld tatsächlich im ausland ankommt, weils durch einige prüfungen durch muss.
+12:31
+außerdem wollte Thomas noch anmerken, dass er gerne einen server hätte, auf dem ein SPARQL endpoint auf die exportierten daten läuft, damit man das auch direkt testen kann.
+12:32
+und er hat gemeint, wenn nötig und falls Yaroslav das möchte, können wir noch einen weiteren monatsvertrag dranhängen.
+12:33
+denkst du wir sollen das alles heute schon mit Yaroslav ansprechen oder erst nächste woche und bis dahin nochmal einen detaillierteren plan für das letzte monat machen?
+dumdribille
+1:25 PM
+huhu nochmal
+1:26
+also Thomas meint, wir sollten alles auf einmal auszahlen, nachdem wir im ersten drittel nicht begonnen haben, das geld zu splitten. jetzt wär es inkonsistent 2/3 auszuzahlen und dann nochmal 1/3.
+jgrewe
+1:27 PM
+ok, von mir aus
+1:28
+dann muessen wir nur aufpassen, dass wir den cut auch bei Zeiten machen
+1:28
+und ihn nicht zu lange haengen lassen
+dumdribille
+1:28 PM
+indeed
+1:29
+wir können ja schauen, dass wir die wichtigsten punkte bis in zwei wochen fertig haben, die zahlung anweisen und polishing noch 1-2 wochen zu machen, dann sollte er das geld in3-4 wochen haben.
+jgrewe
+1:31 PM
+jupp, klingt gut
+dumdribille
+1:32 PM
+calling via hangout
+rickskyy
+1:33 PM
+https://docs.google.com/document/d/1BJy1nhzp9mmAHO-0Jn_ZyRnng9pYZNCbs0IKNvpnQFM/edit#
+dumdribille
+1:35 PM
+sry, microphone troubles
+rickskyy
+1:44 PM
+http://librdf.org/
+1:46
+https://github.com/RDFLib/rdflib-sqlalchemy/blob/develop/README.md
+GitHub
+RDFLib/rdflib-sqlalchemy
+rdflib-sqlalchemy - RDFLib store using SQLAlchemy dbapi as back-end
+jgrewe
+1:52 PM
+https://www.bioontology.org/wiki/images/6/6a/Triple_Stores.pdf
+1:52
+https://www.w3.org/wiki/LargeTripleStores
+rickskyy
+2:05 PM
+https://docs.google.com/document/d/1BJy1nhzp9mmAHO-0Jn_ZyRnng9pYZNCbs0IKNvpnQFM/edit?usp=sharing
+
