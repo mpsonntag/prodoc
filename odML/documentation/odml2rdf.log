@@ -3286,3 +3286,74 @@ rickskyy
 2:05 PM
 https://docs.google.com/document/d/1BJy1nhzp9mmAHO-0Jn_ZyRnng9pYZNCbs0IKNvpnQFM/edit?usp=sharing
 
+
+18.09.2017
+rickskyy
+9:33 AM
+Good morning everyone,
+Just pushed first version of fuzzy finder prototype.
+Have some questions.
+1) I have created a jupyter documentation for implemented RDF classes. Should I create a PR for the review or just send it here?
+2) Also I wanted to clarify the day of the meeting. Did we plan it for tomorrow or today? :sweat_smile: (edited)
+dumdribille
+1:28 PM
+I think we said tuesday again, but I might remember incorrectly. :slightly_smiling_face:
+1:29
+thx for the fuzzy finder, will check it later during the day!
+1:30
+ad 1) with respect to documentation I'm fine either way, lets see which @jgrewe prefers.
+
+
+19.09.2017
+
+rickskyy
+9:51 AM
+Hello @dumdribille  @jgrewe , is it possible to reschedule the meeting to 5pm my time 4pm yours today?
+jgrewe
+9:51 AM
+No problem from my side. See you later
+dumdribille
+10:34 AM
+no problem here either, until 4/5 then. :wink:
+rickskyy
+4:02 PM
+RDF tools.ipynb
+
+Binary Click to download
+dumdribille
+4:08 PM
+calling :slightly_smiling_face:
+jgrewe
+4:08 PM
+ups, second
+rickskyy
+4:22 PM
+1) doc(author:Name) sec(type:sec1) prop1(...) (edited)
+4:23
+2) doc(..) [sec(...)  prop1(..) prop2(..)] (edited)
+4:24
+3) doc sec prop1 prop2 (edited)
+4:25
+4) doc sec1 sec2 prop1 prop2 (edited)
+4:26
+5) d [s1 p1 p2] [s2 p3 p4] (edited)
+jgrewe
+4:27 PM
+ncbi
+dumdribille
+4:27 PM
+https://www.ncbi.nlm.nih.gov/books/NBK3837/
+NCBI Bookshelf
+Entrez Help
+Entrez is NCBI’s primary text search and retrieval system that integrates the PubMed database of biomedical literature with 38 other literature and molecular databases including DNA and protein sequence, structure, gene, genome, genetic variation and gene expression. This document is an overview of the Entrez databases, with general information on searching and displaying data. More detailed help is available for the individual Entrez databases in the NCBI Help Manual sections on the NCBI bookshelf.
+jgrewe
+4:34 PM
+Arthur[sec.name] AND Human[prop.value] (edited)
+rickskyy
+4:38 PM
+select sec.name where doc(..) sec(type:sometype) prop(..) prop(..)
+jgrewe
+4:40 PM
+select sec.name where human and crew
+4:41
+ups, hangout crashed

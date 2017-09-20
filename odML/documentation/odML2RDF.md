@@ -302,7 +302,7 @@ We have problems on multiple levels:
 - should we use empty bag for None values
     MS: I'd say no, since then the edge 'hasValue' will not be present. I think this would reduce the complexity of SPARQL queries later.
 
-- how the terminology can be accessed / stored besids the url in the document
+- how the terminology can be accessed / stored besides the url in the document
     MS: This is touches actually an interesting, more general point: Are `Terminology` and `Document` the same?
         As far as I understand it so far, they are actually two different concepts. Maybe we should therefore 
         Also keep them semantically separate. So I would suggest using odml:Document and odml:Terminology as 
