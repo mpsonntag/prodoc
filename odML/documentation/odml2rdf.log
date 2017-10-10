@@ -3416,4 +3416,63 @@ rickskyy 6:45 PM
 Thank you for the information.
 
 
+10.10.2017
+dumdribille 11:27 AM
+@U642BPMRD just saw, that the two open PRs overlap to some degree, but are also somewhat different. Should I simply close the jupyter nb specific PR and we deal just with the Fuzzy finder PR?
+rickskyy 12:01 PM
+Yes, jupyter specific pr should be closed
+dumdribille 12:12 PM
+ok, closing now. :wink:
+dumdribille 1:21 PM
+@rickskyy @jgrewe just read through the PR, which provides quite a lot of really cool features, thx again! The PR is really quite large. I added a couple of review comments regarding the jupyter notebook which could be addressed right away. but there are two mayor points which @rickskyy already hinted in the chat above, and I'm not sure how to best address these.
+1:24
+1) Currently the PR contains tons of actual data as ttl files which we probably do not want to keep in the main repository. Therefore we probably won't merge the PR as is right now. The whole thing is useful for benchmarking nonetheless. Maybe the current comments I added can be addressed and after they have been resolved, we put the current PR into its own benchmarking branch? And once we have this branch, remove the tons of ttl files, add two or three short example ttl files, rewrite the jupyter notebook towards these files and also create proper tests with them as a basis?
+Or just rename the current notebook, but rename it to "benchmark sthg sthg" and add an additional one with the reduced example ttl files.* (edited)
+dumdribille 1:42 PM
+2) Thx for the fuzzy finder implementations! As mentioned above, there are two different implementations. If I got it right, the `FuzzyFinder.find` returns more exact matches, since the user specifies, that the query should specifically for property and section values. The `FuzzyFinder.find_fuzzy` iterates through combinations of propery, section and the provided values. In principle I like both approaches, I'll post some of the minor points in the PR review for more comments.
+The broader issue I currently have is, that with the current example files I honestly find it hard to evaluate the results and tell you if I like it from a users perspective. :wink: I guess we'll work on that when we have reduced example files.
+rickskyy 2:58 PM
+Responding to 2 point. Actually `find_fuzzy` returns the same thing as simple `find`. It just go through more combinations, but, nevertheless, my approach was to show/output more detailed query first in both functions and than more broad ones. You can see it in notebook but just brief example is:
+if tool found some triples that matched the most specific query (e.g. all input parameters can be used together in some way) it outputs it first, than it goes to less specific until only one parameter were matched.
+As you can see the output is somewhat complicated because I left lots of stuff to show the internal work of algorithms. So if we determine that we only need the most specific query result (or couple on the same level of specificity), we do need to output everything to the user. Also the user can choose whether he/she wants to see the whole output.
+rickskyy 3:04 PM
+I like the idea of creating new branch for benchmarking and create new notebook with more reduced examples.
+@dumdribille As I understood you proposed to have 2 notebooks that would differ only with amount of example files.
+Do you want to strictly separate benchmarking and general explanation in those files. So in the notebook with the reduced examples there won't be any tables with benchmarking  etc.
+dumdribille 3:05 PM
+yes exactly. one notebook would be for us, the other for potential users.
+rickskyy 3:07 PM
+got it, do we need to have rdf explanatory part with graph image in benchmarking notebook?
+dumdribille 3:08 PM
+no, I think this we can leave for the user specific notebook.
+rickskyy 3:08 PM
+cool
+rickskyy 3:16 PM
+@dumdribille @jgrewe Also dealing with ABC issues, I would like to discuss, if we really need those multiple parsers.
+From my perspective we would only need `find_fuzzy()` or a kind of its modification. However, if you think both `find()` and `find_fuzzy()` can be valuable and not confusing, than we can leave the structure with base parser class and multiple concrete parsers.
+dumdribille 3:18 PM
+I leave this question to the more python versed person. :slightly_smiling_face:
+jgrewe 3:18 PM
+hi rickskyy, I acutally thought that we should have a find with an default argument
+```find(terms, mode="fuzzy")```
+(edited)
+3:19
+or something similar, but this can be changed later
+rickskyy 3:25 PM
+@jgrewe that would just merge 2 functions to one. Actually I like the proposed idea in comments by @dumdribille to rename `find` to `match`.
+"Maybe rename this method to match, since find and fuzzy are already in the class name and this method is supposed to return results of exact matches of section and properties and the provided values; then it will also be better distinguishable from the second method."
+Your proposition also looks nice so I would support any of this. (edited)
+jgrewe 3:39 PM
+am I right, that find and fuzzy_find apply two different ways for finding stuff? If this is the case I would be fine with renmaing to match and pass the desired mode of search as an argument with a default of our choice
+new messages
+rickskyy 3:46 PM
+Yes you right, since they work with different types of our query strings.
+rickskyy 3:51 PM
+I do not really understand why we need mode then if we leave match() and fuzzy_find().
+Do you mean that fuzzy_find is just not good name so we have only find() and use mode for specificity.
+Or you would like to have 2 modes (like fuzzy and match) in find() function, so then we do not need public match() function.
+jgrewe 4:01 PM
+two modes that hide behind a find or match function
+rickskyy 4:57 PM
+Ok, understood
 
