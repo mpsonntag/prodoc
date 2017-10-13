@@ -3476,3 +3476,76 @@ two modes that hide behind a find or match function
 rickskyy 4:57 PM
 Ok, understood
 
+12.10.2017
+
+dumdribille 4:19 PM
+hey, what up? :slightly_smiling_face:
+4:20
+are you aware of hacktoberfest? :slightly_smiling_face:
+rickskyy 4:21 PM
+hello, fine, and you? No, Already googling it :smiley:
+dumdribille 4:21 PM
+https://hacktoberfest.digitalocean.com/
+DigitalOcean
+Hacktoberfest 2017 - DigitalOcean
+Hacktoberfest is a month-long celebration of open source software. (134kB)
+rickskyy 4:22 PM
+reading it now)
+4:22
+I heard about it last year or some similar stuff
+dumdribille 4:22 PM
+if you do 4 PRs on open source projects until the end of october you get a t-shirt and some awesome stickers. :smile:
+4:22
+we are all taking part
+4:22
+just for fun
+rickskyy 4:22 PM
+that is cool
+4:23
+now thinking how can I divide last PR in 4, lol
+dumdribille 4:24 PM
+yeah it kinda pushed people towards atomic PRs :stuck_out_tongue:
+rickskyy 4:25 PM
+should I create new benchmarking branch myself to push new documentation ?
+dumdribille 4:25 PM
+yeah, that would be awesome!
+rickskyy 4:29 PM
+I mean what is the best way to make last PR great again.
+I see steps in this way:
+1) Rewrite documentation without benchmarking, delete those much ttl files.
+2) Fix bugs all comments that you mentioned.
+3) Merge the PR with FuzzyFinder and QueryCreator.
+4) Create new branch from merged commits.
+5) Create PR with benchmarking notebook to new branch.
+6) Create PR with tests for all this stuff ( Possible 2 PRs in terms of T-Shirt for RDFReader and SPARQL staff)
+7) Do smth that I forget
+What do you think? (edited)
+dumdribille 4:36 PM
+Yeah, thats a really good plan, go for it! nothing in terms of #7 springs to mind. :wink:
+rickskyy 4:38 PM
+Good.
+4:39
+Still have some preparation for interviews and lots of work on university labs. Haskell is just racking me.
+dumdribille 4:40 PM
+functional ftw! wait...
+rickskyy 4:40 PM
+By the way, I succeed to get internship in SAP for 3 month from 8th of January to 8th of April. And also will go to on-site interview with Microsoft to Belgrad at the end of October.
+dumdribille 4:41 PM
+Awesome, congratualtions! \o/
+rickskyy 4:41 PM
+So maybe I will come to Munich during winter, also it will be cool to meet with all the odml team :smiley:
+dumdribille 4:41 PM
+cool, you are always welcome! :slightly_smiling_face:
+rickskyy 4:42 PM
+Thanks)
+rickskyy 5:48 PM
+Hey Michael, signing some docs for SAP internship, they ask about last employment. Am I right that I can legally say that LMU is my last employer?
+dumdribille 7:48 PM
+I'd say yes, but I will ask Thomas tomorrow to make sure.
+rickskyy 7:51 PM
+That would be great. I talked to Jan, he agreed that it would be ok to write smth like this below.
+For the question: "Last Employer" I wrote "Was External contractor with LMU" (shortened the name of university here)
+
+13.10.2017
+dumdribille 9:07 AM
+This you can write for sure! :slightly_smiling_face:
