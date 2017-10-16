@@ -3549,3 +3549,61 @@ For the question: "Last Employer" I wrote "Was External contractor with LMU" (sh
 13.10.2017
 dumdribille 9:07 AM
 This you can write for sure! :slightly_smiling_face:
+
+16.10.2017
+huhu
+1:30
+ich hätt zwei odml fragen:
+1:31
+1) soll ich den converter mal vom rdf dev in den master branch übernehmen?
+1:34
+2) der aktuelle python-odml master branch xmlparser parsed zwar v1 documents, aber lässt silently `unit` und `type` weg. soll ich mir das mal anschauen? wenn wir den converter in master übernehmen, könnte man ja automatisch vor dem parsen eine konvertierung machen. oder wir bauen ein, dass der parser auch v1 dokumente noch unterstützt und parsed, dem user aber als v1.1 zur verfügung stellt.
+jgrewe 2:25 PM
+hi, sorry, nicht frueher gesehen. mein Telefon war aus dem eduroam geflogen (mal wieder) und auf dem Desktop lief slack noch nicht....
+2:25
+Ja ,
+2:25
+Ja und ja :slightly_smiling_face:
+dumdribille 2:25 PM
+kein stress, kein stress
+jgrewe 2:25 PM
+Finde ich super
+dumdribille 2:25 PM
+ok! :slightly_smiling_face:
+2:26
+und noch wg der terminologies: ich hab ja mal alle durchgeschaut, weil ich mal wissen wollt, was da alles so drin vorkommt, struktur etc.
+jgrewe 2:26 PM
+ueberlege gerade, ob man das silently machen soll...
+2:26
+vieleicht nicht automatisch parsen aber eine flag anbieten?
+dumdribille 2:27 PM
+hm, mit dem aktuellen master funktionieren die parser ja nur noch mit v1.1 soweit ich das gesehen hab. ich würd daher die conversion von v1.0->v1.1 auf jeden fall automatisch machen, aber eine entsprechende meldung für den user ausgeben.
+2:28
+ohne die files tatsächlich anzufassen. wenn der user das file konvertieren möcht, muss er das dann per hand machen.
+2:31
+bzgl terminologies: wie handhaben wir das mit dem v1.1 branch? soll ich den mal mit den änderungen von jiri updaten? und wenn wir die python-odml 1.4 release haben mergen wir den in master?
+jgrewe 2:32 PM
+ja, wenn der converter geht, koennte man ja einfach alle durch das Dingen jagen und meine Aenderungen verwerfen
+2:32
+Wenn das release draussen ist, dann erst mergen, me thinks
+dumdribille 2:34 PM
+ok, dann mach ich erst mal den converter PR, wenn der drin ist konvertier ich die templates und replace damit den inhalt vom v1.1 branch und mach dann einen merge PR wenn python-odml 1.4 release gemacht ist. :wink:
+2:34
+und jetzt muss ich mal schauen, irgendwas passt mit dem rdf_converter und den values nicht, anscheinend wird jede value 4x geschrieben. :smile:
+jgrewe 2:36 PM
+hehe, sehr cool
+dumdribille 2:58 PM
+hui, fortunately that last one was user error. :stuck_out_tongue:
+new messages
+jgrewe 2:59 PM
+ohne user, waere die Welt so viel einfacher :
+dumdribille 4:43 PM
+hi everyone!
+4:43
+Thanks to @rickskyy we currently have a version converter in branch `dev-odml-rdf`. We would like to have this version converter already in the `master` branch, since we are going to need the plain conversion from odml version 1 to 1.1 a lot pretty soon.
+Currently this version converter is entangled with a further format converter which also includes RDF specific features.
+What I would like to do is, create a new file `VersionConverter`, migrate the VersionConverter specific code to this file and make two* pull requests, one towards `master` containing just the Converter, another towards `dev-odml-rdf` removing the VersionConverter from the FormatConverter file and adding the new VersionConverter file.
+Is that ok with everyone or are there other suggestions? (edited)
+jgrewe 6:01 PM
+no objections from my side
+
