@@ -3477,7 +3477,6 @@ rickskyy 4:57 PM
 Ok, understood
 
 12.10.2017
-
 dumdribille 4:19 PM
 hey, what up? :slightly_smiling_face:
 4:20
@@ -3606,4 +3605,51 @@ What I would like to do is, create a new file `VersionConverter`, migrate the Ve
 Is that ok with everyone or are there other suggestions? (edited)
 jgrewe 6:01 PM
 no objections from my side
+rickskyy 10:21 PM
+hi everyone! I made some updates to Fuzzy PR yesterday.
+1) Find functions were modified in relation to our discussion.
+2) Updated jupyter notebook: removed benchmarking parts, added more description of fuzzy finder usage for users, removed all ttls except 3 files.
+Looking forward to some feedback, to make sure that logically I implemented all functionality as it was intended, so I can move forward: write unit tests, then merge this PR to dev-odml-rdf and create new benchmarking branch.
+I do not want to hurry anyone, just wanted to point out that currently I do not plan to add anything before listening to your comments. (edited)
 
+17.10.2017
+dumdribille 10:17 AM
+I just looked through the PR and added a couple of minor comments.
+10:20
+The notebook looks really good, thx a lot! This is a really helpful* introduction and I think will help people getting started. I also like the graph you made! :+1::+1::+1: (edited)
+10:22
+I think its good as is and would merge it as soon as the `ttl` and `ABC` issues are addressed. :slightly_smiling_face:
+dumdribille 12:31 PM
+cool, thx for the changes, just approved the PR. :slightly_smiling_face:
+rickskyy 12:31 PM
+Thank you for your comments, hope i fixed that problems also tested fuzzy tool with python 2.
+dumdribille 12:31 PM
+perfect!
+dumdribille 3:16 PM
+aaaand merged! :slightly_smiling_face:
+rickskyy 3:32 PM
+cool thanks)
+rickskyy 4:25 PM
+hi, that's interesting that fuzzy PR did not count to the hacktoberfest progress, but the contribution to my own repository with university labs did. That's weird system, lol :smiley: Just commit any crappy things (maybe not) to your repos, but not count commits to real projects :sweat_smile: (edited)
+achilleas 4:25 PM
+Is it because it wasn't made against the default branch?
+rickskyy 4:27 PM
+I do know, I mean I even have not merged my labs to my repo master, because I am waiting for reviews from my teachers)
+dumdribille 4:27 PM
+I think it is because it was created before hacktoberfest even started.
+4:27
+it's when you create it not when it is merged I think
+achilleas 4:28 PM
+orite
+rickskyy 4:28 PM
+oh, right
+dumdribille 4:28 PM
+this one was open for waaaaay to long, sorry about that...
+rickskyy 4:28 PM
+hahah no need to sorry
+4:29
+just wrote because it was funny to me)
+rickskyy 4:40 PM
+Again what is the final decision with benchmarking? should I create new python-odml/benchmarking branch from dev-odml-rdf, add the pro jupyter doc as well as 17k triples? (edited)
+dumdribille 4:41 PM
+from my point of view, yes. :slightly_smiling_face:
