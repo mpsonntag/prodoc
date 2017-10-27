@@ -3653,3 +3653,56 @@ rickskyy 4:40 PM
 Again what is the final decision with benchmarking? should I create new python-odml/benchmarking branch from dev-odml-rdf, add the pro jupyter doc as well as 17k triples? (edited)
 dumdribille 4:41 PM
 from my point of view, yes. :slightly_smiling_face:
+
+
+26.10.2017
+dumdribille 2:06 PM
+huhu
+2:06
+hab mal ein paar gedanken für den neuen contract für Yaroslav zusammengeworfen.
+2:06
+gib bescheid, was du davon hältst.
+2:11
+Regarding the remuneration:
+- Corresponds to a months worth's work. The money is accordingly adjusted compared to the previous one. Money will be released when we see the contract fullfilled.
+
+Content of the Contract:
+- Python SPARQL library benchmarking
+   - Create a benchmarking branch (dev-bench-rdf) using the latest available dev-odml-rdf branch and keeping it in sync with dev-odml-rdf until the end of the contract.
+This branch should contain all files from the gin repositories "gin.g-node.org/G-Node/odmlFiles" and "gin.g-node.org/INM6/multielectrode_grasp"
+   - The files found in these repositories should be converted to rdf, the resulting rdf files put in the folder "doc/benchmark".
+   - An ipython notebook should be created in the same folder. A couple of different Python RDF SPARQL libraries should be
+tested using a single graph from all the converted rdf files and the queries developed for the ipython notebook of the dev-odml-rdf branch.
+   - In the ipython notebook provide statistics for
+       - the machine the notebook is executed on.
+       - the number of available individual rdf files.
+       - times to load and create the graph of all the available rdf files with the different SPARQL libraries.
+       - statistics for the execution time of the SPARQL queries using the different SPARQL libraries.
+
+- A python3 server
+   - create a github repository / use github repository -> maybe we should create an empty repository under G-Node & yaroslav forks and pushes against it?)
+   - this python 3 server should provide an entry field either for fuzzy queries or proper SPARQL queries and displaying the results of the queries.
+   - queries should be executed using the SPARQL library identified in the benchmarking part of the contract.
+   - queries should be performed against a graph created with data from gin repository "gin.g-node.org/INM6/multielectrode_grasp"
+2:11
+Ich bin nächste woche auf urlaub, wie sollen wir bzgl am besten weiter tun?
+jgrewe 8:24 PM
+hi, entschuldige, dass ich da nicht schon frueher reingeschaut habe. Hatte slack nicht auf meinen Desktop laufen. Finde das sehr gut, und recht ausführlich. Kann vor allem die python3 server Seite nicht einschätzen…
+8:26
+Vielleicht sollten wir ihm morgen noch schreiben, und dann von ihm erfahren ob er da lust und Zeit für hat
+
+
+27.10.2017
+dumdribille 9:59 AM
+kein stress, kein stress, ich denk mal du hast zz echt genug zu tun. :slightly_smiling_face: (edited)
+10:01
+Ich kann heut bis mittag mal bei yaro anfragen ob er prinzipiell interesse.
+10:02
+ich bin dann halt ab nm die nächste woche auf urlaub und kann nicht wirklich abschätzen wann ich online sein kann u wann nicht. ich fahr je nach wetter in die berge u dort gitbs meistens kein internet. :wink:
+10:04
+der server ist auch für mich noch ein bisschen mysterium, nachdems da ja keine klaren vorgaben gibt... aber wenn wir das so lose halten wie den fuzzy finder im ersten vertrag wird schon irgendwas verwertbares dabei rausschauen, und wenns nur detaillierte queries sind. :wink:
+dumdribille 10:13 AM
+ich hab mal ein kurzes bla für yaro aufgesetzt, das könnt ich jederzeit abschicken, wenn das für dich passt!
+
+
+
