@@ -3705,4 +3705,81 @@ dumdribille 10:13 AM
 ich hab mal ein kurzes bla für yaro aufgesetzt, das könnt ich jederzeit abschicken, wenn das für dich passt!
 
 
-
+07.11.2017
+dumdribille 11:45 AM
+hi! what's up, everything going smoothly at the university? any news from the internships?
+rickskyy 11:45 AM
+hello just returned from the interview a couple of days ago
+11:46
+trying to catch everything up in the university, 4 weeks left, still lot's of stuff to do
+11:47
+I did not succeed to the position in Microsoft but the experience was great and useful
+11:49
+I know I left some tasks on the python-odml, , sorry for that, hope to complete them during next few days.
+11:49
+how are you?
+dumdribille 11:49 AM
+don't worry about it. :wink:
+11:49
+did the guys at microsoft encourage you to apply again when you got more experience or something?
+rickskyy 11:53 AM
+I was talking about results with the HR. She was shaping everything with good words, encouraging to apply next year. However, the process does not intend to provide applicants any feedback, so I have little info about why I did not successed.
+11:53
+Anyway I saw on what parts I could improve
+dumdribille 11:54 AM
+ah cool, so you got at least something out of it and a better idea if you choose to try another time. :slightly_smiling_face:
+rickskyy 11:55 AM
+Yeah)
+dumdribille 11:55 AM
+you mentioned before, that you would be interested in taking on another small contract, is that still the case? it would be for about one months programming, where we again would release the money whenever you are done with the work. in general we would include the benchmarking of different python SPARQL libraries, which you already put some work into and as a second part a small server where the library we would decide on in the benchmarking part is used to query/fuzzyfinderSearch an RDF graph and displays the results in a non-eyecancer way. :smile:
+rickskyy 11:57 AM
+Yeah, I  would like to do it. Besides I will be writing my diploma thesis on the odml topic, yet have not shaped in the specific topic name (edited)
+dumdribille 11:57 AM
+very cool
+rickskyy 11:59 AM
+Best case for me would be February-March, if it is ok. Unfortunately could not seriously commit before that.
+dumdribille 12:00 PM
+fair enough. :slightly_smiling_face:
+rickskyy 12:00 PM
+My SAP internship starts at January 8.
+12:01
+I assume I will need some time to get in shape in what they are doing, so I expect working extra time (reading about technologies an so on) (edited)
+dumdribille 12:01 PM
+cool, will you take a tour of all the different modules or rather concentrate on a specific one?
+rickskyy 12:02 PM
+For now Apache Jena seems to me the most promising
+12:02
+However I would maybe try something more
+dumdribille 12:03 PM
+yeah from what we have encountered so far, apache jena was the most mature one...
+rickskyy 12:04 PM
+Anyway it is all about choosing a storage, neo4j e.g. looks solid and they have some good tools to work with
+dumdribille 12:06 PM
+I've already heard quite a lot about neo4j, but didn't get the chance to try it out myself so far.
+rickskyy 12:08 PM
+also there are some options using Cloud services which I am really love
+12:08
+https://aws.amazon.com/ru/blogs/big-data/building-a-graph-database-on-aws-using-amazon-dynamodb-and-titan/
+Oct 22nd, 2015 at 8:39 PM
+12:09
+I had experience building some apps using AWS Lambda and they are really powerful
+12:09
+Also it can be cheaper than running instances all the time
+12:10
+if there is not much requests per day, the price would be really really low
+12:10
+This is kind of alternative approach
+dumdribille 12:10 PM
+cool, sounds really promising!
+rickskyy 12:11 PM
+Maybe not very practical :smiley:
+12:12
+But it would be much easier to build, since mostly everything is already there, just need to group the services into app
+dumdribille 12:23 PM
+sounds cool for our own use, but I am unsure how easy that would work for life scientists setting up an instance in their own lab, since all the code we produce needs to be open source and easily publicly available and useable.
+12:24
+I will talk to Thomas and Jan tomorrow regarding the contract in feb/mar. :slightly_smiling_face:
+rickskyy 12:24 PM
+Yeah that is exactly I was trying to say)
+12:24
+Great thank you)
