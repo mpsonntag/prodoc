@@ -1,8 +1,7 @@
-
+03.07.2017
 jgrewe
 1:54 PM
 joined #odml. Also, @achilleas joined.
-
 achilleas
 2:46 PM
 Weeeeell
@@ -10,21 +9,17 @@ Weeeeell
 Here I was trying to create the odML channel
 2:46
 and it's already here
-
 jgrewe
 4:46 PM
 sorry
-
 rickskyy
 5:53 PM
 joined #odml by invitation from @achilleas
-
 jgrewe
 6:01 PM
 ah
 6:01
 g’day
-
 rickskyy
 6:18 PM
 somewhat pessimistic ))"We have problems on multiple levels:
@@ -37,21 +32,20 @@ somewhat pessimistic ))"We have problems on multiple levels:
     - how would they like to search the data.
     - which RDF terminologies are they using, etc.
     - if they use validators for RDF graphs"
-
 jgrewe
 6:28 PM
 Indeed that sounds pessimistic
 6:28
 :smirk:
-
 jgrewe
 7:15 PM
 But methinks it is not that bad, or the other way round, we simply do what we like
 
+
+04.07.2017
 dumdribille
 11:26 AM
 joined #odml
-
 dumdribille
 11:27 AM
 @rickskyy jan and me are just re-organizing the odml document
@@ -61,13 +55,11 @@ adding examples for the more tricky parts
 and removing odml terms that should not be supported any longer
 11:28
 feel free to join in of course! :slightly_smiling_face:
-
 jgrewe
 11:28 AM
 @rickskyy, please visit gin.g-node.org and register there, then we can add you to a repository containing some example files
 11:29
 will be extending that
-
 rickskyy
 11:38 AM
 registered as rickskyy
@@ -76,11 +68,9 @@ https://web.gin.g-node.org/rickskyy
 web.gin.g-node.org
 rickskyy (Yaroslav Shalivskyy)
 rickskyy has 0 followers and is following 0 people.
-
 rickskyy
 11:49 AM
 the graph image is nice)
-
 dumdribille
 11:53 AM
 merci
@@ -90,47 +80,37 @@ the graph will still change today though :wink:
 with the changes @jgrewe an and me discussed just now
 11:54
 but everything will become easier which is nice...
-
 jgrewe
 11:57 AM
 @cgars could you add yaroslav to the gin/odmlFiles repo
-
 cgars
 11:57 AM
 joined #odml by invitation from @jgrewe
-
 rickskyy
 11:57 AM
 yeah it is easier to go from this point comparing to yesterday version)
-
 dumdribille
 3:00 PM
 k, I updated the document some more and added the new and improved first version draft graph!
-
 dumdribille
 5:44 PM
 c:
-
 rickskyy
 8:21 PM
 great, thanks) (edited)
+
+
+05.02.2017
 rickskyy
 11:19 AM
-
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?xml-stylesheet  type="text/xsl" href="odmlTerms.xsl"?>
-
 <?xml-stylesheet  type="text/xsl" href="odml.xsl"?>
-
 <odML version="1.1">
-
   <id>"1"</id>
-
 rickskyy
 11:21 AM
 Does this look ok? There will be uuids as ids, current id strings are just for example
-
 dumdribille
 12:13 PM
 oh, cool!
@@ -138,27 +118,22 @@ oh, cool!
 we have a meeting next
 12:14
 I'll get back to you in the afternoon when I had time to properly appreciate it :wink:
-
 rickskyy
 12:49 PM
 frankly there is nothing to really appreciate yet))
-
 dumdribille
 2:51 PM
 From my point of view the file looks good, except for the type in property which should be dtype instead.
 2:52
 I think thats to distinguish between the type of a section for searching purposes and the dtype which actually describes the datatype of the value.
-
 jgrewe
 2:53 PM
 uh, actually I am not sure, if dtype isn’t mapped to type in the xml writer
-
 dumdribille
 2:53 PM
 but that has been changed in the latest version of the odml->rdf document I think :wink:
 2:53
 ah, ok!
-
 jgrewe
 2:55 PM
 but in the rdf export I agree
@@ -167,34 +142,21 @@ should be dtype there
 2:55
 regarding the id strings, I guess there is not reason to have the with quotation marks
 rickskyy
-
 4:01 PM
 yeah, there won't be quotation marks (edited)
-
 rickskyy
 4:11 PM
-
 <rdf:RDF xml:lang="en"
-
          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-
          xmlns:odml="http://g-node/odml#"
-
          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-
 rickskyy
 4:11 PM
-
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?xml-stylesheet  type="text/xsl" href="odmlTerms.xsl"?>
-
 <?xml-stylesheet  type="text/xsl" href="odml.xsl"?>
-
 <odML version="1.1">
-
   <id>aaa</id>
-
 rickskyy
 4:11 PM
 so here is the example of an rdf and odml ( odml is mostly the same as I sent earlier)
@@ -203,15 +165,12 @@ rdf is validated by this tool from w3
 https://www.w3.org/RDF/Validator/
 4:14
 I like the validator because it automatically builds graph and generates errors if smth goes wrong with the rdf model (edited)
-
 rickskyy
 4:16 PM
 The graph generated
-
 rickskyy
 4:18 PM
 how does it look? I use this example as the starting point for the converter (edited)
-
 dumdribille
 4:18 PM
 I just glanced over everything and it looks really good!
@@ -219,7 +178,6 @@ I just glanced over everything and it looks really good!
 I got some comments, but I think I will only manage to properly think them through later in the afternoon. :wink:
 4:20
 the validator seems like  a really helpful tool!
-
 rickskyy
 4:21 PM
 the only problem is that it generates error if I use uuids which start with a digit
@@ -229,7 +187,6 @@ but for simple test examples it is quite good
 4:27
 Also I write some logs about my work in the doc below. Happy to see your comments or feedback there.
 https://docs.google.com/document/d/1EZu6g8TG2ZzoJaXNaTeMDFY5yQTJh1RRm6vf675bMsM/edit?usp=sharing
-
 dumdribille
 4:29 PM
 perfect, thx!
@@ -244,19 +201,12 @@ Like:
        <rdfs:comment>Information on the crew</rdfs:comment>It seems to me quite redundant. What do you think about the idea of mapping between such cases while converting to both sides? So the rdf doc would have only comment and odml definition respectively. (edited)
 rickskyy
 7:35 PM
-
 <?xml version="1.0" encoding="UTF-8"?>
-
 <rdf:RDF
-
    xmlns:ns1="http://g-node/odml#"
-
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-
 This is the example file generated with rdflib without duplicated properties.
-
 dumdribille
 7:59 PM
 finally had some time to look everything over!
@@ -277,27 +227,25 @@ in the concept document, everything in the "RDF alternative" column is supposed 
 8:03
 I think with respect to the other comments, I will collect them and comment in a couple of days, since I am sure, that many of them you have already on your mind, but had no time to address yet. :wink:
 
+
+07.07.2017
 rickskyy
 2:05 PM
 Hello everyone,Just uploaded the first version of a converter:https://github.com/rickskyy/python-odml/blob/rdf-converter/converter/tools/rdf_converter.pyNow working towards adding links and includes in sections.So far have some questions:1) What are specific data types can be used for objects in a triple, in particular, for values of a property, to specify for the xsd type schema? First one I saw and came with was date so I can explicitly specify it, guess there are more.2) Should the bag be created in all cases (even for one value)?
 GitHub
 rickskyy/python-odml
 python-odml - odML libraries and editor
-
 achilleas
 2:06 PM
 I've been falling behind on this so I'll have to check what you guys were talking about before having a look.
-
 dumdribille
 2:10 PM
 hi!
-
 dumdribille
 3:14 PM
 thx for the code!
 3:14
 ad 2) I would say use a bag in every case even if there is only one value
-
 dumdribille
 3:22 PM
 ad 1) I am not sure how we should add data types directly to values , since this is handled via property.dtype. The type defined there applies to all values in the bag. Maybe if dtype is a basic datatype, then add the corresponding datatype, otherwise add xsd:string.
@@ -307,11 +255,9 @@ we were also thinking about how to best do code reviews with the current project
 it would probably be best, if we create a dev-odml-rdf branch on G-Node/python-odml and @rickskyy can then do pull requests towards this branch
 3:24
 which we then can properly review, comment, issurize and everything
-
 achilleas
 3:25 PM
 odml-rdf-dev would be better, surely
-
 rickskyy
 6:34 PM
 thank you for the response)
@@ -328,11 +274,9 @@ Some questions to discuss.
     a) Does inheritance work only for properties or other attributes as well?
     b) Should I manage some validation issues e.g. is link from the section to its subsection is considered as mistake?
     c) Are values of links' attributes just name of Sections in the current document? (edited)
-
 dumdribille
 1:08 PM
 starting hangout :wink:
-
 jgrewe
 1:25 PM
 There are situations in which a strict application of the rules about the hierarchical organization (see above) 
@@ -356,19 +300,16 @@ has to be taken if the data is shared when local  les are referenced. As for the
 information overrides the one given in the included section.
 1:26
 some information on links and includes
-
 rickskyy
 9:44 PM
 Thanks Jan for the info. In general I understand the concept.
 I guess BaseSection.merge does the linkage. I did not see that when I was writing questions and thought I should implement this merge myself.
 Finally, in terms of the converter - the link is just a Literal string, and include is a string or a URIRef?
-
 jgrewe
 9:47 PM
 could you verify that the merge actually does what is claims? That would be great
 9:49
 both link and include are basically strings. The includes are urls/uris in the ideal world. could also be just filenames and path within that file
-
 rickskyy
 9:56 PM
 ok, I will check this
@@ -380,8 +321,6 @@ dumdribille
 I just created the dev-odml-rdf branch on the G-Node/python-odml repository from current master
 10:29
 @rickskyy you can create pull requests against that branch from now on. :slightly_smiling_face:
-
-
 dumdribille
 5:14 PM
 @rickskyy @jgrewe guys, I just added a Q&A section at the bottom of the "Exporting odML to RDF" google doc
@@ -403,17 +342,14 @@ should I post them here or add them to your day log google doc? I don't mind eit
 @jgrewe @rickskyy maybe we could also agree one time during the week, where we are more or less available for half a day and chat about arisen questions
 5:21
 because right now it is more or less asynchronious all the time :wink:
-
 dumdribille
 5:27 PM
 sucks a bit, that we all three sit in completely different locations :stuck_out_tongue:
-
 jgrewe
 5:30 PM
 indeed, I agree with the github issues if there is some intense discussio required we can still switch to slack or hangout (edited)
 5:32
 I am basically offline for the next two days
-
 dumdribille
 5:33 PM
 in general, when would be a good day for you to be available for chatting here?
@@ -421,7 +357,6 @@ in general, when would be a good day for you to be available for chatting here?
 on and off of course :wink:
 5:34
 just so @rickskyy and me know at that time its nice to hang out in the slackroom
-
 jgrewe
 5:34 PM
 can’t say definitely, things keep changing faster than I like
@@ -429,11 +364,9 @@ can’t say definitely, things keep changing faster than I like
 :slightly_smiling_face:
 5:34
 i usually have it on all day
-
 dumdribille
 5:34 PM
 thus is the life of a postdoc :stuck_out_tongue:
-
 jgrewe
 5:34 PM
 hehe
@@ -441,7 +374,6 @@ hehe
 maybe it is easier the other way round, Tuesday mornings is bad since we have seminars, I would also like to keep the Monday morning clear…
 5:36
 othewise I am mainly flexible
-
 dumdribille
 5:37 PM
 that sounds like a good approach!
@@ -449,18 +381,14 @@ that sounds like a good approach!
 for me monday afternoon sucks because of meetings, friday afternoon because of frequent vienna travels
 5:37
 and the DB does not provide wireless on their part of the travel-leg
-
 jgrewe
 5:38 PM
 fair enough :slightly_smiling_face: I considered ICE travel as a distraction-free time and now they have wireless … (edited)
-
 dumdribille
 5:39 PM
 on the upper hand, it keeps the other passengers quiet :wink:
 5:39
 *upside actually
-
-
 rickskyy
 5:46 PM
 hi everyone, sorry, was offline during the whole day. (edited)
@@ -671,8 +599,8 @@ rickskyy
 7:04 PM
 you too)
 
-12.07.2017
 
+12.07.2017
 rickskyy
 1:05 PM
 hi everyone, please check the hub implementation:
@@ -695,35 +623,33 @@ I think we should not use blank nodes, but rather use named nodes (URIRef) where
 I also put together a small example illustrating the custom namespace and how to add instances of custom types.
 dumdribille
 8:25 PM
+    import uuid
+    from rdflib import Graph, Namespace, RDF, URIRef
+    g = Graph()
 
-import uuid
-from rdflib import Graph, Namespace, RDF, URIRef
-g = Graph()
+    # create custom odml namespace
+    ns = Namespace("http://g-node.org/odml-rdf#")
 
-# create custom odml namespace
-ns = Namespace("http://g-node.org/odml-rdf#")
+    # use a specific prefix for our custom odml namespace
+    g.bind('odml', ns)
 
-# use a specific prefix for our custom odml namespace
-g.bind('odml', ns)
+    # create named hub node - since the custom id is supposed to be a uuid,
+    # it should be unique wherever, making it unlikely that two different instances
+    # have the same id - needs to be replaced
+    # maybe there is a nicer way to get a proper uuid tough, I'm not a python guy ;)
+    hubNode = URIRef(uuid.uuid4().urn[9:])
 
-# create named hub node - since the custom id is supposed to be a uuid,
-# it should be unique wherever, making it unlikely that two different instances
-# have the same id - needs to be replaced
-# maybe there is a nicer way to get a proper uuid tough, I'm not a python guy ;)
-hubNode = URIRef(uuid.uuid4().urn[9:])
+    # create named document node
+    docNode = URIRef(uuid.uuid4().urn[9:])
 
-# create named document node
-docNode = URIRef(uuid.uuid4().urn[9:])
+    # add hubNode to graph, add it as RDF type "odml:Hub"
+    g.add( (hubNode, RDF.type, ns.Hub) )
 
-# add hubNode to graph, add it as RDF type "odml:Hub"
-g.add( (hubNode, RDF.type, ns.Hub) )
+    # add docNode to graph, add it as RDF type "odml:Document"
+    g.add( (docNode, RDF.type, ns.Document) )
 
-# add docNode to graph, add it as RDF type "odml:Document"
-g.add( (docNode, RDF.type, ns.Document) )
-
-# connect docNode as child of hubNode via predicate "odml:hasDocument"
-g.add( (hubNode, ns.hasDocument, docNode) )
-
+    # connect docNode as child of hubNode via predicate "odml:hasDocument"
+    g.add( (hubNode, ns.hasDocument, docNode) )
 dumdribille
 8:29 PM
 whether the actual instances like hubNode or docNode etc should live under the odml namespace as well since they are instances of nodes under the odml namespace I myself am unsure still.
@@ -743,7 +669,6 @@ if you have more questions let me know!
 but for today I finally have to go home :wink:
 8:37
 have a nice evening!
-
 rickskyy
 8:39 PM
 have one comment
@@ -766,7 +691,6 @@ Have a nice evening)
 
 
 13.07.2017
-
 dumdribille
 9:51 AM
 and we're back :wink:
@@ -794,7 +718,6 @@ uniquely identifiable for a merge.
 9:51
 So I think the proper way to resolve this is using URIRef(odmlns+uuid) as node identifier. Since a
 URI can be a URN (unique name without pointing to an actual resource as a URL does) it would also be formally correct.
-
 rickskyy 11:47 AM
 Ok I got it, you are right, I thought this blank node ids is being exported. Since I was using xml and I could actually see ids I used to think that way
 rickskyy
@@ -806,7 +729,6 @@ GitHub
 python-odml - odML libraries and editor
 rickskyy
 3:35 PM
-
     from rdflib import Graph, URIRef, Literal, Namespace
     n = Namespace("http://example.org/")
     id1 = 'starts-with-letters'
@@ -852,7 +774,6 @@ protege.stanford.edu
 
 
 14.07.2017
-
 rickskyy
 1:11 AM
 [file]
@@ -864,7 +785,6 @@ rickskyy
 1:12 AM
 [file]
 The turtle version.
-
 dumdribille
 2:45 PM
 and we're back again! :slightly_smiling_face:
@@ -895,7 +815,6 @@ dumdribille
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
     odml:ffd9a039-2f77-42ca-a557-3c44e050d995 a odml:Hub ;
         odml:hasDocument <http://g-node.org/odml-rdf#4620f9c6-204a-4bbb-bf5d-485d9451e78f> .
-
     <http://g-node.org/odml-rdf#4620f9c6-204a-4bbb-bf5d-485d9451e78f> a odml:Document .
 dumdribille
 2:47 PM
@@ -1066,8 +985,8 @@ i included ontology to the pr. But what to remind you that we can edit the schem
 7:44
 Also there is a version control mechanism and tools for discussing and proposing changes.
 
-17.07.2017
 
+17.07.2017
 rickskyy
 1:31 PM
 Hi everyone, want to check if there would be the hangouts meeting today
@@ -1139,7 +1058,6 @@ me too ))
 
 
 18.07.2017
-
 rickskyy
 9:15 AM
 I added 4 new PRs as Michael asked. I did not delete the first big PR, so you can see the passing builds from travis and test coverage. Since core changes was separated to the separate pr, the rdf converter and tests failed the build checks.
@@ -1168,7 +1086,6 @@ cool, thx!
 
 
 19.07.2017
-
 dumdribille 10:58 AM
 @jgrewe @rickskyy do you want to do a hangout today or just chat about stuff?
 jgrewe
@@ -1202,7 +1119,6 @@ I think I managed to get out the kinks with respect to the IRIs and to resolve t
 not sure if this is the proper way to go, but I don't want to spend too much time on the tool itself. :wink:
 dumdribille
 1:03 PM
-
 dumdribille
 1:04 PM
 you can easily import this into webprotege, let me know what you think!
@@ -1222,7 +1138,6 @@ I hope its actually correct, but I think its good enough for now. :wink:
 maybe we have to revisit the topic once we are at the first query and see this construct does not work as its supposed to...
 rickskyy
 3:09 PM
-
 dumdribille
 4:02 PM
 hi guys
@@ -1250,7 +1165,6 @@ https://web.gin.g-node.org/G-Node/odmlFiles
 
 
 20.07.2017
-
 dumdribille
 2:55 PM
 @jgrewe are you ok with it if I merge the 4 PRs now?
@@ -1344,6 +1258,7 @@ For now I can just add ids to the constructor again although they are not using,
 earlier. What do you think? Maybe after implementing rdf-odml converter I could rewrite XMLReader but I think it's not
 what important at the moment.
 P.S. You can see the log on travis: https://travis-ci.org/G-Node/python-odml/jobs/255332260 (edited)
+
 
 21.07.2017
 rickskyy
@@ -1452,8 +1367,8 @@ for invalid id it prints:
 badly formed hexadecimal UUID string
 9f187f00-88f8-45d6-9986-3ca08643a9cd
 
-24.07.2017
 
+24.07.2017
 rickskyy
 10:37 AM
 Hi guys, added a first version of odml_version_converter:
@@ -1535,7 +1450,6 @@ if you still want to visit, which would be awesome, we would pay for the trip fr
 and I am sure also for the food and partly drinks on friday :wink:
 3:01
 It would really be nice to meet you in person, but its totally up to you, if that does not fit with your travel plans. :slightly_smiling_face:
-
 rickskyy
 8:28 PM
 That is ok, I do not think I would have a chance in the near future to visit Munich, so I am really looking forward to
@@ -1544,7 +1458,6 @@ with my friend, so I would be very thankful if you find the room with two beds f
 
 
 25.07.2017
-
 rickskyy
 12:12 PM
 Hi everyone, @dumdribille @jgrewe will we have a meeting today?
@@ -1606,7 +1519,6 @@ https://en.wikipedia.org/wiki/Merkle_tree
 
 
 26.07.2017
-
 dumdribille
 3:15 PM
 I added the proposed xsd types for all RDF leaves to our google doc, xsd:string nearly everywhere :wink:
@@ -1638,7 +1550,6 @@ no hurry, just wanted to keep everyone informed :slightly_smiling_face:
 
 
 27.07.2017
-
 dumdribille
 11:05 AM
 I just merged the 'Changes to ids' PR. @rickskyy, could you rebase the second PR with these changes, so the tests will unfail? :slightly_smiling_face:
@@ -1708,7 +1619,6 @@ shabby part of the city.
 
 
 08.08.2017
-
 dumdribille
 12:19 PM
 @rickskyy I talked to Thomas and sent him your information, so the hotel should be organized in the next days. lets keep our fingers crossed. :wink: he also said, if you keep your stamped train ticket from Berlin to Munich we can reimburse you for that as well.
@@ -2061,7 +1971,6 @@ agree)
 dumdribille
 4:55 PM
 cool, if any questions pop up, we are here :wink:
-
 rickskyy
 5:07 PM
 just added the value_origin PR, check please
@@ -2172,7 +2081,6 @@ the last suggestion will take more time, but ensures that we have at least one t
 
 
 09.08.2017
-
 dumdribille
 3:28 PM
 While reviewing I just realized sthg I overlooked in the previous rdf_converter PR
@@ -2307,10 +2215,8 @@ I mean it is a good question because I do not know what version I call in termin
 achilleas
 2:07 PM
 you can use
-
-import odml
-odml.__file__
-
+    import odml
+    odml.__file__
 2:07
 So see where it’s being imported from
 rickskyy
@@ -2498,60 +2404,34 @@ that's nice feature
 
 
 11.08.2017
-
 rickskyy
 11:39 AM
-
-@prefix odml: <https://g-node.org/projects/odml-rdf#> .
-
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
+    @prefix odml: <https://g-node.org/projects/odml-rdf#> .
+    @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix xml: <http://www.w3.org/XML/1998/namespace> .
+    @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 File used for queries
 rickskyy
 11:39 AM
-
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?xml-stylesheet type="text/xsl" href="odmlTerms.xsl"?>
-
-<?xml-stylesheet type="text/xsl" href="odml.xsl"?>
-
-<odML version="1.1">
-
-  <section>
-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml-stylesheet type="text/xsl" href="odmlTerms.xsl"?>
+    <?xml-stylesheet type="text/xsl" href="odml.xsl"?>
+    <odML version="1.1">
+      <section>
 rickskyy
 11:39 AM
-
-from rdflib import Graph, Namespace, RDF
-
-from rdflib.plugins.sparql import prepareQuery
-
-​
-
-g = Graph()
-
-g.parse(
-
+    from rdflib import Graph, Namespace, RDF
+    from rdflib.plugins.sparql import prepareQuery
+    g = Graph()
+    g.parse(
 rickskyy
 11:41 AM
-
-q1
-
-Doc: https://g-node.org/projects/odml-rdf#cd24b60f-1d5e-4040-9881-5e5a597baef7, Sec: https://g-node.org/projects/odml-rdf#4620a3bf-3316-4a00-9fa0-206aaf520d4a,
-
-Prop: https://g-node.org/projects/odml-rdf#902f9acf-f13c-4b29-ae3b-a9463e480752, Bag: https://g-node.org/projects/odml-rdf#3aab5e4d-3be5-4ffa-92c2-a08ba2ab0393
-
-q2
-
-Doc: https://g-node.org/projects/odml-rdf#cd24b60f-1d5e-4040-9881-5e5a597baef7, Sec: https://g-node.org/projects/odml-rdf#4620a3bf-3316-4a00-9fa0-206aaf520d4a,
-
+    q1
+    Doc: https://g-node.org/projects/odml-rdf#cd24b60f-1d5e-4040-9881-5e5a597baef7, Sec: https://g-node.org/projects/odml-rdf#4620a3bf-3316-4a00-9fa0-206aaf520d4a,
+    Prop: https://g-node.org/projects/odml-rdf#902f9acf-f13c-4b29-ae3b-a9463e480752, Bag: https://g-node.org/projects/odml-rdf#3aab5e4d-3be5-4ffa-92c2-a08ba2ab0393
+    q2
+    Doc: https://g-node.org/projects/odml-rdf#cd24b60f-1d5e-4040-9881-5e5a597baef7, Sec: https://g-node.org/projects/odml-rdf#4620a3bf-3316-4a00-9fa0-206aaf520d4a,
 Here is the result
 rickskyy
 11:43 AM
@@ -2761,7 +2641,6 @@ yeah
 
 
 12.08.2017
-
 jgrewe
 12:35 PM
 I rebased the rdf branch against master and pushed it to g-node as rdf_converter. @rickskyy please confirm that it is correct. In particular the following file:
@@ -3108,7 +2987,6 @@ sounds good, then I'll wait until you've had the chance to add it. :wink:
 
 
 07.09.2017
-
 rickskyy
 11:03 AM
 @dumdribille want to set up my work plan for next days and prioritize the tasks. Here is how I see the whole picture.
@@ -3151,7 +3029,6 @@ we'll try to figure it out until tomorrow.
 
 
 08.09.2017
-
 dumdribille
 3:17 PM
 huhu
@@ -3476,6 +3353,7 @@ two modes that hide behind a find or match function
 rickskyy 4:57 PM
 Ok, understood
 
+
 12.10.2017
 dumdribille 4:19 PM
 hey, what up? :slightly_smiling_face:
@@ -3611,6 +3489,7 @@ hi everyone! I made some updates to Fuzzy PR yesterday.
 2) Updated jupyter notebook: removed benchmarking parts, added more description of fuzzy finder usage for users, removed all ttls except 3 files.
 Looking forward to some feedback, to make sure that logically I implemented all functionality as it was intended, so I can move forward: write unit tests, then merge this PR to dev-odml-rdf and create new benchmarking branch.
 I do not want to hurry anyone, just wanted to point out that currently I do not plan to add anything before listening to your comments. (edited)
+
 
 17.10.2017
 dumdribille 10:17 AM
@@ -3783,3 +3662,49 @@ rickskyy 12:24 PM
 Yeah that is exactly I was trying to say)
 12:24
 Great thank you)
+
+
+15.11.2017
+julia [11:29 PM]
+joined #odml by invitation from achilleas.
+
+
+Tu, 09.01.2018
+dumdribille [11:02 AM]
+I've built packages for odml 1.3.3 and odml-ui 1.3.0 and uploaded them to the test PyPI. (edited)
+They can be tested via `pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple odml-ui`.
+When we are happy with them, we could do a proper release on PyPI
+\o/
+\o/
+\o\ \o/ /o/
+
+
+We, 10.01.2018
+achilleas [4:47 PM]
+Appveyor is building python-odml after the merge. Looking good so far :slightly_smiling_face:
+dumdribille [4:49 PM]
+I got appveyor checks running as well, can be found here
+https://ci.appveyor.com/project/mpsonntag/python-odml
+The osx builds on travis however take forever to start and run
+achilleas [4:51 PM]
+yeah, that’s always like that. osx queue is long
+dumdribille [5:03 PM]
+appveyor fails randomly though. got to do with the terminology deferred loading. when the last two terminology tests fail and the build is restarted, it usually works...
+travis conda tests are also not super stable - when installing conda dependencies some of the jobs fail with a core dump. when restarted, they work fine as well.
+achilleas [5:55 PM]
+How Fun
+Does your appveyor build run the G-Node branches or your own? ’cause I think you need to add them separately.
+Appveyor is weird with projects and ownership. It always confuses me -_-
+dumdribille [6:08 PM]
+Mine, no idea how i can add the g-node one.
+
+
+09.02.2018
+Alper [10:27 AM]
+joined #odml.
+achilleas [10:27 AM]
+Oh, there you are
+Any other channel we need and don't have?
+Is nix private?
+Alper [10:29 AM]
+no, i can join nix
