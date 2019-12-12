@@ -1,10 +1,13 @@
-# GCA-Web user documentation
+# - GCA-Web user documentation
 
-## Normal user documentation
+## -- Normal user documentation
+
+### Registration workflow
 
 ### Abstract submission
 
-## Conference admin documentation
+
+## -- Conference admin documentation
 
 ### Create conference
 
@@ -35,5 +38,8 @@ Check `/app/models/AbstractState` for details.
 
 ## Class description
 
+# Build notes
+
+The project is an `activator` webframework written in Scala and Knockout JS. It relies on an OR mapper automatically creating database tables from Scala classes. 
 
 # Docker build and deployment notes
