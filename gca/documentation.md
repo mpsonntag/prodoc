@@ -101,9 +101,9 @@ Check `/app/models/AbstractState` for details.
 
 # Build and debug notes
 
-The project is an `activator` webframework written in Scala and Knockout JS. It relies on an OR mapper automatically creating database tables from Scala classes. 
+The project is a [play v2.3](https://www.playframework.com/documentation/2.3.x/) webframework written in Scala and Knockout JS. It relies on an OR mapper automatically creating database tables from Scala classes. 
 
-The project can locally be tested and built using the `activator` framework.
+The project can locally be tested and built using the play framework. It requires Java 8 (OpenJDK 1.8) and the sbt build tool `activator` v1.3.7. Which can be downloaded [here](https://downloads.typesafe.com/typesafe-activator/1.3.7/typesafe-activator-1.3.7-minimal.zip).
 
 ## Running local tests
 
