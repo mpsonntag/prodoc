@@ -14,6 +14,11 @@
 ### Conference workflow
 
 ### Abstract administration workflow
+- As long as your abstract is `InPreparation`, you can make any changes you like. You will have to save the abstract manually once, after that any change you make will be automatically saved.
+- When you submit your abstract, the state of your abstract will change to `Submitted`. This means that you cannot make changes to your abstract, signalling to the reviewers, that there will be no more changes from your end and they can begin the review process.
+- If you still need to add changes to your abstract, you can set the state of your abstract back to `InPreparation` again, if it is in state `Submitted`, signalling to the reviewers that changes to the abstract will still happen.
+- Reviewers will set the state of an abstract from `Submitted` to `InRevision`. Submitters cannot make any changes to their abstract in this state.
+- Reviewers can now set the state of the abstract to any of the following states: `Accepted`, `Rejected`, `InRevision`. Both states `Accepted` and `Rejected` 
 
   val ownerStates = Map("isOpen"  -> Map(InPreparation -> (Submitted :: Nil),
                                          Submitted     -> (InPreparation :: Withdrawn :: Nil),
