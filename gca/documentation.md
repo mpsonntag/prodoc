@@ -11,6 +11,34 @@
 
 ### Create conference
 
+Field description, Admin panel, main tab
+
+- Submission ... abstracts can be submitted; sole option to activate and inactivate abstract submission.
+- Published ... the conference will appear in the lower part of the conference list on the main page.
+- Active ... the conference will appear in the top part of the conference list of the main page.
+NOTE: if neither Published or Active are selected, there will be no link to access this conference. Use abstracts.g-node.org/conference/[conference short] to access an unpublished, inactive conference.
+- The banner (via logo link or logo file) on the main conference page will only be displayed, if the 'Link' to an external page has been provided, otherwise the banner will not be shown.
+- Name ... long name of the conference
+- Short ... short name of the conference e.g. BC14 -> is required and must be unique
+- Group ... ???
+- Cite ... ???
+- Start ... start date of the conference; displayed on the main abstracts page and the main conference page
+- end ... end date of the conference; displayed on the main abstracts page and the main conference page
+- deadline ... end date of the abstracts submission; it does not end abstract submission automatically. to end abstract submission, untick the Submission checkbox.
+- logo file ... upload an image that will be displayed on the main page if the conference is active and on the main conference page if a conference link has been provided
+- logo link ... link to a hosted image; the file must be hosted within the same domain (e.g. g-node). if a file has been uploaded via the logo file, logo link will be ignored. will be removed in later versions.
+- thumbnail file ... upload an image that will be displayed on the main page if the conference is published but not active.
+- thumbnail link ... link to a hosted image; the file has to be hosted within the same domain (e.g. g-node). if a file has been uploaded via the thumbnail file, thumbnail link will be ignored. will be removed in later version.
+- iOSApp ... id of the ios gca-web app for this conference. will be discontinued.
+- Link ... link to the external conference web page. if this link is provided, the logo image will be displayed on the main conference page and top navigation will feature a "Conference home" link.
+- Description ... markdown capable text that is displayed on the main page if the conference is active and on the main conference page.
+- Notice ... markdown capable text that is always displayed on the top of every page within the scope of the conference for last minute information for the conference attendees.
+- Presentation preferences ... ???
+- Topics ... topics that can be used to specify keywords for poster abstracts. NOTE even if topics are added, they have to be saved via the "save" button at the bottom of the page!
+- Max. Abs. Len ... Maximum abstract length; this is a required field and cannot be zero. It defines the allowed character length of an abstract including whitespaces.
+- Max. Figures ... Maximum number of abstracts that can be added to an abstract.
+
+
 ### Conference workflow
 
 ### Abstract administration workflow
