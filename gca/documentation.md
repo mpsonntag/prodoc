@@ -38,12 +38,20 @@ NOTE: if neither Published or Active are selected, there will be no link to acce
   - NOTE the specifics have to be entered in the "Groups" tab of the Admin panel; otherwise there will be an empty popup in the abstract submission form.
   - Only one presentation preference can be selected when submitting an abstract.
   - The corresponding field is called "Presentation type" in the abstract submission form.
+  - presentation preferences will be the categories that are displayed on the main abstract list page.
+  - NOTE abstracts have to be manually downloaded, ordered and uploaded to these lists via the GCA-Python command line tool.
 - Topics ...
   - topics that can be used to specify keywords for poster abstracts.
   - NOTE! even if topics are added, they have to be saved via the "save" button at the bottom of the page!
   - Only one topic can be selected per abstract.
 - Max. Abs. Len ... Maximum abstract length; this is a required field and cannot be zero. It defines the allowed character length of an abstract including whitespaces.
 - Max. Figures ... Maximum number of abstracts that can be added to an abstract.
+
+Groups description:
+- these are the display categeories (presentation preferences) of published abstracts.
+- prefix is a number that defines the display order
+- short is a string that is displayed in the abstract list with every abstract to note which category an abstract belongs to. it is also displayed on the abstract display page itself to again note the presentation pereference.
+- long is is the text that is displayed as the tab text on the abstract list page
 
 
 ### Conference workflow
