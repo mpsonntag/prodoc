@@ -11,7 +11,7 @@
 
 ### Create conference
 
-Field description, Admin panel, main tab
+Admin panel - main tab field description
 
 - Submission ... abstracts can be submitted; sole option to activate and inactivate abstract submission.
 - Published ... the conference will appear in the lower part of the conference list on the main page.
@@ -21,7 +21,7 @@ NOTE: if neither Published or Active are selected, there will be no link to acce
 - Name ... long name of the conference
 - Short ... short name of the conference e.g. BC14 -> is required and must be unique
 - Group ... ???
-- Cite ... ???
+- Cite ... text that will be displayed in the "my abstracts" and "my favorites" abstract lists [xxx]
 - Start ... start date of the conference; displayed on the main abstracts page and the main conference page
 - end ... end date of the conference; displayed on the main abstracts page and the main conference page
 - deadline ... end date of the abstracts submission; it does not end abstract submission automatically. to end abstract submission, untick the Submission checkbox.
@@ -30,11 +30,18 @@ NOTE: if neither Published or Active are selected, there will be no link to acce
 - thumbnail file ... upload an image that will be displayed on the main page if the conference is published but not active.
 - thumbnail link ... link to a hosted image; the file has to be hosted within the same domain (e.g. g-node). if a file has been uploaded via the thumbnail file, thumbnail link will be ignored. will be removed in later version.
 - iOSApp ... id of the ios gca-web app for this conference. will be discontinued.
-- Link ... link to the external conference web page. if this link is provided, the logo image will be displayed on the main conference page and top navigation will feature a "Conference home" link.
+- Link ... link to the external conference web page. if this link is provided, the logo image will be displayed on the main conference page and top navigation will feature a "Conference home" link. It will also show up in the abstract submission form to remind people after an abstract submission to also sign up for the conference itself.
 - Description ... markdown capable text that is displayed on the main page if the conference is active and on the main conference page.
 - Notice ... markdown capable text that is always displayed on the top of every page within the scope of the conference for last minute information for the conference attendees.
-- Presentation preferences ... ???
-- Topics ... topics that can be used to specify keywords for poster abstracts. NOTE even if topics are added, they have to be saved via the "save" button at the bottom of the page!
+- Presentation preferences ...
+  - this will enable presentation preferences in the abstract submission.
+  - NOTE the specifics have to be entered in the "Groups" tab of the Admin panel; otherwise there will be an empty popup in the abstract submission form.
+  - Only one presentation preference can be selected when submitting an abstract.
+  - The corresponding field is called "Presentation type" in the abstract submission form.
+- Topics ...
+  - topics that can be used to specify keywords for poster abstracts.
+  - NOTE! even if topics are added, they have to be saved via the "save" button at the bottom of the page!
+  - Only one topic can be selected per abstract.
 - Max. Abs. Len ... Maximum abstract length; this is a required field and cannot be zero. It defines the allowed character length of an abstract including whitespaces.
 - Max. Figures ... Maximum number of abstracts that can be added to an abstract.
 
