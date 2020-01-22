@@ -6,6 +6,20 @@
 
 ### Abstract submission
 
+## Conference admin handling of abstracts
+
+Abstracts in state `submitted` are ready to be managed by conference admins.
+Any state changes administered to an abstract will be recorded in the abstract state history (shown at the bottom of the abstract page and visible to the abstract owners and the conference admins).
+Whenever a conference admin changes the state of an abstract, they can also choose to add a note, that will be displayed in the abstract history to make any decisions or change requests transparent and available to the abstract owners as well. 
+
+- A submitted abstract can only be set to `inReview`. This will disable any changes from the abstract submitters end while a conference admin is reviewing.
+- An abstract in state `inReview` can be set to one of the following four states:
+- `Accepted` ... the abstract is finalized and will be available in the abstract list when the conference is set to published. The submitter cannot make any more changes to the abstract.
+- `Rejected` ... the abstract will not be available in the abstract list and the submitter cannot make any more changes to the abstract.
+- `Withdrawn` ... the abstract will not be available in the abstract list and the submitter cannot make any more changes to the abstract -> this state is usually set by the submitters themselves.
+- `inRevision` ... the abstract is set back into an editable state. Both conference admins and submitters can make changes to the abstract. A submitter is able to re-submit after changes have been done. A conference admin can make changes to the abstract, they will automatically be saved, but the admin is not allowed to re-submit the abstract. They have to move back to the list of abstracts and set the state of the abstract manually to any state they see fit.
+
+- Set an abstract to `inRevision`, if changes need to be made. A conference admin can access and change an abstract that is `inRevision`. Any changes made will be saved automatically, but a conference admin is not allowed to `submit` an abstract. When any required changes are done, a conference admin should return to the conference abstract listing and set the modified abstract manually from `inRevision` to `accepted` to finalize the changes and move the abstract to the published abstracts list.
 
 ## -- Conference admin documentation
 
