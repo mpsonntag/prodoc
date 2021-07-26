@@ -65,7 +65,7 @@ Groups description:
 - these are the display categeories (presentation preferences) of published abstracts.
 - prefix is a number that defines the display order
 - short is a string that is displayed in the abstract list with every abstract to note which category an abstract belongs to. it is also displayed on the abstract display page itself to again note the presentation pereference.
-- long is is the text that is displayed as the tab text on the abstract list page
+- long is the text that is displayed as the tab text on the abstract list page
 
 
 ### Conference workflow
